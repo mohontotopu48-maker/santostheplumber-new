@@ -23,3 +23,27 @@ Stage Summary:
 - All 4 AI-generated images stored in /public/
 - Site follows "Apple-style" minimalist with dark-mode twist aesthetic
 - All sections from the master prompt implemented
+
+---
+Task ID: 2
+Agent: Main Agent
+Task: 15-Mile Radius Expansion — update footer, trust bar, sub-headline, SEO metadata
+
+Work Log:
+- Updated layout.tsx metadata: title, description, OpenGraph, and expanded keywords (added Foothill plumber, Upland plumber, Claremont, Glendora, Chino Hills, Eastvale, Diamond Bar, Victorville, slab leak detection, tankless water heater, re-piping, drain cleaning)
+- Verified footer service areas now use 4 optimized regional columns:
+  1. West Valley & Foothills (Upland, Claremont, La Verne, San Dimas, Glendora, Montclair)
+  2. The 71/60 Corridor (Chino, Chino Hills, Ontario, Eastvale, Diamond Bar, Walnut)
+  3. East Valley & IE Central (Rancho Cucamonga, Fontana, Rialto, San Bernardino, Colton, Loma Linda)
+  4. High Desert Hub (Victorville, Hesperia, Apple Valley, Adelanto)
+- Verified trust bar updated: "909 & 951 Local Experts" / "Greater IE & Foothill Coverage"
+- Verified sub-headline: "Inland Empire and Foothill homeowners"
+- Verified compliance/SEO notice: "Serving a 15-mile radius from Upland, CA including San Bernardino, Riverside, and East Los Angeles Counties."
+- Verified header top bar, CTA banner, footer description, and copyright all reflect expansion
+- Lint passes cleanly, dev server serving updated pages
+
+Stage Summary:
+- All 15-mile radius expansion updates applied across page.tsx and layout.tsx
+- Footer reorganized from 4 basic IE columns to strategic 4-column corridor/regional layout
+- Trust bar and sub-headline updated to reflect broader IE & Foothill coverage
+- SEO metadata expanded with additional city keywords and 3-county coverage language

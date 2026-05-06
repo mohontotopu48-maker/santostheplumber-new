@@ -10,12 +10,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Santos Plumbing | Fast, Professional Plumbing Solutions for Inland Empire",
+  title: "Santos Plumbing | Fast, Professional Plumbing for Inland Empire & Foothill Communities",
   description:
-    "Santos Plumbing provides fast, professional plumbing solutions for Inland Empire homeowners. From emergency pipe repairs to water heater installations, we get it flowing right the first time. Call (909) 256-9224.",
+    "Santos Plumbing provides fast, professional plumbing solutions for Inland Empire and Foothill homeowners. Serving a 15-mile radius from Upland, CA across San Bernardino, Riverside, and East Los Angeles Counties. 24/7 emergency pipe repairs, water heater installations, and leak detection. Call (909) 256-9224.",
   keywords: [
     "Santos Plumbing",
     "Inland Empire plumber",
+    "Foothill plumber",
+    "Upland plumber",
     "emergency plumbing",
     "water heater installation",
     "pipe repair",
@@ -24,6 +26,16 @@ export const metadata: Metadata = {
     "Rancho Cucamonga plumber",
     "Fontana plumber",
     "San Bernardino plumber",
+    "Claremont plumber",
+    "Glendora plumber",
+    "Chino Hills plumber",
+    "Eastvale plumber",
+    "Diamond Bar plumber",
+    "Victorville plumber",
+    "slab leak detection",
+    "tankless water heater",
+    "re-piping",
+    "drain cleaning",
   ],
   authors: [{ name: "Santos Plumbing" }],
   icons: {
@@ -32,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Santos Plumbing | If You Got A Leak, We'll Take A Peek!",
     description:
-      "Fast, professional plumbing solutions for Inland Empire homeowners. Licensed & Insured. 24/7 Emergency Response.",
+      "Fast, professional plumbing solutions for Inland Empire and Foothill homeowners. Serving a 15-mile radius from Upland, CA. Licensed & Insured. 24/7 Emergency Response.",
     type: "website",
   },
 };
