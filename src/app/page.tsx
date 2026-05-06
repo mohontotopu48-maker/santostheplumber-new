@@ -21,6 +21,9 @@ import {
   Zap,
   ArrowRight,
   Heart,
+  Facebook,
+  Instagram,
+  Linkedin,
 } from "lucide-react";
 
 /* ─── Colour Tokens ─── */
@@ -28,6 +31,25 @@ const NAVY = "#001F3F";
 const YELLOW = "#FFD700";
 const WHITE = "#FFFFFF";
 const ELECTRIC_BLUE = "#38BDF8"; /* Electric Light Blue — wave accent */
+
+/* ─── Nextdoor Icon (custom SVG — house with door) ─── */
+function NextdoorIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M3 10.5L12 3l9 7.5" />
+      <path d="M5 9.5V19a1 1 0 001 1h3.5v-5h5v5H18a1 1 0 001-1V9.5" />
+    </svg>
+  );
+}
 
 /* ══════════════════════════════════════════════════════════════════════
    HEADER
@@ -223,8 +245,7 @@ function Hero() {
             </Button>
             <Button
               asChild
-              variant="outline"
-              className="font-bold text-base px-8 py-6 rounded-md border-gray-500 text-white hover:bg-white/10"
+              className="hero-phone-btn font-bold text-lg px-8 py-6 rounded-md shadow-xl hover:scale-105"
             >
               <a href="tel:9092569224">
                 <Phone className="w-5 h-5 mr-2" />
@@ -831,6 +852,43 @@ function Footer() {
               Locally Owned & Family Operated
             </span>
           </div>
+        </div>
+
+        {/* Social media icon row — centered above dual-wing bar */}
+        <div className="mt-6 flex items-center justify-center gap-3">
+          {[
+            {
+              icon: Facebook,
+              href: "https://facebook.com/SantosPlumbingIE",
+              label: "Facebook",
+            },
+            {
+              icon: Instagram,
+              href: "https://instagram.com/SantosPlumbingIE",
+              label: "Instagram",
+            },
+            {
+              icon: Linkedin,
+              href: "https://linkedin.com/company/SantosPlumbingIE",
+              label: "LinkedIn",
+            },
+            {
+              icon: NextdoorIcon,
+              href: "https://nextdoor.com/pages/santos-plumbing-upland-ca/recommendations/",
+              label: "Nextdoor",
+            },
+          ].map((social) => (
+            <a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.label}
+              className="social-tile"
+            >
+              <social.icon className="w-5 h-5" />
+            </a>
+          ))}
         </div>
 
         {/* Dual-wing footer bar — Copyright left, Agency credits right */}

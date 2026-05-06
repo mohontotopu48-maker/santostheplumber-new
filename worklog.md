@@ -155,3 +155,34 @@ Stage Summary:
 - Hover on agency credits transitions entire "managed by" line to Electric Light Blue
 - Zero compliance issues — no License #, BYLDRS GUARDIAN, or other purged text remains
 - Final colour system: Navy (#001F3F) + Yellow (#FFD700) + Electric Light Blue (#38BDF8)
+
+---
+Task ID: 7
+Agent: Main Agent
+Task: Hero Button Visibility Fix + Social Media Expansion
+
+Work Log:
+- Hero phone button restyled from variant="outline" gray border to ghost/transparent button:
+  - 2px solid white border, solid white text, transparent background
+  - Added .hero-phone-btn CSS class with Electric Light Blue hover (background + border transition)
+  - Font weight: bold, font size: text-lg (matching REQUEST SERVICE button)
+  - Phone icon added to left of number, click-to-call href="tel:9092569224"
+- Social media icon row added to footer, centered above the dual-wing copyright bar:
+  - 4 platforms: Facebook, Instagram, LinkedIn, Nextdoor (left to right)
+  - Each icon in a Midnight Navy rounded-square tile (44x44px, 10px border-radius)
+  - Default icon color: Muted Slate Grey (#9CA3AF)
+  - Hover: Icon transitions to Electric Light Blue (#38BDF8), tile background lightens to #002d5c, border glows Electric Light Blue
+  - Hover also applies subtle translateY(-2px) lift for premium feel
+  - All icons linked to respective Santos Plumbing profiles (target _blank, noopener)
+  - Nextdoor links directly to /recommendations/ page (aligns with 1,000+ Neighbors Served social proof)
+- Custom NextdoorIcon SVG component created (house with door shape) — lucide-react doesn't include Nextdoor
+- Added Facebook, Instagram, Linkedin imports from lucide-react
+- Added .social-tile CSS class in globals.css
+- Lint + build both pass cleanly
+
+Stage Summary:
+- Hero phone button now visually distinct: ghost white border on dark navy, Electric Light Blue hover
+- Social media row adds community credibility and multi-platform presence to footer
+- Nextdoor recommendation link reinforces "1,000+ Neighbors Served" positioning
+- Electric Light Blue interactive signature now consistent across: nav hovers, hero button hover, social icon hovers, CRM branding
+- Final colour system: Navy (#001F3F) + Yellow (#FFD700) + Electric Light Blue (#38BDF8)
