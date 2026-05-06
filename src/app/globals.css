@@ -121,14 +121,14 @@
   }
 }
 
-/* ─── Electric Blue Interactive Accent (#00B4D8) ─── */
+/* ─── Electric Light Blue Interactive Accent (#38BDF8) ─── */
 .nav-link {
   position: relative;
   color: #FFFFFF;
   transition: color 0.2s ease;
 }
 .nav-link:hover {
-  color: #00B4D8;
+  color: #38BDF8;
 }
 .nav-link::after {
   content: '';
@@ -137,7 +137,7 @@
   left: 50%;
   width: 0;
   height: 2px;
-  background: #00B4D8;
+  background: #38BDF8;
   transition: all 0.25s ease;
   transform: translateX(-50%);
 }
@@ -146,7 +146,7 @@
   width: 70%;
 }
 .nav-link.active {
-  color: #00B4D8;
+  color: #38BDF8;
 }
 
 .nav-link-mobile {
@@ -154,17 +154,17 @@
   transition: color 0.2s ease;
 }
 .nav-link-mobile:hover {
-  color: #00B4D8;
+  color: #38BDF8;
 }
 
-/* Electric Blue glow behind icon squares */
+/* Electric Light Blue glow behind icon squares */
 .icon-glow {
-  background: rgba(0, 180, 216, 0.10);
+  background: rgba(56, 189, 248, 0.10);
 }
 
 /* Inline hyperlinks in body text */
 .link-accent {
-  color: #00B4D8;
+  color: #38BDF8;
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: opacity 0.2s ease;
@@ -173,10 +173,21 @@
   opacity: 0.8;
 }
 
-/* VSUAL agency link hover */
+/* VSUAL agency link hover — brand text goes Electric Light Blue */
 .agency-link {
   transition: color 0.2s ease;
 }
 .agency-link:hover .agency-brand {
-  color: #00B4D8;
+  color: #38BDF8;
+}
+
+/* Agency credits hover — entire "managed by" line transitions to Electric Light Blue */
+.agency-credits:hover .agency-managed-line {
+  color: #38BDF8;
+}
+.agency-credits:hover .agency-managed-line .agency-domain {
+  color: #38BDF8;
+}
+.agency-credits:hover .agency-managed-line .agency-brand {
+  color: #38BDF8;
 }

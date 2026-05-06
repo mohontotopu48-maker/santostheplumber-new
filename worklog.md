@@ -125,3 +125,33 @@ Stage Summary:
 - Icon backgrounds: subtle 10% Electric Blue glow replaces previous yellow tint
 - VSUAL link hover transitions to Electric Blue — cohesive "tech-powered" look top to bottom
 - Final colour system: Navy (#001F3F) + Yellow (#FFD700) + Electric Blue (#00B4D8)
+
+---
+Task ID: 6
+Agent: Main Agent
+Task: Dual-Wing Footer Layout — restructure bottom bar + swap teal for Electric Light Blue (#38BDF8)
+
+Work Log:
+- Replaced all #00B4D8 (Teal) with #38BDF8 (Electric Light Blue) site-wide:
+  - page.tsx: TEAL constant → ELECTRIC_BLUE (#38BDF8)
+  - globals.css: All 8 instances of #00B4D8 → #38BDF8, rgba(0,180,216,0.10) → rgba(56,189,248,0.10)
+  - Verified zero remaining #00B4D8 references (grep confirmed)
+- Restructured footer bottom into dual-wing layout:
+  - Left wing: "© 2026 Santos Plumbing. All rights reserved." (muted slate grey, small text)
+  - Right wing: Agency credits block (text-right):
+    - Line 1: "Powered by" (grey) + "NXLBYLDR CRM" (Electric Light Blue #38BDF8, semibold, tracking-wide)
+    - Line 2: "managed by" (grey) + VSUAL (bold white) + digitalmedia.com (grey), linked to https://vsualdigitalmedia.com/
+- "Locally Owned & Family Operated" badge moved to center-aligned divider above the dual-wing bar
+- Added .agency-credits hover interaction: entire "managed by" line transitions from grey to Electric Light Blue on hover
+- Added .agency-managed-line and .agency-domain CSS classes for hover targeting
+- Compliance verification: grep for "licens|insured|987654|BYLDRS|GUARDIAN" = ZERO results
+- Lint passes cleanly, dev server rendering updated footer
+
+Stage Summary:
+- Footer restructured to dual-wing horizontal layout per image_aed63c.png reference
+- All teal (#00B4D8) replaced with Electric Light Blue (#38BDF8) — brighter, matches wave accent
+- Copyright left-aligned, agency credits right-aligned in same bar
+- "Locally Owned & Family Operated" centered above as a standalone badge
+- Hover on agency credits transitions entire "managed by" line to Electric Light Blue
+- Zero compliance issues — no License #, BYLDRS GUARDIAN, or other purged text remains
+- Final colour system: Navy (#001F3F) + Yellow (#FFD700) + Electric Light Blue (#38BDF8)

@@ -27,7 +27,7 @@ import {
 const NAVY = "#001F3F";
 const YELLOW = "#FFD700";
 const WHITE = "#FFFFFF";
-const TEAL = "#00B4D8"; /* Electric Coastal Teal */
+const ELECTRIC_BLUE = "#38BDF8"; /* Electric Light Blue — wave accent */
 
 /* ══════════════════════════════════════════════════════════════════════
    HEADER
@@ -630,7 +630,7 @@ function SendPhotoSection() {
         {/* Dashed upload box */}
         <div className="mt-10 border-2 border-dashed rounded-2xl p-10 md:p-14 transition-colors"
           style={{ borderColor: "#d1d5db" }}
-          onMouseEnter={(e) => (e.currentTarget.style.borderColor = TEAL)}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = ELECTRIC_BLUE)}
           onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#d1d5db")}
         >
           <div
@@ -823,39 +823,44 @@ function Footer() {
           </p>
         </div>
 
-        {/* Divider — Main bottom bar */}
-        <div className="mt-8 pt-8 border-t border-white/10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Heart className="w-5 h-5" style={{ color: YELLOW }} />
-              <span className="font-bold text-sm" style={{ color: YELLOW }}>
-                Locally Owned & Family Operated
-              </span>
-            </div>
-            <p className="text-gray-500 text-xs text-center">
-              © {new Date().getFullYear()} Santos Plumbing. All rights reserved. | Inland Empire &amp; Foothill Communities, California
-            </p>
+        {/* Divider — Locally Owned badge */}
+        <div className="mt-8 pt-8 border-t border-white/10 text-center">
+          <div className="flex items-center justify-center gap-3">
+            <Heart className="w-5 h-5" style={{ color: YELLOW }} />
+            <span className="font-bold text-sm" style={{ color: YELLOW }}>
+              Locally Owned & Family Operated
+            </span>
           </div>
         </div>
 
-        {/* Agency & CRM signature */}
-        <div className="mt-6 pt-5 border-t border-white/5 text-center space-y-1">
-          <p className="text-xs">
-            <span className="text-gray-500">Powered by </span>
-            <span className="font-semibold tracking-wide" style={{ color: TEAL }}>NXLBYLDR CRM</span>
-          </p>
-          <p className="text-xs text-gray-500">
-            managed by{" "}
-            <a
-              href="https://vsualdigitalmedia.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="agency-link"
-            >
-              <span className="agency-brand font-bold text-white transition-colors">VSUAL</span>
-              <span className="text-gray-500">digitalmedia.com</span>
-            </a>
-          </p>
+        {/* Dual-wing footer bar — Copyright left, Agency credits right */}
+        <div className="mt-6 pt-5 border-t border-white/5">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Left wing — Copyright */}
+            <p className="text-gray-500 text-xs">
+              © {new Date().getFullYear()} Santos Plumbing. All rights reserved.
+            </p>
+
+            {/* Right wing — Agency credits */}
+            <div className="agency-credits text-right space-y-0.5">
+              <p className="text-xs">
+                <span className="text-gray-500">Powered by </span>
+                <span className="font-semibold tracking-wide" style={{ color: ELECTRIC_BLUE }}>NXLBYLDR CRM</span>
+              </p>
+              <p className="text-xs agency-managed-line transition-colors">
+                <span className="text-gray-500">managed by </span>
+                <a
+                  href="https://vsualdigitalmedia.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="agency-link inline"
+                >
+                  <span className="agency-brand font-bold text-white transition-colors">VSUAL</span>
+                  <span className="agency-domain text-gray-500 transition-colors">digitalmedia.com</span>
+                </a>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
