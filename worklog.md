@@ -233,3 +233,31 @@ Stage Summary:
 - All 7 REQUEST SERVICE touchpoints now trigger the popup
 - No license references anywhere in the popup — social proof only
 - Final colour system: Navy (#001F3F) + Yellow (#FFD700) + Electric Light Blue (#38BDF8)
+
+---
+Task ID: 9
+Agent: Main Agent
+Task: Header Logo Replacement — swap old text+icon for new simplified circular emblem + wordmark
+
+Work Log:
+- Copied new logo file from upload/santos_logo_v1.png → public/santos-logo-v2.png (970×970 RGBA PNG)
+- Header logo updated:
+  - Removed: old rounded-full logo image + two-line "SANTOS" (white) / "PLUMBING" (gold) text block
+  - Inserted: new circular white-on-dark-navy S-pipe/faucet icon (santos-logo-v2.png, no rounded-full crop)
+  - Added: single-line "SANTOS" white wordmark to the right of the icon (font-extrabold, text-xl md:text-2xl)
+  - Gap reduced from gap-3 → gap-2.5 for tighter icon+wordmark pairing
+  - Icon size: h-10 w-10 on mobile, h-11 w-11 on md+ (slightly smaller than old 12×12 to stay proportional)
+- Footer logo updated to match header:
+  - Same swap: old logo + two-line text → new icon + single "SANTOS" wordmark
+  - Maintained gap-2.5 and font-extrabold text-xl styling
+- Favicon updated in layout.tsx: /santos-logo.png → /santos-logo-v2.png
+- ServiceCard image overlay badge "SANTOS PLUMBING" kept as-is (yellow badge on photo, not a logo)
+- Lint + build both pass cleanly
+
+Stage Summary:
+- Header and footer now use the new simplified circular emblem + "SANTOS" wordmark
+- Gold "PLUMBING" text removed from both header and footer logos
+- Cleaner, more modern "Logo + Wordmark" presentation that aligns with the Apple-style minimalist aesthetic
+- New logo file: /public/santos-logo-v2.png (from upload/santos_logo_v1.png)
+- Old logo file preserved at /public/santos-logo.png for reference
+- Final colour system: Navy (#001F3F) + Yellow (#FFD700) + Electric Light Blue (#38BDF8)

@@ -458,26 +458,18 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
       {/* Main nav row */}
       <div className="flex items-center justify-between px-4 md:px-8 py-3 max-w-7xl mx-auto">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-3 shrink-0">
+        <a href="#" className="flex items-center gap-2.5 shrink-0">
           <img
-            src="/santos-logo.png"
+            src="/santos-logo-v2.png"
             alt="Santos Plumbing Logo"
-            className="h-10 w-10 md:h-12 md:w-12 object-contain rounded-full"
+            className="h-10 w-10 md:h-11 md:w-11 object-contain"
           />
-          <div className="leading-tight">
-            <span
-              className="font-extrabold text-lg md:text-xl tracking-tight"
-              style={{ color: WHITE }}
-            >
-              SANTOS
-            </span>
-            <span
-              className="font-extrabold text-lg md:text-xl tracking-tight block -mt-0.5"
-              style={{ color: YELLOW }}
-            >
-              PLUMBING
-            </span>
-          </div>
+          <span
+            className="font-extrabold text-xl md:text-2xl tracking-tight"
+            style={{ color: WHITE }}
+          >
+            SANTOS
+          </span>
         </a>
 
         {/* Desktop nav */}
@@ -1135,26 +1127,18 @@ function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
           {/* Brand column */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-2.5 mb-6">
               <img
-                src="/santos-logo.png"
+                src="/santos-logo-v2.png"
                 alt="Santos Plumbing"
-                className="h-10 w-10 object-contain rounded-full"
+                className="h-10 w-10 object-contain"
               />
-              <div className="leading-tight">
-                <span
-                  className="font-extrabold text-lg tracking-tight"
-                  style={{ color: WHITE }}
-                >
-                  SANTOS
-                </span>
-                <span
-                  className="font-extrabold text-lg tracking-tight block -mt-0.5"
-                  style={{ color: YELLOW }}
-                >
-                  PLUMBING
-                </span>
-              </div>
+              <span
+                className="font-extrabold text-xl tracking-tight"
+                style={{ color: WHITE }}
+              >
+                SANTOS
+              </span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Trusted by Inland Empire and Foothill homeowners since day one. Locally

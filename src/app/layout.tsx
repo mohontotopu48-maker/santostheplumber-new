@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Santos Plumbing" }],
   icons: {
-    icon: "/santos-logo.png",
+    icon: "/santos-logo-v2.png",
   },
   openGraph: {
     title: "Santos Plumbing | If You Got A Leak, We'll Take A Peek!",
