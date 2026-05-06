@@ -230,3 +230,155 @@
 .social-tile:active {
   transform: translateY(0);
 }
+
+/* ─── Multi-Step Popup ─── */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 31, 63, 0.70);
+  backdrop-filter: blur(4px);
+  animation: popup-fade-in 0.25s ease-out;
+}
+@keyframes popup-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 1rem;
+  border-radius: 15px;
+  background: #FFFFFF;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.08),
+    0 4px 24px rgba(0, 31, 63, 0.18),
+    0 0 60px rgba(56, 189, 248, 0.06);
+  animation: popup-slide-up 0.3s ease-out;
+}
+@keyframes popup-slide-up {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Electric Light Blue progress bar */
+.popup-progress-track {
+  height: 3px;
+  background: #e5e7eb;
+}
+.popup-progress-fill {
+  height: 100%;
+  background: #38BDF8;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0 2px 2px 0;
+}
+
+/* Close button */
+.popup-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9CA3AF;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+  z-index: 10;
+}
+.popup-close:hover {
+  color: #001F3F;
+  background: #f3f4f6;
+}
+
+/* Form step content animation */
+.popup-step {
+  padding: 2rem 2rem 1.5rem;
+  animation: step-fade-in 0.3s ease-out;
+}
+@keyframes step-fade-in {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Form inputs */
+.popup-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  color: #001F3F;
+  background: #FFFFFF;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.popup-input:focus {
+  border-color: #38BDF8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+.popup-input::placeholder {
+  color: #9CA3AF;
+}
+
+.popup-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  color: #001F3F;
+  background: #FFFFFF;
+  outline: none;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.popup-textarea:focus {
+  border-color: #38BDF8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+.popup-textarea::placeholder {
+  color: #9CA3AF;
+}
+
+/* Photo upload dashed box inside popup */
+.popup-upload-zone {
+  border: 2px dashed #d1d5db;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.popup-upload-zone:hover {
+  border-color: #38BDF8;
+  background: rgba(56, 189, 248, 0.03);
+}
+
+/* Popup footer */
+.popup-footer {
+  padding: 0 2rem 1.25rem;
+  text-align: center;
+}
+
+/* Success state */
+.popup-success {
+  animation: success-pop 0.4s ease-out;
+}
+@keyframes success-pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  60% { transform: scale(1.02); }
+  100% { transform: scale(1); opacity: 1; }
+}

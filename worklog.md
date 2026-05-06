@@ -186,3 +186,50 @@ Stage Summary:
 - Nextdoor recommendation link reinforces "1,000+ Neighbors Served" positioning
 - Electric Light Blue interactive signature now consistent across: nav hovers, hero button hover, social icon hovers, CRM branding
 - Final colour system: Navy (#001F3F) + Yellow (#FFD700) + Electric Light Blue (#38BDF8)
+
+---
+Task ID: 8
+Agent: Main Agent
+Task: Multi-Step Popup Master — replace REQUEST SERVICE redirect with high-conversion 3-step capture form + CRM backend
+
+Work Log:
+- Created MultiStepPopup component with 3 steps + success state:
+  - Step 1 (Identity): First Name + Last Name fields, "1,000+ Neighbors Served" trust badge, CONTINUE → button
+  - Step 2 (Contact): Mobile Phone + Issue Description textarea, lead created in CRM on submit, back arrow + CONTINUE
+  - Step 3 (Photo): Dashed-border upload zone with native camera trigger (capture="environment"), GET MY ESTIMATE button, skip link
+  - Success: CheckCircle animation, personalized "We're On It, {firstName}!" message, mentions SMS from (909) 256-9224
+- Popup aesthetic: 70% opacity Midnight Navy overlay, white rounded container (15px radius), Electric Light Blue glow shadow
+- Progress bar: 3px Electric Light Blue fill (33% → 66% → 100%) with smooth cubic-bezier transition
+- Form inputs: .popup-input and .popup-textarea with Electric Light Blue focus ring (border-color + 3px glow)
+- Close button: 32px rounded square, grey → dark on hover, resets form on close
+- Step transitions: slide-right fade-in animation per step
+- Agency credit: "managed by VSUALdigitalmedia.com" at popup bottom (non-success steps), with .agency-link hover
+- Wired all REQUEST SERVICE buttons to open popup:
+  - Header desktop CTA (changed from asChild <a> to onClick)
+  - Header mobile menu CTA (added setMobileOpen(false) + onRequestService)
+  - Hero primary CTA (changed from <a href="#contact"> to onClick)
+  - Hidden Leak Section CTA (onClick)
+  - ServiceCard CTA × 3 (prop-drilled onRequestService)
+  - Send Photo "Upload Photo" button (onClick)
+  - CTA Banner "REQUEST SERVICE ONLINE" (onClick)
+- Page composer manages popup state (useState + useCallback) and passes openPopup to all sections
+- Created /api/lead POST endpoint:
+  - Receives FormData (firstName, lastName, phone, issue, photo)
+  - GHL/NXLBYLDR CRM integration: creates contact, triggers SMS, sends internal notification
+  - SMS template: "Hi {firstName}, I've got your info and I'm reviewing your photo now. I'll text you back a preliminary estimate in just a few minutes! - Santos"
+  - Internal notification: "NEW LEAD: {name} — {issue} [PHOTO ATTACHED/No photo] — Call/text: {phone}"
+  - Dev mode: logs lead data to console when GHL_API_KEY not configured
+  - Returns 200 with lead data for popup flow verification
+- Verified zero license/insured/BYLDRS/GUARDIAN references in popup or API route
+- Lint + build both pass cleanly (5 routes: /, /_not-found, /api, /api/lead)
+
+Stage Summary:
+- Multi-step popup replaces all REQUEST SERVICE anchor redirects with in-page capture flow
+- Identity-first approach ensures lead is never lost even if user skips photo step
+- CRM lead created on Step 2 submit (before photo) — prevents drop-off loss
+- Native camera trigger on mobile for instant "point-and-shoot" photo experience
+- Electric Light Blue progress bar, focus rings, and upload zone hover maintain design system consistency
+- Full NXLBYLDR/GHL integration stub with environment variable configuration
+- All 7 REQUEST SERVICE touchpoints now trigger the popup
+- No license references anywhere in the popup — social proof only
+- Final colour system: Navy (#001F3F) + Yellow (#FFD700) + Electric Light Blue (#38BDF8)

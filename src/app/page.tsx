@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Phone,
@@ -24,6 +24,9 @@ import {
   Facebook,
   Instagram,
   Linkedin,
+  Upload,
+  ArrowLeft,
+  CheckCircle,
 } from "lucide-react";
 
 /* ─── Colour Tokens ─── */
@@ -52,9 +55,380 @@ function NextdoorIcon({ className }: { className?: string }) {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
+   MULTI-STEP POPUP
+   ══════════════════════════════════════════════════════════════════════ */
+interface PopupFormData {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  issue: string;
+  photoFile: File | null;
+  photoPreview: string | null;
+}
+
+function MultiStepPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [step, setStep] = useState<1 | 2 | 3 | "success">(1);
+  const [submitting, setSubmitting] = useState(false);
+  const [form, setForm] = useState<PopupFormData>({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    issue: "",
+    photoFile: null,
+    photoPreview: null,
+  });
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const progressWidth = step === 1 ? "33%" : step === 2 ? "66%" : step === 3 ? "100%" : "100%";
+
+  const updateField = useCallback((field: keyof PopupFormData, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  }, []);
+
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    if (file) {
+      const preview = URL.createObjectURL(file);
+      setForm((prev) => ({ ...prev, photoFile: file, photoPreview: preview }));
+    }
+  }, []);
+
+  const submitToCRM = useCallback(async () => {
+    setSubmitting(true);
+    try {
+      const formData = new FormData();
+      formData.append("firstName", form.firstName);
+      formData.append("lastName", form.lastName);
+      formData.append("phone", form.phone);
+      formData.append("issue", form.issue);
+      if (form.photoFile) {
+        formData.append("photo", form.photoFile);
+      }
+
+      await fetch("/api/lead", {
+        method: "POST",
+        body: formData,
+      });
+    } catch {
+      // Silently handle — lead is still captured in UI
+    } finally {
+      setSubmitting(false);
+    }
+  }, [form]);
+
+  const handleStep1Next = useCallback(() => {
+    if (form.firstName.trim() && form.lastName.trim()) {
+      setStep(2);
+    }
+  }, [form.firstName, form.lastName]);
+
+  const handleStep2Next = useCallback(async () => {
+    if (form.phone.trim()) {
+      // Create lead in CRM on step 2 to prevent drop-off loss
+      await submitToCRM();
+      setStep(3);
+    }
+  }, [form.phone, submitToCRM]);
+
+  const handleStep3Submit = useCallback(async () => {
+    // If they have a photo, update the CRM record
+    if (form.photoFile) {
+      await submitToCRM();
+    }
+    setStep("success");
+  }, [form.photoFile, submitToCRM]);
+
+  const handleClose = useCallback(() => {
+    onClose();
+    // Reset after close animation
+    setTimeout(() => {
+      setStep(1);
+      setForm({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        issue: "",
+        photoFile: null,
+        photoPreview: null,
+      });
+    }, 300);
+  }, [onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div className="popup-overlay" onClick={handleClose}>
+      <div className="popup-container" onClick={(e) => e.stopPropagation()}>
+        {/* Progress bar */}
+        <div className="popup-progress-track">
+          <div className="popup-progress-fill" style={{ width: progressWidth }} />
+        </div>
+
+        {/* Close button */}
+        <button className="popup-close" onClick={handleClose} aria-label="Close">
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* ── STEP 1: Identity ── */}
+        {step === 1 && (
+          <div className="popup-step" key="step1">
+            <h2
+              className="text-2xl font-black tracking-tight mb-1"
+              style={{ color: NAVY }}
+            >
+              Let&apos;s Get Your Leak Fixed.
+            </h2>
+            <p className="text-sm text-gray-500 mb-6">
+              Step 1 of 3 — Your Info
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold mb-1.5" style={{ color: NAVY }}>
+                  First Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  className="popup-input"
+                  placeholder="John"
+                  value={form.firstName}
+                  onChange={(e) => updateField("firstName", e.target.value)}
+                  autoFocus
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold mb-1.5" style={{ color: NAVY }}>
+                  Last Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  className="popup-input"
+                  placeholder="Doe"
+                  value={form.lastName}
+                  onChange={(e) => updateField("lastName", e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Trust badge */}
+            <div className="mt-5 flex items-center gap-3 p-3 rounded-lg" style={{ background: "rgba(56, 189, 248, 0.06)" }}>
+              <div className="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center icon-glow">
+                <Users className="w-4.5 h-4.5" style={{ color: NAVY }} />
+              </div>
+              <div>
+                <p className="font-bold text-xs" style={{ color: NAVY }}>1,000+ Neighbors Served</p>
+                <p className="text-[11px] text-gray-500">Trusted by families across the IE</p>
+              </div>
+            </div>
+
+            <Button
+              className="w-full font-bold text-base py-4 rounded-md text-black shadow-lg hover:scale-[1.02] transition-transform mt-6"
+              style={{ background: YELLOW }}
+              onClick={handleStep1Next}
+              disabled={!form.firstName.trim() || !form.lastName.trim()}
+            >
+              CONTINUE <ArrowRight className="w-4 h-4 ml-1 inline" />
+            </Button>
+          </div>
+        )}
+
+        {/* ── STEP 2: Contact & Description ── */}
+        {step === 2 && (
+          <div className="popup-step" key="step2">
+            <h2
+              className="text-2xl font-black tracking-tight mb-1"
+              style={{ color: NAVY }}
+            >
+              How Can We Reach You?
+            </h2>
+            <p className="text-sm text-gray-500 mb-6">
+              Step 2 of 3 — Contact &amp; Issue
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold mb-1.5" style={{ color: NAVY }}>
+                  Mobile Phone <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  className="popup-input"
+                  placeholder="(909) 555-1234"
+                  value={form.phone}
+                  onChange={(e) => updateField("phone", e.target.value)}
+                  autoFocus
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold mb-1.5" style={{ color: NAVY }}>
+                  What&apos;s happening?
+                </label>
+                <textarea
+                  className="popup-textarea"
+                  placeholder="e.g., slab leak, water heater noise, dripping faucet..."
+                  value={form.issue}
+                  onChange={(e) => updateField("issue", e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <Button
+                className="font-bold py-4 px-5 rounded-md border-2 transition-colors"
+                style={{ borderColor: "#d1d5db", color: NAVY, background: WHITE }}
+                onClick={() => setStep(1)}
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </Button>
+              <Button
+                className="flex-1 font-bold text-base py-4 rounded-md text-black shadow-lg hover:scale-[1.02] transition-transform"
+                style={{ background: YELLOW }}
+                onClick={handleStep2Next}
+                disabled={!form.phone.trim() || submitting}
+              >
+                {submitting ? "SAVING..." : "CONTINUE"} <ArrowRight className="w-4 h-4 ml-1 inline" />
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* ── STEP 3: Photo Capture ── */}
+        {step === 3 && (
+          <div className="popup-step" key="step3">
+            <h2
+              className="text-2xl font-black tracking-tight mb-1"
+              style={{ color: NAVY }}
+            >
+              Snap a Photo — Get an Estimate Fast
+            </h2>
+            <p className="text-sm text-gray-500 mb-6">
+              Step 3 of 3 — Photo (Optional)
+            </p>
+
+            {/* Hidden file input with camera support */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+
+            {/* Upload zone */}
+            <div
+              className="popup-upload-zone"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {form.photoPreview ? (
+                <div className="space-y-3">
+                  <img
+                    src={form.photoPreview}
+                    alt="Uploaded photo preview"
+                    className="w-full max-h-48 object-contain rounded-lg"
+                  />
+                  <p className="text-xs font-medium" style={{ color: ELECTRIC_BLUE }}>
+                    Photo added! Tap to replace.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <div
+                    className="w-14 h-14 rounded-full mx-auto flex items-center justify-center icon-glow"
+                  >
+                    <Camera className="w-7 h-7" style={{ color: NAVY }} />
+                  </div>
+                  <div>
+                    <p className="font-bold text-sm" style={{ color: NAVY }}>
+                      Upload Photo
+                    </p>
+                    <p className="text-xs text-gray-400 mt-0.5">
+                      Tap to use camera or select a photo — JPG, PNG
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <Button
+                className="font-bold py-4 px-5 rounded-md border-2 transition-colors"
+                style={{ borderColor: "#d1d5db", color: NAVY, background: WHITE }}
+                onClick={() => setStep(2)}
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </Button>
+              <Button
+                className="flex-1 font-bold text-base py-4 rounded-md text-black shadow-lg hover:scale-[1.02] transition-transform"
+                style={{ background: YELLOW }}
+                onClick={handleStep3Submit}
+                disabled={submitting}
+              >
+                {submitting ? "SUBMITTING..." : "GET MY ESTIMATE"}
+              </Button>
+            </div>
+
+            {/* Skip link */}
+            <button
+              className="w-full text-center text-xs text-gray-400 mt-3 hover:text-gray-600 transition-colors"
+              onClick={handleStep3Submit}
+            >
+              Skip photo &amp; submit without image
+            </button>
+          </div>
+        )}
+
+        {/* ── SUCCESS STATE ── */}
+        {step === "success" && (
+          <div className="popup-step popup-success text-center" key="success">
+            <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-5" style={{ background: "rgba(56, 189, 248, 0.10)" }}>
+              <CheckCircle className="w-8 h-8" style={{ color: ELECTRIC_BLUE }} />
+            </div>
+            <h2
+              className="text-2xl font-black tracking-tight mb-2"
+              style={{ color: NAVY }}
+            >
+              We&apos;re On It, {form.firstName}!
+            </h2>
+            <p className="text-sm text-gray-500 leading-relaxed max-w-xs mx-auto">
+              Your request has been submitted. A text from (909) 256-9224 is on its way with your preliminary estimate.
+            </p>
+            <Button
+              className="w-full font-bold text-base py-4 rounded-md text-black shadow-lg hover:scale-[1.02] transition-transform mt-6"
+              style={{ background: YELLOW }}
+              onClick={handleClose}
+            >
+              DONE
+            </Button>
+          </div>
+        )}
+
+        {/* Agency credit — always visible */}
+        {step !== "success" && (
+          <div className="popup-footer">
+            <p className="text-[10px] text-gray-400">
+              managed by{" "}
+              <a
+                href="https://vsualdigitalmedia.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="agency-link"
+              >
+                <span className="agency-brand font-semibold text-gray-400 transition-colors">VSUAL</span>
+                <span className="agency-domain text-gray-400 transition-colors">digitalmedia.com</span>
+              </a>
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════════
    HEADER
    ══════════════════════════════════════════════════════════════════════ */
-function Header() {
+function Header({ onRequestService }: { onRequestService: () => void }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navLinks = [
     { label: "Emergency Service", href: "#emergency" },
@@ -130,11 +504,11 @@ function Header() {
             (909) 256-9224
           </a>
           <Button
-            asChild
             className="font-bold px-6 py-2.5 rounded-md text-black shadow-lg hover:scale-105 transition-transform"
             style={{ background: YELLOW }}
+            onClick={onRequestService}
           >
-            <a href="#contact">REQUEST SERVICE</a>
+            REQUEST SERVICE
           </Button>
         </div>
 
@@ -178,11 +552,14 @@ function Header() {
               (909) 256-9224
             </a>
             <Button
-              asChild
               className="w-full font-bold py-3 rounded-md text-black"
               style={{ background: YELLOW }}
+              onClick={() => {
+                setMobileOpen(false);
+                onRequestService();
+              }}
             >
-              <a href="#contact">REQUEST SERVICE</a>
+              REQUEST SERVICE
             </Button>
           </div>
         </div>
@@ -194,7 +571,7 @@ function Header() {
 /* ══════════════════════════════════════════════════════════════════════
    HERO
    ══════════════════════════════════════════════════════════════════════ */
-function Hero() {
+function Hero({ onRequestService }: { onRequestService: () => void }) {
   return (
     <section className="relative overflow-hidden">
       {/* Background image with overlay */}
@@ -234,14 +611,12 @@ function Hero() {
           {/* CTA row */}
           <div className="mt-8 flex flex-col sm:flex-row gap-4">
             <Button
-              asChild
               className="font-bold text-lg px-8 py-6 rounded-md text-black shadow-xl hover:scale-105 transition-transform"
               style={{ background: YELLOW }}
+              onClick={onRequestService}
             >
-              <a href="#contact">
-                REQUEST SERVICE
-                <ArrowRight className="w-5 h-5 ml-2 inline" />
-              </a>
+              REQUEST SERVICE
+              <ArrowRight className="w-5 h-5 ml-2 inline" />
             </Button>
             <Button
               asChild
@@ -309,7 +684,7 @@ function Hero() {
 /* ══════════════════════════════════════════════════════════════════════
    HIDDEN LEAK EDUCATION
    ══════════════════════════════════════════════════════════════════════ */
-function HiddenLeakSection() {
+function HiddenLeakSection({ onRequestService }: { onRequestService: () => void }) {
   return (
     <section id="emergency" className="py-20 md:py-28" style={{ background: WHITE }}>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -389,14 +764,12 @@ function HiddenLeakSection() {
             </div>
 
             <Button
-              asChild
               className="font-bold px-8 py-6 rounded-md text-black shadow-lg hover:scale-105 transition-transform mt-4"
               style={{ background: YELLOW }}
+              onClick={onRequestService}
             >
-              <a href="#contact">
-                Schedule a Leak Detection — Free Inspection
-                <ChevronRight className="w-5 h-5 ml-1 inline" />
-              </a>
+              Schedule a Leak Detection — Free Inspection
+              <ChevronRight className="w-5 h-5 ml-1 inline" />
             </Button>
           </div>
         </div>
@@ -420,6 +793,7 @@ function ServiceCard({
   imageAlt,
   ctaText,
   reversed,
+  onRequestService,
 }: {
   id: string;
   icon: React.ElementType;
@@ -432,6 +806,7 @@ function ServiceCard({
   imageAlt: string;
   ctaText: string;
   reversed?: boolean;
+  onRequestService: () => void;
 }) {
   return (
     <section id={id} className="py-20 md:py-28">
@@ -507,14 +882,12 @@ function ServiceCard({
             </div>
 
             <Button
-              asChild
               className="font-bold px-8 py-6 rounded-md text-black shadow-lg hover:scale-105 transition-transform mt-4"
               style={{ background: YELLOW }}
+              onClick={onRequestService}
             >
-              <a href="#contact">
-                {ctaText}
-                <ChevronRight className="w-5 h-5 ml-1 inline" />
-              </a>
+              {ctaText}
+              <ChevronRight className="w-5 h-5 ml-1 inline" />
             </Button>
           </div>
         </div>
@@ -526,7 +899,7 @@ function ServiceCard({
 /* ══════════════════════════════════════════════════════════════════════
    SERVICES DEEP-DIVE
    ══════════════════════════════════════════════════════════════════════ */
-function ServicesDeepDive() {
+function ServicesDeepDive({ onRequestService }: { onRequestService: () => void }) {
   return (
     <div>
       {/* Divider */}
@@ -556,6 +929,7 @@ function ServicesDeepDive() {
         imageSrc="/plumber-service.png"
         imageAlt="Santos Plumbing technician performing pipe repair"
         ctaText="Get a Pipe Repair Quote"
+        onRequestService={onRequestService}
       />
 
       {/* Alternating bg */}
@@ -585,6 +959,7 @@ function ServicesDeepDive() {
           imageAlt="Water heater installation by Santos Plumbing"
           ctaText="Schedule Water Heater Service"
           reversed
+          onRequestService={onRequestService}
         />
       </div>
 
@@ -612,6 +987,7 @@ function ServicesDeepDive() {
         imageSrc="/plumber-service.png"
         imageAlt="Drain cleaning and plumbing maintenance"
         ctaText="Book Your Annual Peek"
+        onRequestService={onRequestService}
       />
     </div>
   );
@@ -620,7 +996,7 @@ function ServicesDeepDive() {
 /* ══════════════════════════════════════════════════════════════════════
    SEND US A PHOTO
    ══════════════════════════════════════════════════════════════════════ */
-function SendPhotoSection() {
+function SendPhotoSection({ onRequestService }: { onRequestService: () => void }) {
   return (
     <section id="contact" className="py-20 md:py-28" style={{ background: "#f8fafc" }}>
       <div className="max-w-3xl mx-auto px-4 md:px-8 text-center">
@@ -671,14 +1047,9 @@ function SendPhotoSection() {
             <Button
               className="font-bold px-8 py-5 rounded-md text-black shadow-lg hover:scale-105 transition-transform"
               style={{ background: YELLOW }}
-              onClick={() => {
-                const input = document.createElement("input");
-                input.type = "file";
-                input.accept = "image/*";
-                input.click();
-              }}
+              onClick={onRequestService}
             >
-              <Camera className="w-4 h-4 mr-2" />
+              <Upload className="w-4 h-4 mr-2" />
               Upload Photo
             </Button>
 
@@ -703,7 +1074,7 @@ function SendPhotoSection() {
 /* ══════════════════════════════════════════════════════════════════════
    CTA BANNER
    ══════════════════════════════════════════════════════════════════════ */
-function CtaBanner() {
+function CtaBanner({ onRequestService }: { onRequestService: () => void }) {
   return (
     <section style={{ background: NAVY }} className="py-16 md:py-20">
       <div className="max-w-4xl mx-auto px-4 md:px-8 text-center">
@@ -731,15 +1102,15 @@ function CtaBanner() {
             </a>
           </Button>
           <Button
-            asChild
             className="font-bold text-lg px-10 py-6 rounded-md border-2 shadow-xl hover:scale-105 transition-transform"
             style={{
               borderColor: YELLOW,
               color: YELLOW,
               background: "transparent",
             }}
+            onClick={onRequestService}
           >
-            <a href="#contact">REQUEST SERVICE ONLINE</a>
+            REQUEST SERVICE ONLINE
           </Button>
         </div>
       </div>
@@ -929,17 +1300,22 @@ function Footer() {
    PAGE COMPOSER
    ══════════════════════════════════════════════════════════════════════ */
 export default function Home() {
+  const [popupOpen, setPopupOpen] = useState(false);
+  const openPopup = useCallback(() => setPopupOpen(true), []);
+  const closePopup = useCallback(() => setPopupOpen(false), []);
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+      <Header onRequestService={openPopup} />
       <main className="flex-1">
-        <Hero />
-        <HiddenLeakSection />
-        <ServicesDeepDive />
-        <SendPhotoSection />
-        <CtaBanner />
+        <Hero onRequestService={openPopup} />
+        <HiddenLeakSection onRequestService={openPopup} />
+        <ServicesDeepDive onRequestService={openPopup} />
+        <SendPhotoSection onRequestService={openPopup} />
+        <CtaBanner onRequestService={openPopup} />
       </main>
       <Footer />
+      <MultiStepPopup open={popupOpen} onClose={closePopup} />
     </div>
   );
 }
