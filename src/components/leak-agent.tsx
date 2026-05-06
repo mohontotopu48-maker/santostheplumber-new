@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { X, Send, RotateCcw } from "lucide-react";
+import { X, Send, RotateCcw, Camera, ImagePlus } from "lucide-react";
 
 /* ─── Colour Tokens (must match page.tsx) ─── */
 const NAVY = "#001F3F";
@@ -33,6 +33,7 @@ interface ChatMessage {
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
+  photo?: string | null; // base64 data URL for user photo messages
 }
 
 /* ─── Suggested Quick Actions ─── */
@@ -45,15 +46,18 @@ const QUICK_ACTIONS = [
 ];
 
 /* ══════════════════════════════════════════════════════════════════════
-   LEAK AGENT AI — Full Component
+   LEAK AGENT AI — Full Component with Photo Drop Zone
    ══════════════════════════════════════════════════════════════════════ */
 export default function LeakAgentAI() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoBase64, setPhotoBase64] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const chatFileInputRef = useRef<HTMLInputElement>(null);
 
   /* Auto-scroll to bottom on new messages */
   useEffect(() => {
@@ -70,19 +74,65 @@ export default function LeakAgentAI() {
   /* Generate unique message ID */
   const genId = useCallback(() => `msg_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`, []);
 
-  /* Send message to AI backend */
+  /* Process a photo file — creates preview URL and base64 data URL */
+  const processPhoto = useCallback((file: File) => {
+    if (!file.type.startsWith("image/")) return;
+    const previewUrl = URL.createObjectURL(file);
+    setPhotoPreview(previewUrl);
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPhotoBase64(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  }, []);
+
+  /* Handle drag-and-drop on the photo drop zone */
+  const handlePhotoDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files?.[0];
+    if (file) processPhoto(file);
+  }, [processPhoto]);
+
+  /* Handle drag-over to show visual feedback */
+  const handlePhotoDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  /* Handle file selection from camera/gallery via hidden input */
+  const handlePhotoSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) processPhoto(file);
+    // Reset input so the same file can be re-selected
+    e.target.value = "";
+  }, [processPhoto]);
+
+  /* Clear the pending photo */
+  const clearPhoto = useCallback(() => {
+    setPhotoPreview(null);
+    setPhotoBase64(null);
+  }, []);
+
+  /* Send message to AI backend (with optional photo) */
   const sendMessage = useCallback(async (text: string) => {
-    if (!text.trim() || isLoading) return;
+    if ((!text.trim() && !photoBase64) || isLoading) return;
 
     const userMessage: ChatMessage = {
       id: genId(),
       role: "user",
-      content: text.trim(),
+      content: text.trim() || (photoBase64 ? "📷 Photo of my plumbing issue — what do you see?" : ""),
       timestamp: new Date(),
+      photo: photoPreview,
     };
+
+    // Capture photo for API before clearing state
+    const capturedBase64 = photoBase64;
 
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
+    setPhotoPreview(null);
+    setPhotoBase64(null);
     setIsLoading(true);
 
     try {
@@ -90,10 +140,18 @@ export default function LeakAgentAI() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [...messages, userMessage].map((m) => ({
-            role: m.role,
-            content: m.content,
-          })),
+          messages: [...messages, userMessage].map((m, idx) => {
+            // Only attach image to the latest user message
+            const isLatestWithPhoto =
+              m.role === "user" &&
+              idx === messages.length &&
+              !!capturedBase64;
+            return {
+              role: m.role,
+              content: m.content,
+              image: isLatestWithPhoto ? capturedBase64 : undefined,
+            };
+          }),
         }),
       });
 
@@ -119,7 +177,7 @@ export default function LeakAgentAI() {
     } finally {
       setIsLoading(false);
     }
-  }, [messages, isLoading, genId]);
+  }, [messages, isLoading, genId, photoBase64, photoPreview]);
 
   /* Handle quick action click */
   const handleQuickAction = useCallback((query: string) => {
@@ -136,6 +194,8 @@ export default function LeakAgentAI() {
   const handleReset = useCallback(() => {
     setMessages([]);
     setInputValue("");
+    setPhotoPreview(null);
+    setPhotoBase64(null);
   }, []);
 
   /* Close chat */
@@ -240,7 +300,7 @@ export default function LeakAgentAI() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-base leading-none mt-0.5">{"\uD83D\uDCF8"}</span>
-                    <span>Analyze photos of your water heater or pipes</span>
+                    <span>Analyze photos of your water heater or pipes for AI Analysis</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-base leading-none mt-0.5">{"\uD83D\uDCB0"}</span>
@@ -274,6 +334,16 @@ export default function LeakAgentAI() {
                     <div
                       className={`leak-agent-msg-bubble ${msg.role === "user" ? "leak-agent-msg-bubble-user" : "leak-agent-msg-bubble-ai"}`}
                     >
+                      {/* Show photo thumbnail in user message if present */}
+                      {msg.photo && (
+                        <div className="mb-2">
+                          <img
+                            src={msg.photo}
+                            alt="Uploaded plumbing photo"
+                            className="leak-agent-photo-thumb"
+                          />
+                        </div>
+                      )}
                       <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                     </div>
                   </div>
@@ -302,7 +372,7 @@ export default function LeakAgentAI() {
               </div>
             )}
 
-            {/* ── Suggested Questions (show when no messages or after welcome) ── */}
+            {/* ── Suggested Questions (show when no messages) ── */}
             {messages.length === 0 && (
               <div className="leak-agent-quick-actions">
                 {QUICK_ACTIONS.map((action, i) => (
@@ -321,13 +391,63 @@ export default function LeakAgentAI() {
             )}
           </div>
 
+          {/* ── Photo Drop Zone (above input) ── */}
+          <div
+            className="leak-agent-photo-drop"
+            onDragOver={handlePhotoDragOver}
+            onDrop={handlePhotoDrop}
+            onClick={() => chatFileInputRef.current?.click()}
+          >
+            {photoPreview ? (
+              <div className="leak-agent-photo-preview-row">
+                <img
+                  src={photoPreview}
+                  alt="Photo preview"
+                  className="leak-agent-photo-preview-img"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold truncate" style={{ color: ELECTRIC_BLUE }}>
+                    Photo ready!
+                  </p>
+                  <p className="text-[10px] text-gray-400">Send with your message or tap to replace</p>
+                </div>
+                <button
+                  className="leak-agent-photo-clear"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    clearPhoto();
+                  }}
+                  aria-label="Remove photo"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <div className="leak-agent-photo-prompt">
+                <Camera className="w-4 h-4 shrink-0" style={{ color: YELLOW }} />
+                <span className="text-xs font-semibold" style={{ color: NAVY }}>
+                  Drop photos here or <span style={{ color: ELECTRIC_BLUE }}>Snap a new one!</span>
+                </span>
+              </div>
+            )}
+          </div>
+          {/* Hidden file input for camera / gallery */}
+          <input
+            ref={chatFileInputRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="hidden"
+            onChange={handlePhotoSelect}
+          />
+
           {/* ── Input Area ── */}
           <form className="leak-agent-input-area" onSubmit={handleSubmit}>
             <input
               ref={inputRef}
               type="text"
               className="leak-agent-input"
-              placeholder="Ask Leak Agent anything..."
+              placeholder={photoBase64 ? "Add a description (optional)..." : "Ask Leak Agent anything..."}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isLoading}
@@ -335,10 +455,14 @@ export default function LeakAgentAI() {
             <button
               type="submit"
               className="leak-agent-send-btn"
-              disabled={!inputValue.trim() || isLoading}
+              disabled={(!inputValue.trim() && !photoBase64) || isLoading}
               aria-label="Send message"
             >
-              <Send className="w-4 h-4" />
+              {photoBase64 ? (
+                <ImagePlus className="w-4 h-4" />
+              ) : (
+                <Send className="w-4 h-4" />
+              )}
             </button>
           </form>
 

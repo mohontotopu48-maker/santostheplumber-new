@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 
@@ -34,6 +34,7 @@ import {
   Upload,
   ArrowLeft,
   CheckCircle,
+  ImagePlus,
 } from "lucide-react";
 
 /* ─── Colour Tokens ─── */
@@ -73,7 +74,7 @@ interface PopupFormData {
   photoPreview: string | null;
 }
 
-function MultiStepPopup({ open, onClose }: { open: boolean; onClose: () => void }) {
+function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClose: () => void; initialPhoto?: { file: File; preview: string } | null }) {
   const [step, setStep] = useState<1 | 2 | 3 | "success">(1);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState<PopupFormData>({
@@ -81,10 +82,22 @@ function MultiStepPopup({ open, onClose }: { open: boolean; onClose: () => void 
     lastName: "",
     phone: "",
     issue: "",
-    photoFile: null,
-    photoPreview: null,
+    photoFile: initialPhoto?.file || null,
+    photoPreview: initialPhoto?.preview || null,
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // When initialPhoto changes (hero drop zone), pre-populate photo and skip to step 1
+  // The user still needs to fill in their name, but photo is already attached
+  useEffect(() => {
+    if (initialPhoto) {
+      setForm((prev) => ({
+        ...prev,
+        photoFile: initialPhoto.file,
+        photoPreview: initialPhoto.preview,
+      }));
+    }
+  }, [initialPhoto]);
 
   const progressWidth = step === 1 ? "33%" : step === 2 ? "66%" : step === 3 ? "100%" : "100%";
 
@@ -159,7 +172,7 @@ function MultiStepPopup({ open, onClose }: { open: boolean; onClose: () => void 
         photoPreview: null,
       });
     }, 300);
-  }, [onClose]);
+  }, [onClose, initialPhoto]);
 
   if (!open) return null;
 
@@ -239,69 +252,9 @@ function MultiStepPopup({ open, onClose }: { open: boolean; onClose: () => void 
           </div>
         )}
 
-        {/* ── STEP 2: Contact & Description ── */}
+        {/* ── STEP 2: Photo Drop Zone ── */}
         {step === 2 && (
           <div className="popup-step" key="step2">
-            <h2
-              className="text-2xl font-black tracking-tight mb-1"
-              style={{ color: NAVY }}
-            >
-              How Can We Reach You?
-            </h2>
-            <p className="text-sm text-gray-500 mb-6">
-              Step 2 of 3 — Contact &amp; Issue
-            </p>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold mb-1.5" style={{ color: NAVY }}>
-                  Mobile Phone <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="tel"
-                  className="popup-input"
-                  placeholder="(909) 555-1234"
-                  value={form.phone}
-                  onChange={(e) => updateField("phone", e.target.value)}
-                  autoFocus
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold mb-1.5" style={{ color: NAVY }}>
-                  What&apos;s happening?
-                </label>
-                <textarea
-                  className="popup-textarea"
-                  placeholder="e.g., slab leak, water heater noise, dripping faucet..."
-                  value={form.issue}
-                  onChange={(e) => updateField("issue", e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="flex gap-3 mt-6">
-              <Button
-                className="font-bold py-4 px-5 rounded-md border-2 transition-colors"
-                style={{ borderColor: "#d1d5db", color: NAVY, background: WHITE }}
-                onClick={() => setStep(1)}
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </Button>
-              <Button
-                className="flex-1 font-bold text-base py-4 rounded-md text-black shadow-lg hover:scale-[1.02] transition-transform"
-                style={{ background: YELLOW }}
-                onClick={handleStep2Next}
-                disabled={!form.phone.trim() || submitting}
-              >
-                {submitting ? "SAVING..." : "CONTINUE"} <ArrowRight className="w-4 h-4 ml-1 inline" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* ── STEP 3: Photo Capture ── */}
-        {step === 3 && (
-          <div className="popup-step" key="step3">
             <h2
               className="text-2xl font-black tracking-tight mb-1"
               style={{ color: NAVY }}
@@ -309,7 +262,7 @@ function MultiStepPopup({ open, onClose }: { open: boolean; onClose: () => void 
               Snap a Photo — Get an Estimate Fast
             </h2>
             <p className="text-sm text-gray-500 mb-6">
-              Step 3 of 3 — Photo (Optional)
+              Step 2 of 3 — Photo (Optional)
             </p>
 
             {/* Hidden file input with camera support */}
@@ -347,7 +300,7 @@ function MultiStepPopup({ open, onClose }: { open: boolean; onClose: () => void 
                   </div>
                   <div>
                     <p className="font-bold text-sm" style={{ color: NAVY }}>
-                      Upload Photo
+                      Drop photos here or Snap a new one!
                     </p>
                     <p className="text-xs text-gray-400 mt-0.5">
                       Tap to use camera or select a photo — JPG, PNG
@@ -361,6 +314,89 @@ function MultiStepPopup({ open, onClose }: { open: boolean; onClose: () => void 
               <Button
                 className="font-bold py-4 px-5 rounded-md border-2 transition-colors"
                 style={{ borderColor: "#d1d5db", color: NAVY, background: WHITE }}
+                onClick={() => setStep(1)}
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </Button>
+              <Button
+                className="flex-1 font-bold text-base py-4 rounded-md text-black shadow-lg hover:scale-[1.02] transition-transform"
+                style={{ background: YELLOW }}
+                onClick={() => setStep(3)}
+              >
+                {form.photoPreview ? "CONTINUE (PHOTO ADDED) →" : "CONTINUE"}{" "}
+                {!form.photoPreview && <ArrowRight className="w-4 h-4 ml-1 inline" />}
+              </Button>
+            </div>
+
+            {/* Skip link */}
+            <button
+              className="w-full text-center text-xs text-gray-400 mt-3 hover:text-gray-600 transition-colors"
+              onClick={() => setStep(3)}
+            >
+              Skip photo &amp; continue without image
+            </button>
+          </div>
+        )}
+
+        {/* ── STEP 3: Contact & Description ── */}
+        {step === 3 && (
+          <div className="popup-step" key="step3">
+            <h2
+              className="text-2xl font-black tracking-tight mb-1"
+              style={{ color: NAVY }}
+            >
+              How Can We Reach You?
+            </h2>
+            <p className="text-sm text-gray-500 mb-6">
+              Step 3 of 3 — Contact &amp; Issue
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold mb-1.5" style={{ color: NAVY }}>
+                  Mobile Phone <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  className="popup-input"
+                  placeholder="(909) 555-1234"
+                  value={form.phone}
+                  onChange={(e) => updateField("phone", e.target.value)}
+                  autoFocus
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold mb-1.5" style={{ color: NAVY }}>
+                  What&apos;s happening?
+                </label>
+                <textarea
+                  className="popup-textarea"
+                  placeholder="e.g., slab leak, water heater noise, dripping faucet..."
+                  value={form.issue}
+                  onChange={(e) => updateField("issue", e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Photo indicator if uploaded */}
+            {form.photoPreview && (
+              <div className="mt-4 flex items-center gap-3 p-3 rounded-lg" style={{ background: "rgba(56, 189, 248, 0.06)" }}>
+                <img
+                  src={form.photoPreview}
+                  alt="Uploaded photo"
+                  className="w-10 h-10 rounded object-cover"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold" style={{ color: ELECTRIC_BLUE }}>Photo attached</p>
+                  <p className="text-[10px] text-gray-400">Your photo will be included with the request</p>
+                </div>
+              </div>
+            )}
+
+            <div className="flex gap-3 mt-6">
+              <Button
+                className="font-bold py-4 px-5 rounded-md border-2 transition-colors"
+                style={{ borderColor: "#d1d5db", color: NAVY, background: WHITE }}
                 onClick={() => setStep(2)}
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -368,20 +404,13 @@ function MultiStepPopup({ open, onClose }: { open: boolean; onClose: () => void 
               <Button
                 className="flex-1 font-bold text-base py-4 rounded-md text-black shadow-lg hover:scale-[1.02] transition-transform"
                 style={{ background: YELLOW }}
-                onClick={handleStep3Submit}
-                disabled={submitting}
+                onClick={handleStep2Next}
+                disabled={!form.phone.trim() || submitting}
               >
-                {submitting ? "SUBMITTING..." : "GET MY ESTIMATE"}
+                {submitting ? "SUBMITTING..." : form.photoPreview ? "SUBMIT (PHOTO ADDED) →" : "SUBMIT"}{" "}
+                {!form.photoPreview && !submitting && <ArrowRight className="w-4 h-4 ml-1 inline" />}
               </Button>
             </div>
-
-            {/* Skip link */}
-            <button
-              className="w-full text-center text-xs text-gray-400 mt-3 hover:text-gray-600 transition-colors"
-              onClick={handleStep3Submit}
-            >
-              Skip photo &amp; submit without image
-            </button>
           </div>
         )}
 
@@ -570,7 +599,7 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
 /* ══════════════════════════════════════════════════════════════════════
    HERO
    ══════════════════════════════════════════════════════════════════════ */
-function Hero({ onRequestService }: { onRequestService: () => void }) {
+function Hero({ onRequestService, onPhotoDrop }: { onRequestService: () => void; onPhotoDrop?: (photo: { file: File; preview: string }) => void }) {
   return (
     <section className="relative overflow-hidden">
       {/* Background image with overlay */}
@@ -624,6 +653,57 @@ function Hero({ onRequestService }: { onRequestService: () => void }) {
               <a href="tel:9092569224">
                 <Phone className="w-5 h-5 mr-2" />
                 (909) 256-9224
+              </a>
+            </Button>
+          </div>
+
+          {/* ── Hero Photo Drop Zone ── */}
+          <div
+            className="hero-drop-zone mt-8"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              const file = e.dataTransfer.files?.[0];
+              if (file && file.type.startsWith("image/")) {
+                const preview = URL.createObjectURL(file);
+                onPhotoDrop?.({ file, preview });
+              }
+            }}
+            onClick={() => {
+              const input = document.getElementById("hero-file-input") as HTMLInputElement;
+              input?.click();
+            }}
+          >
+            <input
+              id="hero-file-input"
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  const preview = URL.createObjectURL(file);
+                  onPhotoDrop?.({ file, preview });
+                }
+                e.target.value = "";
+              }}
+            />
+            <div className="flex items-center gap-3 justify-center">
+              <Droplets className="w-5 h-5 shrink-0" style={{ color: ELECTRIC_BLUE }} />
+              <Camera className="w-5 h-5 shrink-0" style={{ color: YELLOW }} />
+              <span className="text-sm font-semibold text-gray-200">
+                Drag & Drop photos of your leak here for an instant AI estimate.
+              </span>
+            </div>
+            <Button
+              asChild
+              className="font-bold text-sm px-6 py-3 rounded-md text-black shadow-lg hover:scale-105 transition-transform mt-3"
+              style={{ background: YELLOW }}
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            >
+              <a href="sms:9092569224?body=Hi%20Santos%20Plumbing%2C%20I%20have%20a%20plumbing%20issue%20I%27d%20like%20to%20share%20a%20photo%20of.">
+                TAKE A PEEK (SMS) <ArrowRight className="w-4 h-4 ml-1 inline" />
               </a>
             </Button>
           </div>
@@ -1292,21 +1372,31 @@ function Footer() {
    ══════════════════════════════════════════════════════════════════════ */
 export default function Home() {
   const [popupOpen, setPopupOpen] = useState(false);
+  const [heroPhoto, setHeroPhoto] = useState<{ file: File; preview: string } | null>(null);
   const openPopup = useCallback(() => setPopupOpen(true), []);
-  const closePopup = useCallback(() => setPopupOpen(false), []);
+  const closePopup = useCallback(() => {
+    setPopupOpen(false);
+    setHeroPhoto(null);
+  }, []);
+
+  const handleHeroPhotoDrop = useCallback((photo: { file: File; preview: string }) => {
+    setHeroPhoto(photo);
+    // Automatically open the popup so the photo flows into the lead form
+    setPopupOpen(true);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header onRequestService={openPopup} />
       <main className="flex-1">
-        <Hero onRequestService={openPopup} />
+        <Hero onRequestService={openPopup} onPhotoDrop={handleHeroPhotoDrop} />
         <HiddenLeakSection onRequestService={openPopup} />
         <ServicesDeepDive onRequestService={openPopup} />
         <SendPhotoSection onRequestService={openPopup} />
         <CtaBanner onRequestService={openPopup} />
       </main>
       <Footer />
-      <MultiStepPopup open={popupOpen} onClose={closePopup} />
+      <MultiStepPopup open={popupOpen} onClose={closePopup} initialPhoto={heroPhoto} />
       <LeakAgentAI />
     </div>
   );
