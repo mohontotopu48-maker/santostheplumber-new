@@ -120,3 +120,63 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ─── Electric Blue Interactive Accent (#00B4D8) ─── */
+.nav-link {
+  position: relative;
+  color: #FFFFFF;
+  transition: color 0.2s ease;
+}
+.nav-link:hover {
+  color: #00B4D8;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #00B4D8;
+  transition: all 0.25s ease;
+  transform: translateX(-50%);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 70%;
+}
+.nav-link.active {
+  color: #00B4D8;
+}
+
+.nav-link-mobile {
+  color: #e5e7eb;
+  transition: color 0.2s ease;
+}
+.nav-link-mobile:hover {
+  color: #00B4D8;
+}
+
+/* Electric Blue glow behind icon squares */
+.icon-glow {
+  background: rgba(0, 180, 216, 0.10);
+}
+
+/* Inline hyperlinks in body text */
+.link-accent {
+  color: #00B4D8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.2s ease;
+}
+.link-accent:hover {
+  opacity: 0.8;
+}
+
+/* VSUAL agency link hover */
+.agency-link {
+  transition: color 0.2s ease;
+}
+.agency-link:hover .agency-brand {
+  color: #00B4D8;
+}

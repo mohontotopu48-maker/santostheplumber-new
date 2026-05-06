@@ -90,7 +90,7 @@ function Header() {
             <a
               key={l.href}
               href={l.href}
-              className="px-4 py-2 text-sm font-medium text-gray-200 hover:text-white transition-colors rounded-md hover:bg-white/10"
+              className="nav-link px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5"
             >
               {l.label}
             </a>
@@ -141,7 +141,7 @@ function Header() {
               key={l.href}
               href={l.href}
               onClick={() => setMobileOpen(false)}
-              className="block px-4 py-3 text-gray-200 font-medium rounded-md hover:bg-white/10"
+              className="nav-link-mobile block px-4 py-3 font-medium rounded-md hover:bg-white/5"
             >
               {l.label}
             </a>
@@ -266,8 +266,7 @@ function Hero() {
                 className="flex items-start gap-3 p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div
-                  className="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: `${YELLOW}20` }}
+                  className="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center icon-glow"
                 >
                   <item.icon className="w-5 h-5" style={{ color: NAVY }} />
                 </div>
@@ -629,12 +628,13 @@ function SendPhotoSection() {
         </p>
 
         {/* Dashed upload box */}
-        <div className="mt-10 border-2 border-dashed rounded-2xl p-10 md:p-14 transition-colors hover:border-yellow-400"
+        <div className="mt-10 border-2 border-dashed rounded-2xl p-10 md:p-14 transition-colors"
           style={{ borderColor: "#d1d5db" }}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = TEAL)}
+          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#d1d5db")}
         >
           <div
-            className="w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4"
-            style={{ background: `${YELLOW}20` }}
+            className="w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4 icon-glow"
           >
             <Camera className="w-8 h-8" style={{ color: NAVY }} />
           </div>
@@ -850,9 +850,9 @@ function Footer() {
               href="https://vsualdigitalmedia.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:opacity-80 transition-opacity"
+              className="agency-link"
             >
-              <span className="font-bold text-white">VSUAL</span>
+              <span className="agency-brand font-bold text-white transition-colors">VSUAL</span>
               <span className="text-gray-500">digitalmedia.com</span>
             </a>
           </p>
