@@ -47,3 +47,26 @@ Stage Summary:
 - Footer reorganized from 4 basic IE columns to strategic 4-column corridor/regional layout
 - Trust bar and sub-headline updated to reflect broader IE & Foothill coverage
 - SEO metadata expanded with additional city keywords and 3-county coverage language
+
+---
+Task ID: 3
+Agent: Main Agent
+Task: Brand Pivot — remove all licensing references, replace with 1,000+ Neighbors Served social proof
+
+Work Log:
+- Searched entire codebase for "licens", "insured", "987654" — found 5 instances across 2 files
+- Trust Bar Card 1: Replaced Shield icon → Users icon, "Licensed & Insured" → "1,000+ Neighbors Served", "Full protection for your home" → "Trusted by families across the IE"
+- Hero Sub-headline: "Fast, professional plumbing solutions for Inland Empire and Foothill homeowners" → "Join over 1,000 local families who trust Santos for honest, fast repairs. From emergency pipe repairs to water heater installations, the Inland Empire's most referred plumber gets it flowing right the first time."
+- Footer brand description: "Licensed, insured, and committed" → "Locally owned, family operated, and committed… With over 1,000 neighbors served, we don't just fix pipes — we help our community win."
+- Footer compliance section: Deleted "License # 987654" with MapPin icon → "Locally Owned & Family Operated" with Heart icon in Safety Yellow
+- Layout.tsx OpenGraph description: "Licensed & Insured" → "1,000+ Neighbors Served"
+- Removed unused Shield import, added Users and Heart imports
+- Final grep for "licens|insured|987654" returns ZERO results — full purge confirmed
+- Lint passes, dev server serving updated pages
+
+Stage Summary:
+- All 5 licensing/insurance references purged site-wide (page.tsx + layout.tsx)
+- Trust authority now comes from social proof (1,000+ Neighbors Served) instead of licensing
+- "1,000+ Neighbors Served" badge is first card in trust bar — visible immediately on page load
+- Footer license number replaced with "Locally Owned & Family Operated" + Heart icon
+- Hero sub-headline now includes community proof + "most referred plumber" positioning

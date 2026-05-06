@@ -6,7 +6,7 @@ import {
   Phone,
   Menu,
   X,
-  Shield,
+  Users,
   DollarSign,
   MapPin,
   Clock,
@@ -20,6 +20,7 @@ import {
   CheckCircle2,
   Zap,
   ArrowRight,
+  Heart,
 } from "lucide-react";
 
 /* ─── Colour Tokens ─── */
@@ -202,9 +203,9 @@ function Hero() {
 
           {/* Sub-headline */}
           <p className="mt-6 text-base md:text-lg text-gray-300 leading-relaxed max-w-xl">
-            Fast, professional plumbing solutions for Inland Empire and Foothill homeowners.
-            From emergency pipe repairs to water heater installations, we get it
-            flowing right the first time.
+            Join over 1,000 local families who trust Santos for honest, fast repairs.
+            From emergency pipe repairs to water heater installations, the Inland
+            Empire&apos;s most referred plumber gets it flowing right the first time.
           </p>
 
           {/* CTA row */}
@@ -239,9 +240,9 @@ function Hero() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
               {
-                icon: Shield,
-                title: "Licensed & Insured",
-                desc: "Full protection for your home",
+                icon: Users,
+                title: "1,000+ Neighbors Served",
+                desc: "Trusted by families across the IE",
               },
               {
                 icon: DollarSign,
@@ -763,8 +764,9 @@ function Footer() {
               </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Trusted by Inland Empire and Foothill homeowners since day one. Licensed,
-              insured, and committed to getting it flowing right the first time.
+              Trusted by Inland Empire and Foothill homeowners since day one. Locally
+              owned, family operated, and committed to getting it flowing right the first time.
+              With over 1,000 neighbors served, we don&apos;t just fix pipes — we help our community win.
             </p>
             <div className="mt-6 space-y-2">
               <a
@@ -824,9 +826,9 @@ function Footer() {
         <div className="mt-8 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <MapPin className="w-5 h-5" style={{ color: YELLOW }} />
+              <Heart className="w-5 h-5" style={{ color: YELLOW }} />
               <span className="font-bold text-sm" style={{ color: YELLOW }}>
-                License # 987654
+                Locally Owned & Family Operated
               </span>
             </div>
             <p className="text-gray-500 text-xs text-center">

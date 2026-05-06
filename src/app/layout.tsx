@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Santos Plumbing | If You Got A Leak, We'll Take A Peek!",
     description:
-      "Fast, professional plumbing solutions for Inland Empire and Foothill homeowners. Serving a 15-mile radius from Upland, CA. Licensed & Insured. 24/7 Emergency Response.",
+      "Fast, professional plumbing solutions for Inland Empire and Foothill homeowners. Serving a 15-mile radius from Upland, CA. 1,000+ Neighbors Served. 24/7 Emergency Response.",
     type: "website",
   },
 };
