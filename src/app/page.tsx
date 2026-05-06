@@ -27,6 +27,7 @@ import {
 const NAVY = "#001F3F";
 const YELLOW = "#FFD700";
 const WHITE = "#FFFFFF";
+const TEAL = "#00B4D8"; /* Electric Coastal Teal */
 
 /* ══════════════════════════════════════════════════════════════════════
    HEADER
@@ -822,7 +823,7 @@ function Footer() {
           </p>
         </div>
 
-        {/* Divider */}
+        {/* Divider — Main bottom bar */}
         <div className="mt-8 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -835,6 +836,26 @@ function Footer() {
               © {new Date().getFullYear()} Santos Plumbing. All rights reserved. | Inland Empire &amp; Foothill Communities, California
             </p>
           </div>
+        </div>
+
+        {/* Agency & CRM signature */}
+        <div className="mt-6 pt-5 border-t border-white/5 text-center space-y-1">
+          <p className="text-xs">
+            <span className="text-gray-500">Powered by </span>
+            <span className="font-semibold tracking-wide" style={{ color: TEAL }}>NXLBYLDR CRM</span>
+          </p>
+          <p className="text-xs text-gray-500">
+            managed by{" "}
+            <a
+              href="https://vsualdigitalmedia.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity"
+            >
+              <span className="font-bold text-white">VSUAL</span>
+              <span className="text-gray-500">digitalmedia.com</span>
+            </a>
+          </p>
         </div>
       </div>
     </footer>

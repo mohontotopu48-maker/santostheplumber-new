@@ -70,3 +70,27 @@ Stage Summary:
 - "1,000+ Neighbors Served" badge is first card in trust bar — visible immediately on page load
 - Footer license number replaced with "Locally Owned & Family Operated" + Heart icon
 - Hero sub-headline now includes community proof + "most referred plumber" positioning
+
+---
+Task ID: 4
+Agent: Main Agent
+Task: Agency Footer & CRM Backend — add NXLBYLDR CRM + VSUALdigitalmedia signature
+
+Work Log:
+- Added Electric Coastal Teal (#00B4D8) as a new colour token (TEAL)
+- Added agency/CRM signature block at the very bottom of the footer:
+  - Line 1: "Powered by" (muted grey) + "NXLBYLDR CRM" (Electric Coastal Teal, semibold, tracking-wide)
+  - Line 2: "managed by" (muted grey) + "VSUAL" (bold white) + "digitalmedia.com" (muted grey)
+  - Entire VSUALdigitalmedia.com text links to https://vsualdigitalmedia.com/ (target _blank, noopener)
+  - Subtle divider (border-white/5) separates signature from main footer content
+- Verified all 6 phone number instances use href="tel:9092569224" for mobile click-to-call
+- Verified zero licensing references remain (licens, insured, 987654 grep = 0 results)
+- Verified branding colours: Midnight Navy, Safety Yellow, Electric Coastal Teal
+- Lint passes cleanly, dev server running
+
+Stage Summary:
+- Agency & CRM signature added to footer bottom per image_5847.png reference
+- Three-colour brand system now: #001F3F (Navy), #FFD700 (Yellow), #00B4D8 (Teal)
+- VSUALdigitalmedia.com linked externally with proper rel attributes
+- All phone numbers confirmed as click-to-call (tel: protocol)
+- No license info anywhere — social proof remains sole authority signal
