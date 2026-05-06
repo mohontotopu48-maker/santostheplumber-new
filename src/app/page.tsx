@@ -46,7 +46,7 @@ function Header() {
         className="hidden md:flex items-center justify-end gap-6 px-6 py-1.5 text-xs"
         style={{ background: "rgba(0,0,0,0.25)" }}
       >
-        <span className="text-gray-300">Serving the Inland Empire</span>
+        <span className="text-gray-300">Serving Inland Empire & Foothill Communities</span>
         <a
           href="tel:9092569224"
           className="font-bold flex items-center gap-1.5"
@@ -202,7 +202,7 @@ function Hero() {
 
           {/* Sub-headline */}
           <p className="mt-6 text-base md:text-lg text-gray-300 leading-relaxed max-w-xl">
-            Fast, professional plumbing solutions for Inland Empire homeowners.
+            Fast, professional plumbing solutions for Inland Empire and Foothill homeowners.
             From emergency pipe repairs to water heater installations, we get it
             flowing right the first time.
           </p>
@@ -250,8 +250,8 @@ function Hero() {
               },
               {
                 icon: MapPin,
-                title: "909 Local Expertise",
-                desc: "Born & raised in the IE",
+                title: "909 & 951 Local Experts",
+                desc: "Greater IE & Foothill Coverage",
               },
               {
                 icon: Clock,
@@ -692,7 +692,7 @@ function CtaBanner() {
           <span style={{ color: YELLOW }}>We&apos;re On Our Way.</span>
         </h2>
         <p className="mt-4 text-gray-400 text-base md:text-lg max-w-xl mx-auto">
-          Don&apos;t wait for a small leak to become a big disaster. Our 909
+          Don&apos;t wait for a small leak to become a big disaster. Our 909 &amp; 951
           team is standing by 24/7 to take your call and get your home back to
           normal — fast.
         </p>
@@ -729,10 +729,10 @@ function CtaBanner() {
    ══════════════════════════════════════════════════════════════════════ */
 function Footer() {
   const serviceAreas = {
-    "West Valley": ["Ontario", "Rancho Cucamonga", "Upland", "Montclair", "Claremont"],
-    "East Valley": ["Fontana", "Rialto", "Bloomington", "Muscoy"],
-    "San Bernardino": ["San Bernardino", "Highland", "Redlands", "Loma Linda", "Colton"],
-    "High Desert": ["Victorville", "Apple Valley", "Hesperia", "Adelanto"],
+    "West Valley & Foothills": ["Upland", "Claremont", "La Verne", "San Dimas", "Glendora", "Montclair"],
+    "The 71/60 Corridor": ["Chino", "Chino Hills", "Ontario", "Eastvale", "Diamond Bar", "Walnut"],
+    "East Valley & IE Central": ["Rancho Cucamonga", "Fontana", "Rialto", "San Bernardino", "Colton", "Loma Linda"],
+    "High Desert Hub": ["Victorville", "Hesperia", "Apple Valley", "Adelanto"],
   };
 
   return (
@@ -763,7 +763,7 @@ function Footer() {
               </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Trusted by Inland Empire homeowners since day one. Licensed,
+              Trusted by Inland Empire and Foothill homeowners since day one. Licensed,
               insured, and committed to getting it flowing right the first time.
             </p>
             <div className="mt-6 space-y-2">
@@ -777,7 +777,7 @@ function Footer() {
               </a>
               <div className="flex items-center gap-2 text-sm text-gray-400">
                 <MapPin className="w-4 h-4" style={{ color: YELLOW }} />
-                Serving the Inland Empire, CA
+                15-Mile Radius from Upland, CA
               </div>
             </div>
           </div>
@@ -811,8 +811,17 @@ function Footer() {
           </div>
         </div>
 
+        {/* Compliance & SEO notice */}
+        <div className="mt-10 p-4 rounded-lg" style={{ background: "rgba(255,215,0,0.08)", border: `1px solid rgba(255,215,0,0.2)` }}>
+          <p className="text-xs text-gray-400 text-center leading-relaxed">
+            <MapPin className="w-3.5 h-3.5 inline mr-1" style={{ color: YELLOW }} />
+            Serving a <strong className="text-gray-300">15-mile radius from Upland, CA</strong> including{" "}
+            <strong className="text-gray-300">San Bernardino, Riverside, and East Los Angeles Counties.</strong>
+          </p>
+        </div>
+
         {/* Divider */}
-        <div className="mt-12 pt-8 border-t border-white/10">
+        <div className="mt-8 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <MapPin className="w-5 h-5" style={{ color: YELLOW }} />
@@ -821,8 +830,7 @@ function Footer() {
               </span>
             </div>
             <p className="text-gray-500 text-xs text-center">
-              © {new Date().getFullYear()} Santos Plumbing. All rights reserved. | Inland
-              Empire, California
+              © {new Date().getFullYear()} Santos Plumbing. All rights reserved. | Inland Empire &amp; Foothill Communities, California
             </p>
           </div>
         </div>
