@@ -1,7 +1,14 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
+
+/* ─── Lazy-load Leak Agent AI (client-only, no SSR) ─── */
+const LeakAgentAI = dynamic(() => import("@/components/leak-agent"), {
+  ssr: false,
+});
+
 import {
   Phone,
   Menu,
@@ -1300,6 +1307,7 @@ export default function Home() {
       </main>
       <Footer />
       <MultiStepPopup open={popupOpen} onClose={closePopup} />
+      <LeakAgentAI />
     </div>
   );
 }

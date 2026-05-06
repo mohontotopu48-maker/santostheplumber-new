@@ -261,3 +261,46 @@ Stage Summary:
 - New logo file: /public/santos-logo-v2.png (from upload/santos_logo_v1.png)
 - Old logo file preserved at /public/santos-logo.png for reference
 - Final colour system: Navy (#001F3F) + Yellow (#FFD700) + Electric Light Blue (#38BDF8)
+
+---
+Task ID: 10
+Agent: Main Agent
+Task: Leak Agent AI Integration — add persistent AI chat tab + expanded chat interface
+
+Work Log:
+- Created `/src/components/leak-agent.tsx` — standalone LeakAgentAI component:
+  - Sticky Tab: Fixed right edge, vertical rounded Midnight Navy tab with Safety Yellow accent border
+  - Water Drop custom SVG icon (minimalistic droplet shape) in Electric Light Blue
+  - Vertical "Ask Leak Agent AI" text in white
+  - Hover: Tab slides left 3px, background lightens, yellow border intensifies, Electric Light Blue glow shadow
+- Expanded Chat Interface (380x600px panel, bottom-right):
+  - Header: "Leak Agent AI" name + "YOUR EMERGENCY RESPONSE ASSISTANT" sub-header in Safety Yellow
+  - Reset + Close buttons in header
+  - Welcome State: Water drop icon, greeting, 4 capability bullets, "What can I help you with today?"
+  - 5 Quick Action buttons: Get instant estimate, Is my leak a Slab Leak?, Water heater noise?, Available in [City]?, Book a Peek Inspection
+  - Message thread: User messages right-aligned (Navy bg, white text), AI messages left-aligned (slate bg, dark text) with Water Drop avatar
+  - Typing indicator: 3 bouncing dots animation
+  - Input box: "Ask Leak Agent anything..." with Electric Light Blue focus ring, Safety Yellow send button
+  - Compliance footer: "Powered by NXLBYLDR AI | managed by VSUALdigitalmedia.com"
+  - Mobile: Full-screen on screens < 440px
+- Created `/src/app/api/chat/route.ts` — backend AI chat endpoint:
+  - Uses z-ai-web-dev-sdk for chat completions
+  - Comprehensive system prompt covering Santos Plumbing services, service area, pricing philosophy, emergency protocols
+  - Temperature 0.7, max 300 tokens for concise responses
+  - Graceful error handling: returns 200 with fallback message "call (909) 256-9224"
+- Added 130+ lines of CSS in globals.css for `.leak-agent-*` classes:
+  - Slide-in animation for chat panel (cubic-bezier)
+  - Typing bounce animation
+  - Quick action hover with Electric Light Blue glow
+  - Mobile responsive (full-screen below 440px)
+- Integrated into page.tsx via `next/dynamic` with `ssr: false` for client-only rendering
+- Build verified: All routes compile cleanly (/, /_not-found, /api, /api/chat, /api/lead)
+
+Stage Summary:
+- Leak Agent AI adds a persistent, always-available AI chat assistant to the Santos Plumbing site
+- Sticky tab on right edge of every page — zero visual intrusion until activated
+- Full conversational AI backed by z-ai-web-dev-sdk with Santos-specific plumbing knowledge
+- 5 pre-built quick actions for instant engagement without typing
+- Design system consistent: Midnight Navy, Safety Yellow accents, Electric Light Blue interactive elements
+- Agency branding: "Powered by NXLBYLDR AI | managed by VSUALdigitalmedia.com"
+- Final colour system: Navy (#001F3F) + Yellow (#FFD700) + Electric Light Blue (#38BDF8)
