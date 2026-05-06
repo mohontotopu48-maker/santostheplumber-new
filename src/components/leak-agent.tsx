@@ -159,8 +159,8 @@ export default function LeakAgentAI() {
         >
           {/* Yellow accent stripe */}
           <div className="leak-agent-tab-accent" />
-          {/* Water drop icon */}
-          <WaterDropIcon className="w-5 h-5" style={{ color: ELECTRIC_BLUE }} />
+          {/* Water drop icon — white for max contrast on navy tab */}
+          <WaterDropIcon className="w-5 h-5" style={{ color: WHITE }} />
           {/* Vertical text */}
           <span className="leak-agent-tab-text">Ask Leak Agent AI</span>
         </button>
