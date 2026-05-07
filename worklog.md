@@ -1,18 +1,26 @@
 ---
-Task ID: photo-drop-zone-integration
+Task ID: 1
 Agent: Main Agent
-Task: Integrate Photo Drop Zone into Leak Agent AI, Lead Form, Hero section, and Backend Vision API
+Task: Request Service Form Photo Drop — Multi-photo support, Capture Photo button, trust badge, Safety Yellow styling, backend multi-photo API
 
 Work Log:
-- Read all 4 target files (leak-agent.tsx, page.tsx, globals.css, api/chat/route.ts) for full context
-- Updated /api/chat/route.ts: Added Vision API support — accepts `image` field in messages, constructs multimodal content arrays with type:text + type:image_url for user messages with photos
-- Updated leak-agent.tsx: Added photo state management (photoPreview, photoBase64), drag-and-drop handler, file input for camera/gallery, photo drop zone above chat input with Safety Yellow dashed border + camera icon, photo thumbnails in message bubbles, updated welcome message with photo analysis bullet, ImagePlus icon on send button when photo attached
-- Updated page.tsx: Restructured MultiStepPopup (Step 1: Name, Step 2: Photo Drop Zone NEW, Step 3: Contact & Issue), added CONTINUE (PHOTO ADDED) and SUBMIT (PHOTO ADDED) button text when photo detected, added Hero Drop Zone below CTA row with dashed border + icons + TAKE A PEEK (SMS) button, added shared heroPhoto state for UI Sync (hero drop auto-opens popup with photo pre-populated), added initialPhoto prop to MultiStepPopup
-- Updated globals.css: Added .leak-agent-photo-drop, .leak-agent-photo-prompt, .leak-agent-photo-preview-row, .leak-agent-photo-preview-img, .leak-agent-photo-clear, .leak-agent-photo-thumb, .hero-drop-zone styles
-- Build passes successfully, dev server running on port 3000
+- Read all key files: page.tsx, leak-agent.tsx, globals.css, api/chat/route.ts, api/lead/route.ts
+- Confirmed Leak Agent Visibility Fix (z-index 9999 !important) was already applied
+- Converted PopupFormData from single photo (photoFile/photoPreview) to multi-photo arrays (photoFiles/photoPreviews)
+- Added addPhotoFiles() and removePhoto() callbacks for multi-photo management
+- Added second hidden file input with cameraInputRef for mobile Capture Photo button
+- Made main file input support multiple={true} attribute
+- Updated Step 2: Changed title to "Upload Photos of Your Issue", updated instructional text to match spec
+- Added explicit "CAPTURE PHOTO" button with Camera icon and Safety Yellow border for mobile users
+- Added removable image thumbnail grid (popup-photo-thumbs/popup-photo-thumb-item/popup-photo-thumb-remove CSS classes)
+- Added "1,000+ Neighbors Served" trust badge to Step 2
+- Updated Step 3: Photo indicator now shows stacked thumbnails with photo count
+- Updated button logic: "CONTINUE (PHOTO ADDED) →" when photos present, "SUBMIT (N PHOTOS ADDED) →" on final step
+- Updated popup-upload-zone CSS: Changed border from gray (#d1d5db) to Safety Yellow (#FFD700), added active state, added hover box-shadow
+- Added multi-thumb CSS: popup-photo-thumbs (flex wrap grid), popup-photo-thumb-item (64x64 relative), popup-photo-thumb-img, popup-photo-thumb-remove (circle X button)
+- Updated /api/lead/route.ts: Collects all photo_0, photo_1, etc. from FormData, uses photoCount/photoNames in payload, dynamic SMS message, multi-photo CRM logging
 
 Stage Summary:
-- All 4 areas implemented: Leak Agent photo drop, Lead Form photo step, Hero drop zone, Backend Vision API
-- Photo flow: Hero Drop Zone → auto-opens popup with photo pre-populated → user fills name → sees photo in Step 2 → continues to contact → submits with photo
-- Chat flow: User drops/selects photo in drop zone above input → photo thumbnail appears → send with message → backend processes via Vision API → AI analyzes and responds
-- Build: Compiled successfully
+- Build compiles successfully (Next.js 16.1.3, zero errors)
+- All 3 files updated: page.tsx, globals.css, api/lead/route.ts
+- Multi-photo support fully functional across form, CSS, and backend

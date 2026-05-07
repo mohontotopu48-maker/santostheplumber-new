@@ -70,8 +70,8 @@ interface PopupFormData {
   lastName: string;
   phone: string;
   issue: string;
-  photoFile: File | null;
-  photoPreview: string | null;
+  photoFiles: File[];
+  photoPreviews: string[];
 }
 
 function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClose: () => void; initialPhoto?: { file: File; preview: string } | null }) {
@@ -82,19 +82,19 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
     lastName: "",
     phone: "",
     issue: "",
-    photoFile: initialPhoto?.file || null,
-    photoPreview: initialPhoto?.preview || null,
+    photoFiles: initialPhoto ? [initialPhoto.file] : [],
+    photoPreviews: initialPhoto ? [initialPhoto.preview] : [],
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  // When initialPhoto changes (hero drop zone), pre-populate photo and skip to step 1
-  // The user still needs to fill in their name, but photo is already attached
+  // When initialPhoto changes (hero drop zone), pre-populate photo
   useEffect(() => {
     if (initialPhoto) {
       setForm((prev) => ({
         ...prev,
-        photoFile: initialPhoto.file,
-        photoPreview: initialPhoto.preview,
+        photoFiles: [...prev.photoFiles, initialPhoto.file],
+        photoPreviews: [...prev.photoPreviews, initialPhoto.preview],
       }));
     }
   }, [initialPhoto]);
@@ -105,13 +105,40 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
     setForm((prev) => ({ ...prev, [field]: value }));
   }, []);
 
-  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    if (file) {
-      const preview = URL.createObjectURL(file);
-      setForm((prev) => ({ ...prev, photoFile: file, photoPreview: preview }));
+  const addPhotoFiles = useCallback((files: FileList | File[]) => {
+    const newFiles: File[] = [];
+    const newPreviews: string[] = [];
+    Array.from(files).forEach((file) => {
+      if (file.type.startsWith("image/")) {
+        newFiles.push(file);
+        newPreviews.push(URL.createObjectURL(file));
+      }
+    });
+    if (newFiles.length > 0) {
+      setForm((prev) => ({
+        ...prev,
+        photoFiles: [...prev.photoFiles, ...newFiles],
+        photoPreviews: [...prev.photoPreviews, ...newPreviews],
+      }));
     }
   }, []);
+
+  const removePhoto = useCallback((index: number) => {
+    setForm((prev) => {
+      const newFiles = [...prev.photoFiles];
+      const newPreviews = [...prev.photoPreviews];
+      newFiles.splice(index, 1);
+      newPreviews.splice(index, 1);
+      return { ...prev, photoFiles: newFiles, photoPreviews: newPreviews };
+    });
+  }, []);
+
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      addPhotoFiles(e.target.files);
+    }
+    e.target.value = "";
+  }, [addPhotoFiles]);
 
   const submitToCRM = useCallback(async () => {
     setSubmitting(true);
@@ -121,9 +148,9 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
       formData.append("lastName", form.lastName);
       formData.append("phone", form.phone);
       formData.append("issue", form.issue);
-      if (form.photoFile) {
-        formData.append("photo", form.photoFile);
-      }
+      form.photoFiles.forEach((file, i) => {
+        formData.append(`photo_${i}`, file);
+      });
 
       await fetch("/api/lead", {
         method: "POST",
@@ -144,19 +171,11 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
 
   const handleStep2Next = useCallback(async () => {
     if (form.phone.trim()) {
-      // Create lead in CRM on step 2 to prevent drop-off loss
+      // Create lead in CRM on step 3 to prevent drop-off loss
       await submitToCRM();
-      setStep(3);
+      setStep("success");
     }
   }, [form.phone, submitToCRM]);
-
-  const handleStep3Submit = useCallback(async () => {
-    // If they have a photo, update the CRM record
-    if (form.photoFile) {
-      await submitToCRM();
-    }
-    setStep("success");
-  }, [form.photoFile, submitToCRM]);
 
   const handleClose = useCallback(() => {
     onClose();
@@ -168,8 +187,8 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
         lastName: "",
         phone: "",
         issue: "",
-        photoFile: null,
-        photoPreview: null,
+        photoFiles: [],
+        photoPreviews: [],
       });
     }, 300);
   }, [onClose, initialPhoto]);
@@ -252,22 +271,30 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
           </div>
         )}
 
-        {/* ── STEP 2: Photo Drop Zone ── */}
+        {/* ── STEP 2: Upload Photos ── */}
         {step === 2 && (
           <div className="popup-step" key="step2">
             <h2
               className="text-2xl font-black tracking-tight mb-1"
               style={{ color: NAVY }}
             >
-              Snap a Photo — Get an Estimate Fast
+              Upload Photos of Your Issue
             </h2>
             <p className="text-sm text-gray-500 mb-6">
-              Step 2 of 3 — Photo (Optional)
+              Step 2 of 3 — Photos (Optional)
             </p>
 
-            {/* Hidden file input with camera support */}
+            {/* Hidden file inputs */}
             <input
               ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={handleFileChange}
+            />
+            <input
+              ref={cameraInputRef}
               type="file"
               accept="image/*"
               capture="environment"
@@ -275,39 +302,79 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
               onChange={handleFileChange}
             />
 
-            {/* Upload zone */}
+            {/* Drop zone */}
             <div
               className="popup-upload-zone"
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                if (e.dataTransfer.files.length > 0) {
+                  addPhotoFiles(e.dataTransfer.files);
+                }
+              }}
               onClick={() => fileInputRef.current?.click()}
             >
-              {form.photoPreview ? (
-                <div className="space-y-3">
-                  <img
-                    src={form.photoPreview}
-                    alt="Uploaded photo preview"
-                    className="w-full max-h-48 object-contain rounded-lg"
-                  />
-                  <p className="text-xs font-medium" style={{ color: ELECTRIC_BLUE }}>
-                    Photo added! Tap to replace.
+              <div className="space-y-3">
+                <div
+                  className="w-14 h-14 rounded-full mx-auto flex items-center justify-center icon-glow"
+                >
+                  <Camera className="w-7 h-7" style={{ color: NAVY }} />
+                </div>
+                <div>
+                  <p className="font-bold text-sm" style={{ color: NAVY }}>
+                    Drag & Drop photos of your leak here
+                  </p>
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    for an instant AI analysis and faster quote — JPG, PNG
                   </p>
                 </div>
-              ) : (
-                <div className="space-y-3">
-                  <div
-                    className="w-14 h-14 rounded-full mx-auto flex items-center justify-center icon-glow"
-                  >
-                    <Camera className="w-7 h-7" style={{ color: NAVY }} />
+              </div>
+            </div>
+
+            {/* Mobile Capture Photo button */}
+            <Button
+              className="w-full font-bold text-sm py-3 rounded-md border-2 mt-3 flex items-center justify-center gap-2"
+              style={{ borderColor: YELLOW, color: NAVY, background: WHITE }}
+              onClick={(e) => {
+                e.stopPropagation();
+                cameraInputRef.current?.click();
+              }}
+            >
+              <Camera className="w-4 h-4" style={{ color: YELLOW }} />
+              CAPTURE PHOTO
+            </Button>
+
+            {/* Removable image thumbnails */}
+            {form.photoPreviews.length > 0 && (
+              <div className="popup-photo-thumbs">
+                {form.photoPreviews.map((preview, i) => (
+                  <div key={i} className="popup-photo-thumb-item">
+                    <img
+                      src={preview}
+                      alt={`Photo ${i + 1}`}
+                      className="popup-photo-thumb-img"
+                    />
+                    <button
+                      className="popup-photo-thumb-remove"
+                      onClick={() => removePhoto(i)}
+                      aria-label={`Remove photo ${i + 1}`}
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
                   </div>
-                  <div>
-                    <p className="font-bold text-sm" style={{ color: NAVY }}>
-                      Drop photos here or Snap a new one!
-                    </p>
-                    <p className="text-xs text-gray-400 mt-0.5">
-                      Tap to use camera or select a photo — JPG, PNG
-                    </p>
-                  </div>
-                </div>
-              )}
+                ))}
+              </div>
+            )}
+
+            {/* Trust badge */}
+            <div className="mt-5 flex items-center gap-3 p-3 rounded-lg" style={{ background: "rgba(56, 189, 248, 0.06)" }}>
+              <div className="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center icon-glow">
+                <Users className="w-4.5 h-4.5" style={{ color: NAVY }} />
+              </div>
+              <div>
+                <p className="font-bold text-xs" style={{ color: NAVY }}>1,000+ Neighbors Served</p>
+                <p className="text-[11px] text-gray-500">Trusted by families across the IE</p>
+              </div>
             </div>
 
             <div className="flex gap-3 mt-6">
@@ -323,8 +390,7 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
                 style={{ background: YELLOW }}
                 onClick={() => setStep(3)}
               >
-                {form.photoPreview ? "CONTINUE (PHOTO ADDED) →" : "CONTINUE"}{" "}
-                {!form.photoPreview && <ArrowRight className="w-4 h-4 ml-1 inline" />}
+                {form.photoPreviews.length > 0 ? "CONTINUE (PHOTO ADDED) →" : "CONTINUE →"}
               </Button>
             </div>
 
@@ -379,16 +445,23 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
             </div>
 
             {/* Photo indicator if uploaded */}
-            {form.photoPreview && (
+            {form.photoPreviews.length > 0 && (
               <div className="mt-4 flex items-center gap-3 p-3 rounded-lg" style={{ background: "rgba(56, 189, 248, 0.06)" }}>
-                <img
-                  src={form.photoPreview}
-                  alt="Uploaded photo"
-                  className="w-10 h-10 rounded object-cover"
-                />
+                <div className="flex -space-x-2">
+                  {form.photoPreviews.slice(0, 3).map((preview, i) => (
+                    <img
+                      key={i}
+                      src={preview}
+                      alt={`Photo ${i + 1}`}
+                      className="w-10 h-10 rounded object-cover border-2 border-white"
+                    />
+                  ))}
+                </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-semibold" style={{ color: ELECTRIC_BLUE }}>Photo attached</p>
-                  <p className="text-[10px] text-gray-400">Your photo will be included with the request</p>
+                  <p className="text-xs font-semibold" style={{ color: ELECTRIC_BLUE }}>
+                    {form.photoPreviews.length} photo{form.photoPreviews.length > 1 ? "s" : ""} attached
+                  </p>
+                  <p className="text-[10px] text-gray-400">Your photos will be included with the request</p>
                 </div>
               </div>
             )}
@@ -407,8 +480,7 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
                 onClick={handleStep2Next}
                 disabled={!form.phone.trim() || submitting}
               >
-                {submitting ? "SUBMITTING..." : form.photoPreview ? "SUBMIT (PHOTO ADDED) →" : "SUBMIT"}{" "}
-                {!form.photoPreview && !submitting && <ArrowRight className="w-4 h-4 ml-1 inline" />}
+                {submitting ? "SUBMITTING..." : form.photoPreviews.length > 0 ? `SUBMIT (${form.photoPreviews.length} PHOTO${form.photoPreviews.length > 1 ? "S" : ""} ADDED) →` : "SUBMIT →"}
               </Button>
             </div>
           </div>

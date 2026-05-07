@@ -353,18 +353,70 @@
   color: #9CA3AF;
 }
 
-/* Photo upload dashed box inside popup */
+/* Photo upload dashed box inside popup — Safety Yellow border */
 .popup-upload-zone {
-  border: 2px dashed #d1d5db;
+  border: 2px dashed #FFD700;
   border-radius: 12px;
   padding: 1.5rem;
   text-align: center;
   cursor: pointer;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 .popup-upload-zone:hover {
   border-color: #38BDF8;
-  background: rgba(56, 189, 248, 0.03);
+  background: rgba(56, 189, 248, 0.04);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.08);
+}
+.popup-upload-zone:active {
+  transform: scale(0.99);
+}
+
+/* Multi-photo thumbnail grid */
+.popup-photo-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.popup-photo-thumb-item {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  overflow: visible;
+}
+.popup-photo-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #e5e7eb;
+  transition: border-color 0.2s ease;
+}
+.popup-photo-thumb-item:hover .popup-photo-thumb-img {
+  border-color: #38BDF8;
+}
+.popup-photo-thumb-remove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border: 1.5px solid #d1d5db;
+  color: #6b7280;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.popup-photo-thumb-remove:hover {
+  background: #fef2f2;
+  border-color: #dc2626;
+  color: #dc2626;
 }
 
 /* Popup footer */

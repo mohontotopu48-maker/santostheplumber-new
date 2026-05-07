@@ -26,7 +26,16 @@ export async function POST(req: NextRequest) {
     const lastName = formData.get("lastName") as string;
     const phone = formData.get("phone") as string;
     const issue = formData.get("issue") as string;
-    const photo = formData.get("photo") as File | null;
+
+    // ── Collect all photo files (photo_0, photo_1, photo_2, …) ──
+    const photos: File[] = [];
+    let i = 0;
+    while (true) {
+      const photo = formData.get(`photo_${i}`) as File | null;
+      if (!photo) break;
+      photos.push(photo);
+      i++;
+    }
 
     // ── Basic validation ──
     if (!firstName?.trim() || !lastName?.trim() || !phone?.trim()) {
@@ -42,8 +51,8 @@ export async function POST(req: NextRequest) {
       lastName: lastName.trim(),
       phone: phone.trim(),
       issue: issue?.trim() || "",
-      hasPhoto: !!photo,
-      photoName: photo?.name || null,
+      photoCount: photos.length,
+      photoNames: photos.map((p) => p.name),
       source: "santos-plumbing-website",
       tags: ["website-lead", "multi-step-form"],
     };
@@ -95,7 +104,7 @@ export async function POST(req: NextRequest) {
               locationId: ghlLocationId,
               contactId,
               type: 1, // SMS
-              message: `Hi ${leadData.firstName}, I've got your info and I'm reviewing your photo now. I'll text you back a preliminary estimate in just a few minutes! - Santos`,
+              message: `Hi ${leadData.firstName}, I've got your info${leadData.photoCount > 0 ? ` and ${leadData.photoCount} photo${leadData.photoCount > 1 ? "s" : ""}` : ""}. I'll text you back a preliminary estimate in just a few minutes! - Santos`,
             }),
           }
         );
@@ -114,19 +123,21 @@ export async function POST(req: NextRequest) {
               locationId: ghlLocationId,
               contactId,
               type: 1,
-              message: `NEW LEAD: ${leadData.firstName} ${leadData.lastName} — ${leadData.issue || "No issue description"}${leadData.hasPhoto ? " [PHOTO ATTACHED]" : " [No photo]"} — Call/text: ${leadData.phone}`,
+              message: `NEW LEAD: ${leadData.firstName} ${leadData.lastName} — ${leadData.issue || "No issue description"}${leadData.photoCount > 0 ? ` [${leadData.photoCount} PHOTO${leadData.photoCount > 1 ? "S" : ""} ATTACHED]` : " [No photo]"} — Call/text: ${leadData.phone}`,
               assignTo: process.env.GHL_LEAD_SPECIALIST_ID || undefined,
             }),
           }
         );
 
-        // 4. Upload photo to contact if provided
-        if (photo && contactId) {
+        // 4. Upload photos to contact if provided
+        if (photos.length > 0 && contactId) {
           // Photo upload requires multipart — log the reference for now
           // In production, use GHL file upload endpoint with the contact's ID
-          console.log(
-            `[CRM] Photo received for contact ${contactId}: ${photo.name} (${(photo.size / 1024).toFixed(1)}KB)`
-          );
+          photos.forEach((photo, idx) => {
+            console.log(
+              `[CRM] Photo ${idx + 1} received for contact ${contactId}: ${photo.name} (${(photo.size / 1024).toFixed(1)}KB)`
+            );
+          });
         }
       } else {
         console.error(
