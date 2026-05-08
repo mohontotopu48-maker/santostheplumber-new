@@ -547,36 +547,36 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
 
   return (
     <header className="sticky top-0 z-50 w-full" style={{ background: NAVY }}>
-      {/* Top bar – contact strip */}
+      {/* Top bar – service area strip (phone removed — shown on main nav row next to CTA) */}
       <div
-        className="hidden md:flex items-center justify-end gap-6 px-6 py-1.5 text-xs"
+        className="hidden md:flex items-center justify-center px-6 py-1.5 text-xs"
         style={{ background: "rgba(0,0,0,0.25)" }}
       >
         <span className="text-gray-300">Serving Inland Empire & Foothill Communities</span>
-        <a
-          href="tel:9092569224"
-          className="font-bold flex items-center gap-1.5"
-          style={{ color: YELLOW }}
-        >
-          <Phone className="w-3.5 h-3.5" />
-          (909) 256-9224
-        </a>
       </div>
 
       {/* Main nav row */}
       <div className="flex items-center justify-between px-4 md:px-8 py-3 max-w-7xl mx-auto">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2.5 shrink-0">
-          <img
-            src="/santos-logo-v2.png"
-            alt="Santos Plumbing Logo"
-            className="h-10 w-10 md:h-11 md:w-11 object-contain"
-          />
+        <a href="#" className="flex items-center gap-2.5 shrink-0" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1 }}>
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/santos-logo-v2.png"
+              alt="Santos Plumbing Logo"
+              className="h-10 w-10 md:h-11 md:w-11 object-contain"
+            />
+            <span
+              className="font-extrabold text-xl md:text-2xl tracking-tight"
+              style={{ color: WHITE }}
+            >
+              SANTOS
+            </span>
+          </div>
           <span
-            className="font-extrabold text-xl md:text-2xl tracking-tight"
-            style={{ color: WHITE }}
+            className="brand-subtext font-semibold text-[0.65rem] md:text-xs uppercase tracking-[0.12em] ml-[52px] md:ml-[58px] mt-[-2px]"
+            style={{ color: "#FBBF24" }}
           >
-            SANTOS
+            Plumbing
           </span>
         </a>
 
@@ -593,12 +593,12 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
           ))}
         </nav>
 
-        {/* CTA + phone */}
+        {/* CTA + phone (single phone instance with nowrap) */}
         <div className="hidden lg:flex items-center gap-4">
           <a
             href="tel:9092569224"
             className="font-bold text-sm flex items-center gap-1.5"
-            style={{ color: YELLOW }}
+            style={{ color: YELLOW, whiteSpace: "nowrap" }}
           >
             <Phone className="w-4 h-4" />
             (909) 256-9224

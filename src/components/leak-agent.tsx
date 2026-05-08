@@ -48,6 +48,21 @@ const QUICK_ACTIONS = [
 /* ══════════════════════════════════════════════════════════════════════
    LEAK AGENT AI — Full Component with Photo Drop Zone
    ══════════════════════════════════════════════════════════════════════ */
+/* ─── Helper: Open GHL chat widget or fallback scroll ─── */
+function openLeakAgentAI() {
+  const ghlChatBubble =
+    document.querySelector("#lc-chat-bubble") ||
+    document.querySelector(".msg-bubble-launcher");
+  if (ghlChatBubble) {
+    (ghlChatBubble as HTMLElement).click();
+  } else {
+    const smsSection = document.querySelector("#take-a-peek-sms");
+    if (smsSection) {
+      smsSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+}
+
 export default function LeakAgentAI() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -213,7 +228,10 @@ export default function LeakAgentAI() {
       {/* ══════ Sticky Tab (always visible when chat is closed) ══════ */}
       {!isOpen && (
         <button
-          onClick={handleOpen}
+          onClick={() => {
+            handleOpen();
+            openLeakAgentAI();
+          }}
           className="leak-agent-tab"
           aria-label="Open Leak Agent AI"
         >
