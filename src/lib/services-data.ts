@@ -65,10 +65,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🔴",
     categoryColor: "#dc2626",
     features: [
-      "Emergency shut-off and water extraction",
-      "Copper and PEX pipe replacement",
-      "Pressure testing after repair",
-      "Dry-out recommendations and prevention plan",
+      "Structural pipe restoration with copper and PEX replacement",
+      "Emergency shut-off safety routing and water extraction",
+      "Post-repair pressure testing and flow verification",
+      "Flood mitigation protocol with dry-out and prevention plan",
     ],
     warningSigns: [
       "Sudden drop in water pressure",
@@ -90,9 +90,9 @@ export const services: ServiceData[] = [
     categoryEmoji: "🔴",
     categoryColor: "#dc2626",
     features: [
-      "Main line camera inspection to locate blockage",
-      "Mechanical and hydro-jet clearing",
-      "Contamination assessment and sanitization guidance",
+      "Heavy-duty blockage elimination with mechanical and hydro-jet clearing",
+      "Cleanout extraction and main line camera inspection",
+      "Immediate sanitization pathing and contamination assessment",
       "Root cause report with prevention recommendations",
     ],
     warningSigns: [
@@ -115,10 +115,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🔴",
     categoryColor: "#dc2626",
     features: [
-      "Electronic gas leak detection scanning",
-      "Pressure decay testing on gas lines",
-      "Emergency shut-off coordination",
-      "Detailed safety report and repair recommendations",
+      "High-precision tracking matrix with electronic detection scanning",
+      "Automated safety shut-offs and pressure decay testing",
+      "Line re-piping architecture for compromised gas lines",
+      "Detailed safety report and emergency coordination protocol",
     ],
     warningSigns: [
       "Rotten egg or sulfur smell in or around home",
@@ -140,10 +140,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🔴",
     categoryColor: "#dc2626",
     features: [
-      "Same-day dispatch with confirmed arrival window",
-      "Upfront flat-rate quote before any work",
-      "Professional-grade parts and materials",
-      "Code-compliant repair with warranty",
+      "Priority routing parameters with confirmed arrival window",
+      "Rapid-dispatch mechanics and same-day service deployment",
+      "Flat-rate diagnostic waivers — know the price before work begins",
+      "Code-compliant repair with professional-grade materials and warranty",
     ],
     warningSigns: [
       "Dripping that's getting progressively worse",
@@ -167,10 +167,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🟢",
     categoryColor: "#16a34a",
     features: [
-      "Mechanical snake clearing with professional-grade equipment",
-      "Secondary trap cleaning and inspection",
-      "Camera safety verification checks",
-      "Preventative maintenance recommendations",
+      "Secondary line clearing — sinks, tubs, and showers",
+      "Hair and grease mechanical removal with professional-grade snaking",
+      "Camera safety verification checks and line testing",
+      "Preventative maintenance recommendations for lasting flow",
     ],
     warningSigns: [
       "Slow draining basins and tubs",
@@ -192,9 +192,9 @@ export const services: ServiceData[] = [
     categoryEmoji: "🟢",
     categoryColor: "#16a34a",
     features: [
-      "Pre-jetting camera inspection to assess pipe condition",
-      "High-pressure water jetting at up to 4,000 PSI",
-      "Post-jetting camera verification of results",
+      "High-pressure scouring arrays at up to 4,000 PSI",
+      "Complete internal pipe descaling and root intrusion elimination",
+      "Long-term grease remediation with pre- and post-jetting camera verification",
       "Preventative maintenance schedule recommendation",
     ],
     warningSigns: [
@@ -217,10 +217,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🟢",
     categoryColor: "#16a34a",
     features: [
-      "Kitchen grease trap and P-trap clearing",
-      "Bathroom hair and soap scum removal",
-      "Garbage disposal line clearing",
-      "Odor elimination and drain refresh",
+      "Specialized grease trap mitigation and P-trap clearing",
+      "Food waste removal and garbage disposal line clearing",
+      "Bathroom organic matter clearing — hair, soap scum, and residue",
+      "Odor elimination and professional drain refresh treatment",
     ],
     warningSigns: [
       "Water pooling in kitchen sink",
@@ -242,10 +242,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🟢",
     categoryColor: "#16a34a",
     features: [
-      "Full main line camera inspection",
-      "Mechanical augering and hydro-jetting",
-      "Root cutting and removal",
-      "Post-cleaning flow verification",
+      "Root intrusion clearing and high-torque mechanical snaking",
+      "Full main line camera inspection and blockage mapping",
+      "Mechanical augering and hydro-jetting deployment",
+      "Flow optimization modeling and post-cleaning verification",
     ],
     warningSigns: [
       "All drains in home draining slowly simultaneously",
@@ -267,10 +267,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🟢",
     categoryColor: "#16a34a",
     features: [
-      "Annual comprehensive drain system inspection",
-      "Scheduled preventive hydro-jetting",
-      "Priority scheduling for any issues found",
-      "Detailed system health report",
+      "Bi-annual systemic line flushing regimens",
+      "Organic enzyme treatment logging and application",
+      "Flow tracking with camera inspection and performance metrics",
+      "Priority scheduling for any developing issues discovered",
     ],
     warningSigns: [
       "Drains that are slowing but not yet blocked",
@@ -294,10 +294,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🟠",
     categoryColor: "#ea580c",
     features: [
-      "Thermal component testing and calibration",
-      "Tank safety flush to remove sediment",
+      "Component diagnostics and thermocouple repair arrays",
+      "Pressure relief calibration and thermostat verification",
+      "Tank safety flush to remove sediment buildup",
       "Sacrificial anode verification and replacement",
-      "Thermostat and pressure relief valve inspection",
     ],
     warningSigns: [
       "Lukewarm water supplies from taps",
@@ -319,10 +319,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🟠",
     categoryColor: "#ea580c",
     features: [
-      "Professional tankless unit sizing and selection",
+      "High-efficiency heat exchanger descaling and calcium flush routing",
+      "Luxury continuous-flow engineering and professional unit sizing",
       "Code-compliant gas and water line installation",
-      "Annual descaling flush service",
-      "Venting and combustion air verification",
+      "Annual descaling flush service with venting verification",
     ],
     warningSigns: [
       "Inconsistent water temperature from tankless unit",
@@ -344,10 +344,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🟠",
     categoryColor: "#ea580c",
     features: [
-      "Non-invasive thermal imaging detection",
-      "Acoustic listening pinpoint technology",
-      "Precision leak location mapping",
-      "Minimally invasive repair options",
+      "Electronic acoustic line locating and precision mapping",
+      "Precise foundation isolation without destructive digging",
+      "Non-destructive bypass mapping and leak location targeting",
+      "Minimally invasive repair options with structural preservation",
     ],
     warningSigns: [
       "Unexplained high water bills",
@@ -369,10 +369,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🟠",
     categoryColor: "#ea580c",
     features: [
-      "Complete system assessment and material recommendation",
-      "Copper Type L and PEX-A installation",
-      "Code-compliant connections and permits",
-      "Whole-home pressure testing and flush",
+      "Old galvanized extraction paths and complete system removal",
+      "Modern structural manifold design with Copper Type L and PEX-A",
+      "Multi-point distribution arrays and code-compliant connections",
+      "Whole-home pressure testing, flush, and system commissioning",
     ],
     warningSigns: [
       "Home has original galvanized or polybutylene pipes",
@@ -394,10 +394,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🟠",
     categoryColor: "#ea580c",
     features: [
-      "Multi-sensor leak detection (thermal, acoustic, pressure)",
-      "Wall and slab penetration mapping",
-      "Minimally invasive access techniques",
-      "Permanent code-compliant repair",
+      "Thermal imaging overlays and electronic moisture tracking",
+      "Deep structural pipe targeting with multi-sensor detection",
+      "Wall and slab penetration mapping with acoustic precision",
+      "Permanent code-compliant repair with minimally invasive access",
     ],
     warningSigns: [
       "Unexplained moisture or mold growth",
@@ -421,10 +421,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🔵",
     categoryColor: "#2563eb",
     features: [
+      "Premium hardware trim integrations and custom bathroom fixtures",
+      "Leak-free basin sealing with commercial-grade silicone",
       "Structural supply and drain integration",
-      "Code compliance verification",
-      "Clean commercial-grade silicone seals",
-      "Fixture alignment and operation testing",
+      "Fixture alignment, operation testing, and code compliance verification",
     ],
     warningSigns: [
       "Steady fixture drips that won't stop",
@@ -446,9 +446,9 @@ export const services: ServiceData[] = [
     categoryEmoji: "🔵",
     categoryColor: "#2563eb",
     features: [
-      "Flush valve and fill valve replacement",
-      "Wax ring seal and flange repair",
-      "Tank-to-bowl gasket replacement",
+      "Internal flush valve optimization and fill valve calibration",
+      "Wax ring seal replacements and closet flange repair",
+      "Dual-flush efficiency upgrades and tank-to-bowl gasket service",
       "Full toilet replacement with code-compliant installation",
     ],
     warningSigns: [
@@ -471,10 +471,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🔵",
     categoryColor: "#2563eb",
     features: [
-      "Jam clearing and motor reset",
-      "Seal and gasket replacement",
-      "New disposal unit installation",
-      "Plumbing connection and drain line verification",
+      "Jam clearing protocols and motor reset procedures",
+      "High-torque unit swaps and new disposal installation",
+      "Seal and gasket replacement for leak prevention",
+      "Safe kitchen drain line optimization and connection verification",
     ],
     warningSigns: [
       "Disposal humming but not spinning",
@@ -496,10 +496,10 @@ export const services: ServiceData[] = [
     categoryEmoji: "🔵",
     categoryColor: "#2563eb",
     features: [
-      "Water quality testing and analysis",
-      "System sizing and type recommendation",
-      "Professional installation at main water line",
-      "Filter replacement schedule and maintenance plan",
+      "Central carbon filtering configurations and sediment removal tracking",
+      "Hard water softening architecture and mineral reduction systems",
+      "Water quality testing, analysis, and system sizing recommendation",
+      "Professional installation at main water line with maintenance plan",
     ],
     warningSigns: [
       "Chlorine taste or smell in tap water",
@@ -516,15 +516,15 @@ export const services: ServiceData[] = [
     slug: "annual-plumbing-safety-inspections",
     title: "Annual Plumbing Safety Inspections",
     h1: "Annual Plumbing Safety Inspection — Your Yearly Peace of Mind",
-    hook: "Our comprehensive 20-point safety inspection catches small problems before they become expensive emergencies. It's the smartest investment you can make in your home's plumbing health.",
+    hook: "Our comprehensive 100-point safety inspection catches small problems before they become expensive emergencies. It's the smartest investment you can make in your home's plumbing health.",
     category: "MAINTENANCE & FIXTURES",
     categoryEmoji: "🔵",
     categoryColor: "#2563eb",
     features: [
-      "20-point comprehensive system inspection",
-      "Water pressure and flow testing",
-      "Water heater safety verification",
-      "Detailed written report with priority recommendations",
+      "Comprehensive 100-point home safety checks and system inspection",
+      "Hidden leak scans with thermal and acoustic detection technology",
+      "Early component degradation warnings and wear identification",
+      "Detailed written report with priority recommendations and action plan",
     ],
     warningSigns: [
       "Home hasn't had a plumbing inspection in over 2 years",

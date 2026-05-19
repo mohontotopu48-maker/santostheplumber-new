@@ -7,7 +7,7 @@ import {
   SERVICE_COLUMNS,
   SERVICE_AREA_CITIES,
 } from "@/lib/services-data";
-import { CheckCircle2, AlertTriangle, Phone, ArrowRight, Star, Shield, Clock, MapPin, ChevronRight, Heart, Crown, Zap, Users, CalendarCheck, BadgeCheck } from "lucide-react";
+import { CheckCircle2, AlertTriangle, Phone, ArrowRight, Star, Shield, Clock, MapPin, ChevronRight } from "lucide-react";
 import { ServiceCtaButtons, StickyHeaderCta } from "@/components/service-cta";
 
 /* ─── Colour Tokens ─── */
@@ -407,7 +407,108 @@ export default async function ServicePage({
           </div>
         </section>
 
-        {/* ─── F. AUTHORITY SECTION ─── */}
+        {/* ─── F. DIAMOND VIP UPSELL — "Friend in the Plumbing Business" ─── */}
+        <section className="py-16 md:py-24" style={{ background: "#0a1628" }}>
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
+            <div
+              className="relative rounded-2xl overflow-hidden"
+              style={{
+                background: `linear-gradient(135deg, ${NAVY} 0%, #0d2847 50%, ${NAVY} 100%)`,
+                border: `2px solid #FBBF2440`,
+              }}
+            >
+              {/* Gold shimmer stripe */}
+              <div
+                className="absolute top-0 left-0 right-0 h-1"
+                style={{ background: "linear-gradient(90deg, #FFD700, #FBBF24, #FFD700)" }}
+              />
+
+              <div className="relative z-10 p-8 md:p-12 lg:p-16">
+                <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+                  {/* Left — CTA Content */}
+                  <div className="lg:col-span-3">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold mb-5"
+                      style={{ background: "#FBBF2420", color: "#FBBF24", border: "1px solid #FBBF2440" }}
+                    >
+                      <DiamondIcon className="w-3.5 h-3.5" />
+                      DIAMOND VIP CARE CLUB
+                    </div>
+
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight leading-[1.15] mb-4" style={{ color: WHITE }}>
+                      Need a Friend in the Plumbing Business?
+                    </h2>
+
+                    <p className="text-gray-300 leading-relaxed text-base md:text-lg mb-6 max-w-xl">
+                      For just <span className="font-black" style={{ color: YELLOW }}>$22/mo</span>, Diamond VIP members get priority 24/7 dispatch, fixed-price drain unclogging, zero weekend surge fees, and early access to new services. It&apos;s like having a plumber on speed dial — one who actually picks up at 2 AM across the Inland Empire and Foothill Communities.
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <a
+                        href="/services/diamond-vip-membership"
+                        className="font-bold text-base px-6 py-4 rounded-md text-black shadow-xl hover:scale-105 transition-transform inline-flex items-center justify-center gap-2"
+                        style={{ background: YELLOW }}
+                      >
+                        <DiamondIcon className="w-4 h-4" />
+                        JOIN DIAMOND VIP — $22/MO
+                      </a>
+                      <a
+                        href="tel:9092562244"
+                        className="font-bold text-sm px-6 py-4 rounded-md inline-flex items-center justify-center gap-2 border-2 transition-colors"
+                        style={{ borderColor: ELECTRIC_BLUE, color: ELECTRIC_BLUE, background: "transparent" }}
+                      >
+                        <Phone className="w-4 h-4" />
+                        CALL (909) 256-2244
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Right — Benefits Card */}
+                  <div className="lg:col-span-2">
+                    <div
+                      className="rounded-xl p-6 md:p-8"
+                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+                    >
+                      <h3 className="font-bold text-sm mb-5 uppercase tracking-wider" style={{ color: "#FBBF24" }}>
+                        VIP Member Perks
+                      </h3>
+                      <div className="space-y-4">
+                        {[
+                          { icon: "⚡", text: "Priority 24/7 Dispatch — Skip the queue" },
+                          { icon: "🔧", text: "Fixed-Price Drain Unclogging — No surprises" },
+                          { icon: "🚫", text: "Zero Weekend & Holiday Surge Fees" },
+                          { icon: "🆕", text: "Early-Bird Access to New Services" },
+                          { icon: "💰", text: "Exclusive Member-Only Pricing" },
+                          { icon: "🏠", text: "Annual Safety Inspection Included" },
+                        ].map((perk, i) => (
+                          <div key={i} className="flex items-start gap-3">
+                            <span className="text-lg shrink-0 mt-[-2px]">{perk.icon}</span>
+                            <p className="text-sm text-gray-300 font-medium">{perk.text}</p>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="mt-6 pt-5 border-t border-white/10">
+                        <div className="flex items-baseline gap-1">
+                          <span className="text-3xl font-black" style={{ color: YELLOW }}>$22</span>
+                          <span className="text-sm text-gray-400">/month</span>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">Less than a streaming subscription. More valuable than any of them.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom gold stripe */}
+              <div
+                className="absolute bottom-0 left-0 right-0 h-1"
+                style={{ background: "linear-gradient(90deg, #FFD700, #FBBF24, #FFD700)" }}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ─── G. AUTHORITY SECTION ─── */}
         <section className="py-16 md:py-24" style={{ background: NAVY }}>
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <div className="text-center mb-10">
@@ -460,102 +561,7 @@ export default async function ServicePage({
           </div>
         </section>
 
-        {/* ─── F2. DIAMOND VIP CTA — "FRIEND IN THE PLUMBING BUSINESS" ─── */}
-        <section className="py-16 md:py-20" style={{ background: "linear-gradient(135deg, #001F3F 0%, #0a2e52 50%, #001F3F 100%)" }}>
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <div
-              className="relative rounded-2xl p-8 md:p-12 overflow-hidden"
-              style={{
-                background: `linear-gradient(135deg, ${WARM_YELLOW}10 0%, ${WARM_YELLOW}05 100%)`,
-                border: `2px solid ${WARM_YELLOW}35`,
-              }}
-            >
-              {/* Accent glow */}
-              <div
-                className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl opacity-20"
-                style={{ background: WARM_YELLOW }}
-              />
-
-              <div className="relative z-10 grid lg:grid-cols-2 gap-10 items-center">
-                {/* Left — Copy */}
-                <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold mb-5"
-                    style={{ background: `${WARM_YELLOW}20`, color: WARM_YELLOW, border: `1px solid ${WARM_YELLOW}40` }}
-                  >
-                    <Crown className="w-3.5 h-3.5" />
-                    DIAMOND VIP CARE CLUB
-                  </div>
-
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight mb-4" style={{ color: WHITE }}>
-                    Your Friend in the Plumbing Business
-                  </h2>
-
-                  <p className="text-gray-300 leading-relaxed mb-6 text-base md:text-lg">
-                    For just <span className="font-black" style={{ color: WARM_YELLOW }}>$22/month</span>, the Santos Diamond VIP Care Club gives you a dedicated plumbing partner on call — with priority scheduling, zero surge fees, and exclusive member pricing on every service. It&apos;s like having a friend in the plumbing business, 365 days a year.
-                  </p>
-
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <a
-                      href="/services/diamond-vip-membership"
-                      className="font-bold text-base px-6 py-4 rounded-md text-black shadow-xl hover:scale-105 transition-transform inline-flex items-center justify-center gap-2"
-                      style={{ background: WARM_YELLOW }}
-                    >
-                      <Crown className="w-4 h-4" />
-                      JOIN DIAMOND VIP — $22/MO
-                    </a>
-                    <a
-                      href="tel:9092562244"
-                      className="font-bold text-sm px-6 py-4 rounded-md inline-flex items-center justify-center gap-2 border-2 transition-colors hover:bg-white/5"
-                      style={{ borderColor: ELECTRIC_BLUE, color: ELECTRIC_BLUE }}
-                    >
-                      <Phone className="w-4 h-4" />
-                      Call (909) 256-2244
-                    </a>
-                  </div>
-                </div>
-
-                {/* Right — Perks Grid */}
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { icon: Zap, title: "Priority Dispatch", desc: "First in line, every time" },
-                    { icon: Shield, title: "Zero Surge Fees", desc: "Same rate 365 days/year" },
-                    { icon: CalendarCheck, title: "Annual Safety Inspection", desc: "20-point system check included" },
-                    { icon: Users, title: "VIP-Only Pricing", desc: "Exclusive member discounts" },
-                    { icon: BadgeCheck, title: "Leak Agent AI Access", desc: "Smart diagnostics first" },
-                    { icon: Star, title: "Early Service Access", desc: "New offerings before anyone" },
-                  ].map((perk, i) => (
-                    <div
-                      key={i}
-                      className="p-4 rounded-xl"
-                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
-                    >
-                      <perk.icon className="w-5 h-5 mb-2" style={{ color: WARM_YELLOW }} />
-                      <p className="font-bold text-xs mb-0.5" style={{ color: WHITE }}>{perk.title}</p>
-                      <p className="text-[10px] text-gray-500 leading-tight">{perk.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Bottom tagline */}
-              <div className="relative z-10 mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <p className="text-xs text-gray-400">
-                  Join 1,000+ Inland Empire and Foothill homeowners who trust Santos as their friend in the plumbing business.
-                </p>
-                <a
-                  href="/services/diamond-vip-membership"
-                  className="text-xs font-bold inline-flex items-center gap-1 transition-colors hover:underline"
-                  style={{ color: WARM_YELLOW }}
-                >
-                  View all Diamond VIP benefits
-                  <ArrowRight className="w-3 h-3" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── G. COVERAGE SECTION ─── */}
+        {/* ─── H. COVERAGE SECTION ─── */}
         <section className="py-16 md:py-24" style={{ background: WHITE }}>
           <div className="max-w-7xl mx-auto px-4 md:px-8 text-center">
             <MapPin className="w-8 h-8 mx-auto mb-4" style={{ color: service.categoryColor }} />
