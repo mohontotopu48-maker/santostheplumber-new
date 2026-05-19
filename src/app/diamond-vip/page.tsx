@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   Phone,
   Shield,
-  DollarSign,
   CheckCircle2,
   ArrowRight,
   Heart,
@@ -14,9 +13,12 @@ import {
   Gift,
   Percent,
   MapPin,
-  Clock,
+  Smartphone,
+  Wrench,
+  Ban,
+  Tag,
+  Scissors,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 /* ─── Colour Tokens ─── */
 const NAVY = "#001F3F";
@@ -65,42 +67,117 @@ function NextdoorIcon({ className }: { className?: string }) {
   );
 }
 
+/* ─── Coupon Scissors Icon ─── */
+function CouponIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="6" cy="6" r="3" />
+      <circle cx="6" cy="18" r="3" />
+      <line x1="20" y1="4" x2="8.12" y2="15.88" />
+      <line x1="14.47" y1="14.48" x2="20" y2="20" />
+      <line x1="8.12" y1="8.12" x2="12" y2="12" />
+    </svg>
+  );
+}
+
 
 /* ══════════════════════════════════════════════════════════════════════
-   HERO SECTION
+   SECTION 1: "FRIEND IN THE PLUMBING BUSINESS" STORY CLOSE
    ══════════════════════════════════════════════════════════════════════ */
-function HeroSection() {
+function StorySection() {
   return (
     <section className="relative overflow-hidden py-20 md:py-32 lg:py-40" style={{ background: NAVY }}>
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#001F3F] via-[#001a35] to-[#002244]" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-8 text-center">
-        {/* Badge */}
-        <div
-          className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold mb-8"
-          style={{ background: "rgba(251,191,36,0.15)", color: WARM_YELLOW, border: `1px solid ${WARM_YELLOW}40` }}
-        >
-          <DiamondIcon className="w-4 h-4" />
-          DIAMOND VIP CARE CLUB
+      <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8">
+        {/* Accent header */}
+        <div className="text-center mb-10">
+          <span
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase mb-6"
+            style={{ background: "rgba(251,191,36,0.12)", color: WARM_YELLOW, border: `1px solid ${WARM_YELLOW}30` }}
+          >
+            <DiamondIcon className="w-4 h-4" />
+            WHY BECOME A VIP?
+          </span>
+
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight mt-6">
+            <span style={{ color: WHITE }}>You Need a Friend in the</span>
+            <br />
+            <span style={{ color: WARM_YELLOW }}>Plumbing Business.</span>
+          </h1>
         </div>
 
-        {/* Headline */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight">
-          <span style={{ color: WHITE }}>Your Friend in the</span>
-          <br />
-          <span style={{ color: WARM_YELLOW }}>Plumbing Business</span>
-        </h1>
+        {/* Story copy */}
+        <div className="space-y-6 text-gray-300 text-base md:text-lg leading-relaxed max-w-3xl mx-auto">
+          <p>
+            Picture this: you notice a slow drip under the kitchen sink. Not an emergency — not yet —
+            but you know that &quot;not yet&quot; has a funny way of becoming &quot;right now&quot; at the worst
+            possible moment. So you do what every homeowner does: you start Googling, you start calling
+            around, and you start getting quotes that feel like they were written on a napkin by someone
+            who just makes up numbers for a living.
+          </p>
 
-        {/* Subtitle */}
-        <p className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
-          For just <span className="font-black" style={{ color: WARM_YELLOW }}>$22/month</span>, you get a
-          plumber who answers at 2 AM, skips the surge fees, and treats your home
-          like their own. That&apos;s not a membership — that&apos;s a friend.
-        </p>
+          <p>
+            Now imagine a different version. You notice that drip, and you call{" "}
+            <strong style={{ color: WARM_YELLOW }}>Santos</strong>. A real person picks up — not a
+            robot, not a dispatch queue — a person who already knows your name, your address, and your
+            plumbing history. They schedule you a priority daytime appointment, bumped straight to the
+            top of the book. No waiting until Thursday between &quot;8 and 4.&quot;
+          </p>
+
+          <p>
+            And here&apos;s the part that makes people do a double-take: when you join Diamond VIP,
+            we walk through your home like we&apos;re{" "}
+            <em style={{ color: ELECTRIC_BLUE }}>disarming a nuclear bomb</em>. We label and photograph
+            every single water valve, every shutoff, every emergency access point. We hand you a map of
+            your own plumbing — a literal blueprint of every pipe, valve, and drain in your house. So
+            if something ever does go sideways, you know exactly which valve to turn. The water stops
+            before the panic starts. Then you call us, and we handle the rest.
+          </p>
+
+          <p>
+            Plus, the moment you sign up, a{" "}
+            <strong style={{ color: WARM_YELLOW }}>$20 Instant Welcome Credit</strong> certificate
+            drops into your account. Use it on your very first scheduled service, your first routine
+            flush — whatever you need. Think of it as your first drink on the house, except
+            it&apos;s plumbing, and your house isn&apos;t flooding.
+          </p>
+
+          <p>
+            No wading through the{" "}
+            <strong style={{ color: "#dc2626" }}>Bog of Eternal Stench</strong> — that swamp of
+            surprise fees, shady quotes, and &quot;we&apos;ll get there when we get there&quot;
+            attitude that other plumbers drag you through. (Yes, we named it after the Labyrinth
+            swamp. If you know, you know. If you don&apos;t, ask your plumber why they charge
+            double on Saturdays.) We help families across the Inland Empire stay free of hassle
+            and plumbing overpayments — one Diamond VIP at a time.
+          </p>
+
+          <p
+            className="text-xl md:text-2xl font-black leading-snug pt-4"
+            style={{ color: WHITE }}
+          >
+            For <span style={{ color: WARM_YELLOW }}>$22 a month</span> — less than your streaming
+            subscription — you&apos;ve got a friend in the plumbing business.
+            <br />
+            <span style={{ color: WARM_YELLOW }}>
+              And that friend actually picks up the phone.
+            </span>
+          </p>
+        </div>
 
         {/* CTA row */}
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="tel:9092562244"
             className="font-bold text-lg px-10 py-5 rounded-md text-black shadow-xl hover:scale-105 transition-transform inline-flex items-center justify-center"
@@ -114,7 +191,7 @@ function HeroSection() {
             className="font-bold text-lg px-10 py-5 rounded-md border-2 shadow-xl hover:scale-105 transition-transform inline-flex items-center justify-center"
             style={{ borderColor: WARM_YELLOW, color: WARM_YELLOW, background: "transparent" }}
           >
-            REQUEST SERVICE
+            JOIN DIAMOND VIP
             <ArrowRight className="w-5 h-5 ml-2" />
           </Link>
         </div>
@@ -124,50 +201,50 @@ function HeroSection() {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   4-ITEM ICON GRID
+   SECTION 2: PREMIUM 4-ITEM GRID (NON-EMERGENCY)
    ══════════════════════════════════════════════════════════════════════ */
 function BenefitsGrid() {
   const benefits = [
     {
-      icon: Phone,
-      title: "VIP Hotline",
-      desc: "Skip the line. Your calls jump to the front, 24/7/365.",
+      icon: Smartphone,
+      title: "Dedicated VIP Hotline",
+      desc: "Preferred member scheduling — bumped straight to the top of our daytime appointment book. No waiting, no hold music, no \"we'll call you back.\"",
       accent: ELECTRIC_BLUE,
     },
     {
       icon: Gift,
-      title: "$20 Welcome Gift",
-      desc: "$20 Instant Welcome Gift Credit dropped into your account the moment you sign up. Use it on your first service call.",
+      title: "$20 Instant Welcome Gift",
+      desc: "A $20 instant welcome credit certificate dropped into your account the moment you sign up. Good toward your very first scheduled service or routine flush.",
       accent: WARM_YELLOW,
     },
     {
-      icon: Percent,
-      title: "15% Preferred Savings",
-      desc: "15% off every service call, every time. Members save an average of $150/year.",
+      icon: Wrench,
+      title: "Preferred 15% Savings",
+      desc: "Majorly cuts down your bill on all preventative maintenance and fixture upgrades. Members save an average of $150/year on routine work alone.",
       accent: "#10b981",
     },
     {
       icon: Shield,
       title: "No Bog of Eternal Stench",
-      desc: "No surprise surge fees. No weekend penalties. No 'after-hours' markup. Ever.",
+      desc: "Free annual main line camera checkups keep your yard and property pristine. No surprise backups, no mystery clogs — just peace of mind, every single year.",
       accent: "#8b5cf6",
     },
   ];
 
   return (
-    <section className="py-20 md:py-28" style={{ background: WHITE }}>
+    <section className="py-20 md:py-28" style={{ background: "#0d1117" }}>
       <div className="max-w-5xl mx-auto px-4 md:px-8">
         {/* Section label */}
         <div className="text-center mb-14">
           <span
             className="text-xs font-bold tracking-widest uppercase"
-            style={{ color: NAVY }}
+            style={{ color: ELECTRIC_BLUE }}
           >
-            What You Get
+            Premium Perks
           </span>
           <h2
             className="mt-3 text-3xl md:text-4xl font-black leading-tight tracking-tight"
-            style={{ color: NAVY }}
+            style={{ color: WHITE }}
           >
             Four Reasons to Stop Googling
             <br />
@@ -180,18 +257,18 @@ function BenefitsGrid() {
           {benefits.map((b, i) => (
             <div
               key={i}
-              className="p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300"
+              className="p-8 rounded-2xl border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 transition-all duration-300 group"
             >
               <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
+                className="w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
                 style={{ background: `${b.accent}15` }}
               >
                 <b.icon className="w-7 h-7" style={{ color: b.accent }} />
               </div>
-              <h3 className="text-lg font-black" style={{ color: NAVY }}>
+              <h3 className="text-lg font-black" style={{ color: WHITE }}>
                 {b.title}
               </h3>
-              <p className="mt-2 text-sm text-gray-500 leading-relaxed">
+              <p className="mt-2 text-sm text-gray-400 leading-relaxed">
                 {b.desc}
               </p>
             </div>
@@ -203,81 +280,105 @@ function BenefitsGrid() {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   EMOTIONAL CLOSE / STORY BLOCK
+   SECTION 3: HIGH-CONVERSION DIGITAL COUPONS GRID
    ══════════════════════════════════════════════════════════════════════ */
-function StoryBlock() {
+function CouponsGrid() {
+  const coupons = [
+    {
+      title: "HD Camera Mainline Inspection",
+      price: "$99",
+      savings: "Save $151",
+      originalPrice: "$250",
+      accent: ELECTRIC_BLUE,
+    },
+    {
+      title: "System Flush & Tune-Up",
+      price: "$49",
+      savings: "Save $140",
+      originalPrice: "$189",
+      accent: WARM_YELLOW,
+    },
+    {
+      title: "Leak & Pressure Diagnostic",
+      price: "$69",
+      savings: "Save $106",
+      originalPrice: "$175",
+      accent: "#10b981",
+    },
+  ];
+
   return (
     <section className="py-20 md:py-28" style={{ background: NAVY }}>
-      <div className="max-w-3xl mx-auto px-4 md:px-8">
-        {/* Diamond badge */}
-        <div className="flex items-center justify-center gap-2 mb-8">
-          <DiamondIcon className="w-5 h-5" style={{ color: WARM_YELLOW }} />
-          <span
-            className="text-xs font-bold tracking-widest uppercase"
-            style={{ color: WARM_YELLOW }}
-          >
-            Why This Is Different
+      <div className="max-w-5xl mx-auto px-4 md:px-8">
+        {/* Section label */}
+        <div className="text-center mb-14">
+          <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase" style={{ color: WARM_YELLOW }}>
+            <CouponIcon className="w-4 h-4" />
+            VIP-ONLY COUPONS
           </span>
+          <h2
+            className="mt-3 text-3xl md:text-4xl font-black leading-tight tracking-tight"
+            style={{ color: WHITE }}
+          >
+            Your Digital Coupon Book
+            <br />
+            <span style={{ color: WARM_YELLOW }}>Already Loaded &amp; Ready</span>
+          </h2>
+          <p className="mt-4 text-gray-400 max-w-xl mx-auto">
+            These exclusive rates are available to Diamond VIP members only. Not
+            someday — right now. Use them on your very first scheduled service.
+          </p>
         </div>
 
-        {/* Story */}
-        <div className="space-y-6 text-gray-300 text-base md:text-lg leading-relaxed">
-          <p>
-            It&apos;s 11 PM on a Tuesday. You hear it first — a faint drip behind the
-            hallway wall. Then you see the ceiling stain, spreading like a watercolor
-            painting you never asked for. Your heart rate climbs. You grab your phone
-            and Google &quot;emergency plumber near me.&quot;
-          </p>
+        {/* Coupon cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {coupons.map((c, i) => (
+            <div
+              key={i}
+              className="relative rounded-2xl border-2 border-dashed p-8 text-center transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+              style={{
+                borderColor: c.accent,
+                background: "rgba(13,17,23,0.7)",
+              }}
+            >
+              {/* Scissors notch top-left */}
+              <div
+                className="absolute -top-3 -left-3 w-7 h-7 rounded-full flex items-center justify-center"
+                style={{ background: "#0d1117", border: `2px dashed ${c.accent}` }}
+              >
+                <Scissors className="w-3.5 h-3.5" style={{ color: c.accent }} />
+              </div>
 
-          <p>
-            Three calls later: one goes to voicemail, one says they&apos;ll &quot;try to fit
-            you in tomorrow,&quot; and the third quotes you double because it&apos;s
-            &quot;after hours.&quot; You&apos;re standing in your hallway, watching your
-            ceiling bubble, feeling that particular mix of panic and helplessness
-            that only a plumbing emergency at 11 PM can deliver.
-          </p>
+              {/* Savings badge */}
+              <div
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold mb-5"
+                style={{ background: `${c.accent}18`, color: c.accent }}
+              >
+                <Tag className="w-3.5 h-3.5" />
+                {c.savings}
+              </div>
 
-          <p style={{ color: WHITE }} className="font-semibold text-xl md:text-2xl leading-snug">
-            Now imagine a different version.
-          </p>
+              {/* Service title */}
+              <h3 className="text-base font-bold mb-4" style={{ color: WHITE }}>
+                {c.title}
+              </h3>
 
-          <p>
-            You see the stain. You call <strong style={{ color: WARM_YELLOW }}>Santos</strong>.
-            A real person picks up on the first ring. They already know your name,
-            your address, and — here&apos;s the part that makes people do a double-take
-            — <em>exactly which valve to turn off</em>.
-          </p>
+              {/* Price */}
+              <div className="flex items-baseline justify-center gap-2">
+                <span className="text-4xl font-black" style={{ color: c.accent }}>
+                  {c.price}
+                </span>
+                <span className="text-sm text-gray-500 line-through">
+                  {c.originalPrice}
+                </span>
+              </div>
 
-          <p>
-            That&apos;s because when you join Diamond VIP, we walk through your home
-            like we&apos;re disarming a nuclear bomb: we label and photograph every
-            single water valve, every shutoff, every emergency access point. We
-            hand you a map of your own plumbing. So when the ceiling starts
-            bubbling at 11 PM, you don&apos;t panic. You flip the valve we tagged,
-            and the water stops. Then you call us, and we handle the rest.
-          </p>
-
-          <p>
-            No wading through the <strong style={{ color: "#dc2626" }}>Bog of Eternal Stench</strong> —
-            that swamp of surprise fees, shady quotes, and &quot;we&apos;ll get there when
-            we get there&quot; attitude that other plumbers drag you through. (Yes, we
-            named it after the Labyrinth swamp. If you know, you know. If you
-            don&apos;t, ask your plumber why they charge double on Saturdays.)
-          </p>
-
-          <p>
-            And the <strong style={{ color: WARM_YELLOW }}>$20 Instant Welcome Gift Credit</strong>?
-            It&apos;s dropped into your account the moment you sign up. Use it on
-            your first service call. It&apos;s like your first drink is on the house —
-            except it&apos;s plumbing, and the house isn&apos;t flooding.
-          </p>
-
-          <p className="text-xl md:text-2xl font-black leading-snug pt-4" style={{ color: WHITE }}>
-            For $22 a month — less than your streaming subscription — you&apos;ve got
-            a friend in the plumbing business.
-            <br />
-            <span style={{ color: WARM_YELLOW }}>And that friend answers the phone at 2 AM.</span>
-          </p>
+              {/* Fine print */}
+              <p className="mt-4 text-xs text-gray-500 leading-relaxed">
+                Diamond VIP members only. Present at time of service. Cannot be combined with other offers.
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -285,29 +386,29 @@ function StoryBlock() {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   NEXTDOOR TESTIMONIALS
+   SECTION 4: VERIFIED NEXTDOOR TESTIMONIALS
    ══════════════════════════════════════════════════════════════════════ */
 function TestimonialsSection() {
   const testimonials = [
     {
       name: "Marcus T.",
       location: "Rancho Cucamonga",
-      text: "Santos answered at midnight on a Sunday. My wife was panicking about the flooded bathroom, and he had someone at our door in 40 minutes. That\u2019s not a plumber \u2014 that\u2019s a friend.",
+      text: "I called Santos on a Monday morning for a routine water heater check. They had someone at my door by noon that same day — no waiting, no hassle. The Diamond VIP priority booking is the real deal. Feels good knowing I can just call and get on the schedule same-day.",
     },
     {
       name: "Elena R.",
-      location: "Upland",
-      text: "The Diamond VIP membership has paid for itself five times over. Fixed-price drain clearing alone saved us $200 last year. No surge fees on a Saturday emergency? Chef\u2019s kiss.",
+      location: "Fontana",
+      text: "The annual camera checkup caught a slab leak forming under our foundation before it ever surfaced. That alone saved us thousands in potential damage. The 15% preferred savings on top of that? Diamond VIP has paid for itself ten times over. I tell every neighbor about it.",
     },
     {
       name: "David K.",
-      location: "Fontana",
-      text: "I called three other plumbers before Santos. Two didn\u2019t answer, one quoted me double for \u201cafter-hours.\u201d Santos picked up on the first ring and charged me the standard rate. I signed up for Diamond VIP that same day.",
+      location: "Chino",
+      text: "Three plumbers before Santos gave me estimates that were all over the map. Santos gave me a flat rate upfront, no games, no hidden line items. I signed up for Diamond VIP that same visit. Upfront pricing and priority scheduling — what more could you want?",
     },
   ];
 
   return (
-    <section className="py-20 md:py-28" style={{ background: WHITE }}>
+    <section className="py-20 md:py-28" style={{ background: "#0d1117" }}>
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         {/* Section label */}
         <div className="text-center mb-14">
@@ -315,14 +416,14 @@ function TestimonialsSection() {
             <NextdoorIcon className="w-5 h-5" style={{ color: "#00b946" }} />
             <span
               className="text-xs font-bold tracking-widest uppercase"
-              style={{ color: NAVY }}
+              style={{ color: "#00b946" }}
             >
-              Nextdoor Reviews
+              Verified Nextdoor Reviews
             </span>
           </div>
           <h2
             className="text-3xl md:text-4xl font-black leading-tight tracking-tight"
-            style={{ color: NAVY }}
+            style={{ color: WHITE }}
           >
             Don&apos;t Take Our Word for It
           </h2>
@@ -333,7 +434,7 @@ function TestimonialsSection() {
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col"
+              className="p-8 rounded-2xl border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 transition-all duration-300 flex flex-col"
             >
               {/* Stars */}
               <div className="flex gap-0.5 mb-4">
@@ -350,16 +451,16 @@ function TestimonialsSection() {
               </div>
 
               {/* Quote */}
-              <p className="text-sm text-gray-600 leading-relaxed flex-1">
+              <p className="text-sm text-gray-400 leading-relaxed flex-1">
                 &ldquo;{t.text}&rdquo;
               </p>
 
               {/* Attribution */}
-              <div className="mt-6 pt-4 border-t border-gray-100">
-                <p className="font-bold text-sm" style={{ color: NAVY }}>
+              <div className="mt-6 pt-4 border-t border-zinc-800">
+                <p className="font-bold text-sm" style={{ color: WHITE }}>
                   {t.name}
                 </p>
-                <p className="text-xs text-gray-400 flex items-center gap-1 mt-0.5">
+                <p className="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
                   <MapPin className="w-3 h-3" />
                   {t.location}
                 </p>
@@ -438,7 +539,7 @@ function PricingCTA() {
    ══════════════════════════════════════════════════════════════════════ */
 function Footer() {
   return (
-    <footer style={{ background: NAVY }} className="pt-12 pb-8">
+    <footer style={{ background: "#0d1117" }} className="pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Brand row */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -480,8 +581,7 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.label}
-              className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors hover:bg-white/10"
-              style={{ color: "rgba(255,255,255,0.6)" }}
+              className="social-tile"
             >
               <social.icon className="w-5 h-5" />
             </a>
@@ -536,9 +636,9 @@ export default function DiamondVIPPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
-        <HeroSection />
+        <StorySection />
         <BenefitsGrid />
-        <StoryBlock />
+        <CouponsGrid />
         <TestimonialsSection />
         <PricingCTA />
       </main>
