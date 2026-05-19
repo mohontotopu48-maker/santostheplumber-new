@@ -14,8 +14,14 @@ import {
   Zap,
   Activity,
   ChevronRight,
+  X,
+  Users,
+  Radio,
+  Navigation,
+  CheckCircle2,
+  CircleDot,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 /* ─── Colour Tokens ─── */
 const NAVY = "#001F3F";
@@ -23,6 +29,7 @@ const YELLOW = "#FFD700";
 const WHITE = "#FFFFFF";
 const ELECTRIC_BLUE = "#38BDF8";
 const WARM_YELLOW = "#FBBF24";
+const EMERALD = "#10b981";
 
 /* ─── Nextdoor Icon (custom SVG — house with door) ─── */
 function NextdoorIcon({ className }: { className?: string }) {
@@ -44,12 +51,12 @@ function NextdoorIcon({ className }: { className?: string }) {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   HERO SECTION
+   1. HEADER & STATUS INTERFACE
    ══════════════════════════════════════════════════════════════════════ */
-function HeroSection() {
+function HeaderSection() {
   return (
-    <section className="relative overflow-hidden py-20 md:py-32 lg:py-40" style={{ background: NAVY }}>
-      {/* Subtle radial gradient overlay */}
+    <section className="relative overflow-hidden pt-24 pb-16 md:pt-36 md:pb-24" style={{ background: NAVY }}>
+      {/* Radial gradient atmosphere */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#001F3F] via-[#001a35] to-[#002244]" />
 
       {/* Decorative grid pattern */}
@@ -65,16 +72,16 @@ function HeroSection() {
       />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-8 text-center">
-        {/* Badge */}
+        {/* Accent Tag — SYSTEM MONITOR */}
         <div
           className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold mb-8"
           style={{ background: "rgba(56,189,248,0.12)", color: ELECTRIC_BLUE, border: `1px solid ${ELECTRIC_BLUE}30` }}
         >
           <Activity className="w-4 h-4" />
-          INTU-MAP AREA MONITOR
+          SYSTEM MONITOR
         </div>
 
-        {/* Headline */}
+        {/* H1 Headline */}
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight">
           <span style={{ color: WHITE }}>Real-Time Service Territory</span>
           <br />
@@ -83,27 +90,34 @@ function HeroSection() {
 
         {/* Subhead */}
         <p className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-          Proving our presence on the ground. A lightweight, 100% free interactive geospatial layout showing every community Santos Plumbing serves across the Inland Empire and Foothill regions.
+          Lightweight, 100% free interactive geospatial framework tracking core service hubs across the Inland Empire and Foothill regions.
         </p>
 
-        {/* CTA row */}
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="tel:9092562244"
-            className="font-bold text-lg px-10 py-5 rounded-md text-black shadow-xl hover:scale-105 transition-transform inline-flex items-center justify-center"
-            style={{ background: YELLOW }}
-          >
-            <Phone className="w-5 h-5 mr-2" />
-            (909) 256-2244
-          </a>
-          <Link
-            href="/"
-            className="font-bold text-lg px-10 py-5 rounded-md border-2 shadow-xl hover:scale-105 transition-transform inline-flex items-center justify-center"
-            style={{ borderColor: ELECTRIC_BLUE, color: ELECTRIC_BLUE, background: "transparent" }}
-          >
-            REQUEST SERVICE
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </Link>
+        {/* Status Bar — glassmorphic */}
+        <div
+          className="mt-10 mx-auto max-w-2xl bg-zinc-950/80 border border-zinc-800 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6"
+        >
+          {/* System status */}
+          <div className="flex items-center gap-2.5">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: EMERALD }} />
+              <span className="relative inline-flex rounded-full h-3 w-3" style={{ background: EMERALD }} />
+            </span>
+            <span className="text-sm font-bold tracking-wider" style={{ color: EMERALD }}>
+              SYSTEM STATUS: ACTIVE
+            </span>
+          </div>
+
+          {/* Divider */}
+          <div className="hidden sm:block w-px h-5 bg-zinc-700" />
+
+          {/* Hub counter */}
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4" style={{ color: ELECTRIC_BLUE }} />
+            <span className="text-sm font-semibold text-gray-300">
+              Primary Service Hubs: <span className="font-black" style={{ color: ELECTRIC_BLUE }}>6 Cities Secured</span>
+            </span>
+          </div>
         </div>
       </div>
     </section>
@@ -111,42 +125,17 @@ function HeroSection() {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   INTERACTIVE MAP COMPONENT PANEL
+   2. THE PREMIUM DARK MAP CORE
    ══════════════════════════════════════════════════════════════════════ */
-function MapPanel() {
+function MapCore() {
   return (
     <section className="py-16 md:py-24" style={{ background: NAVY }}>
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         {/* Glassmorphism container */}
-        <div
-          className="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-4 shadow-2xl overflow-hidden"
-        >
-          {/* ── Faux Tech Status Bar ── */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-4 py-3 mb-4 rounded-xl"
-            style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.06)" }}
-          >
-            {/* System status */}
-            <div className="flex items-center gap-2.5">
-              <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: "#10b981" }} />
-                <span className="relative inline-flex rounded-full h-3 w-3" style={{ background: "#10b981" }} />
-              </span>
-              <span className="text-sm font-bold tracking-wider" style={{ color: "#10b981" }}>
-                SYSTEM STATUS: ACTIVE
-              </span>
-            </div>
+        <div className="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-4 md:p-6 shadow-2xl overflow-hidden">
 
-            {/* Tracking counter */}
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4" style={{ color: ELECTRIC_BLUE }} />
-              <span className="text-sm font-semibold text-gray-300">
-                Primary Service Hubs: <span className="font-black" style={{ color: ELECTRIC_BLUE }}>6 Cities Secured</span>
-              </span>
-            </div>
-          </div>
-
-          {/* ── Map Embed Container ── */}
-          <div className="relative rounded-xl overflow-hidden border border-zinc-800">
+          {/* ── Premium Dark Map Container ── */}
+          <div className="w-full h-[500px] rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-950 shadow-2xl relative">
             {/* Scan-line overlay for premium tech aesthetic */}
             <div
               className="absolute inset-0 z-10 pointer-events-none opacity-[0.04]"
@@ -156,27 +145,39 @@ function MapPanel() {
               }}
             />
 
+            {/* Google Maps iframe with dark-mode CSS filter inversion */}
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105743.14249339396!2d-117.70119285!3d34.0964724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c334336c117d87%3A0x272ae4cb9b09ef32!2sUpland%2C%20CA!5e0!3m2!1sen!2sus!4v1716123456789!5m2!1sen!2sus"
-              className="w-full h-[450px] rounded-xl border border-zinc-800 grayscale invert brightness-[0.9] contrast-[1.2]"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105844.2341235!2d-117.680!3d34.100!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c334fee!2sUpland%2C+CA!5e0!3m2!1sen!2sus!4v123456789"
+              className="w-full h-full grayscale invert brightness-[0.85] contrast-[1.2] border-0"
               allowFullScreen={false}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title="Santos Plumbing Service Territory Map"
             />
 
-            {/* Corner accents for HUD-like framing */}
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 z-20 pointer-events-none" style={{ borderColor: ELECTRIC_BLUE }} />
-            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 z-20 pointer-events-none" style={{ borderColor: ELECTRIC_BLUE }} />
-            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 z-20 pointer-events-none" style={{ borderColor: ELECTRIC_BLUE }} />
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 z-20 pointer-events-none" style={{ borderColor: ELECTRIC_BLUE }} />
+            {/* HUD Corner accents */}
+            <div className="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 z-20 pointer-events-none" style={{ borderColor: ELECTRIC_BLUE }} />
+            <div className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 z-20 pointer-events-none" style={{ borderColor: ELECTRIC_BLUE }} />
+            <div className="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 z-20 pointer-events-none" style={{ borderColor: ELECTRIC_BLUE }} />
+            <div className="absolute bottom-3 right-3 w-8 h-8 border-b-2 border-r-2 z-20 pointer-events-none" style={{ borderColor: ELECTRIC_BLUE }} />
+
+            {/* Floating map badge — top right */}
+            <div className="absolute top-3 right-14 z-20 pointer-events-none">
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-950/80 border border-zinc-700 backdrop-blur-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: EMERALD }} />
+                  <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: EMERALD }} />
+                </span>
+                <span className="text-[10px] font-bold tracking-widest text-gray-300 uppercase">Live Coverage</span>
+              </div>
+            </div>
           </div>
 
           {/* ── Mini Status Footer ── */}
           <div className="flex flex-wrap items-center justify-between gap-3 mt-4 px-2">
             <div className="flex items-center gap-4 text-xs text-gray-500">
               <span className="flex items-center gap-1.5">
-                <Shield className="w-3.5 h-3.5" style={{ color: "#10b981" }} />
+                <Shield className="w-3.5 h-3.5" style={{ color: EMERALD }} />
                 Coverage Verified
               </span>
               <span className="flex items-center gap-1.5">
@@ -199,14 +200,50 @@ function MapPanel() {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   6 TARGET HUB INFORMATION CARDS
+   3. COVERAGE STATS BAR (Dark Glassmorphic)
+   ══════════════════════════════════════════════════════════════════════ */
+function StatsBar() {
+  const stats = [
+    { value: "1,000+", label: "Neighbors Served", Icon: Users, color: ELECTRIC_BLUE },
+    { value: "6", label: "City Hubs Active", Icon: MapPin, color: EMERALD },
+    { value: "15 mi", label: "Dispatch Radius", Icon: Radio, color: WARM_YELLOW },
+    { value: "Same-Day", label: "Daytime Priority", Icon: Navigation, color: "#f97316" },
+  ];
+
+  return (
+    <section className="py-14 md:py-20" style={{ background: "#0a1628" }}>
+      <div className="max-w-6xl mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {stats.map((stat, i) => (
+            <div
+              key={i}
+              className="text-center p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-colors"
+            >
+              <stat.Icon className="w-6 h-6 mx-auto mb-3" style={{ color: stat.color }} />
+              <p
+                className="text-3xl md:text-4xl font-black tracking-tight"
+                style={{ color: stat.color }}
+              >
+                {stat.value}
+              </p>
+              <p className="text-sm text-gray-400 mt-1 font-medium">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   4. 6 TARGET HUB INFORMATION CARDS (Dark Premium)
    ══════════════════════════════════════════════════════════════════════ */
 const hubData = [
   {
     city: "Upland Hub",
     tagline: "Central Dispatch Headquarters",
     description:
-      "Providing localized rooter support across all historic Foothill neighborhoods. Upland serves as the primary operations base where Santos technicians are dispatched from, ensuring the fastest possible response times for emergency and scheduled calls throughout the Foothill corridor.",
+      "Providing localized rooter support across all historic Foothill neighborhoods. Upland serves as the primary operations base where Santos technicians are dispatched from, ensuring the fastest possible response times for scheduled calls throughout the Foothill corridor.",
     accent: ELECTRIC_BLUE,
     icon: "HQ",
     metrics: { responseTime: "< 25 min", coverage: "15 mi radius", dispatchPriority: "Primary" },
@@ -216,7 +253,7 @@ const hubData = [
     tagline: "Premium Scheduled Priority Coverage",
     description:
       "Premium scheduled priority coverage across all master-planned communities north of Foothill Blvd. From Victoria Gardens to Alta Loma, Santos maintains dedicated routing for homeowners who expect white-glove service windows and guaranteed arrival slots.",
-    accent: "#10b981",
+    accent: EMERALD,
     icon: "RC",
     metrics: { responseTime: "< 30 min", coverage: "12 mi radius", dispatchPriority: "Priority" },
   },
@@ -260,35 +297,36 @@ const hubData = [
 
 function HubCards() {
   return (
-    <section className="py-20 md:py-28" style={{ background: WHITE }}>
+    <section className="py-20 md:py-28" style={{ background: NAVY }}>
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         {/* Section header */}
         <div className="text-center mb-14">
           <span
-            className="text-xs font-bold tracking-widest uppercase"
-            style={{ color: NAVY }}
+            className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full"
+            style={{ color: ELECTRIC_BLUE, background: "rgba(56,189,248,0.1)", border: `1px solid ${ELECTRIC_BLUE}20` }}
           >
+            <CircleDot className="w-3.5 h-3.5" />
             Service Territory
           </span>
           <h2
-            className="mt-3 text-3xl md:text-4xl font-black leading-tight tracking-tight"
-            style={{ color: NAVY }}
+            className="mt-5 text-3xl md:text-4xl font-black leading-tight tracking-tight"
+            style={{ color: WHITE }}
           >
             6 Primary Service Hubs
             <br />
             <span style={{ color: ELECTRIC_BLUE }}>Across the Inland Empire</span>
           </h2>
-          <p className="mt-4 text-gray-500 max-w-2xl mx-auto">
+          <p className="mt-4 text-gray-400 max-w-2xl mx-auto leading-relaxed">
             Every hub is staffed with certified Santos technicians who live in the communities they serve. That local knowledge means faster arrivals, better diagnostics, and neighbors who genuinely care about your home.
           </p>
         </div>
 
-        {/* Hub cards grid */}
+        {/* Hub cards grid — dark glassmorphic cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {hubData.map((hub, i) => (
             <div
               key={i}
-              className="group relative p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+              className="group relative p-6 md:p-8 rounded-2xl bg-zinc-900/70 border border-zinc-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-zinc-700 overflow-hidden"
             >
               {/* Top accent stripe */}
               <div
@@ -300,15 +338,15 @@ function HubCards() {
               <div className="flex items-start justify-between mb-5">
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center font-black text-sm"
-                  style={{ background: `${hub.accent}15`, color: hub.accent }}
+                  style={{ background: `${hub.accent}18`, color: hub.accent }}
                 >
                   {hub.icon}
                 </div>
-                <MapPin className="w-5 h-5 text-gray-300 group-hover:text-gray-400 transition-colors" />
+                <MapPin className="w-5 h-5 text-zinc-600 group-hover:text-zinc-400 transition-colors" />
               </div>
 
               {/* City name */}
-              <h3 className="text-lg font-black" style={{ color: NAVY }}>
+              <h3 className="text-lg font-black text-white">
                 {hub.city}
               </h3>
               <p className="text-sm font-semibold mt-1" style={{ color: hub.accent }}>
@@ -316,23 +354,23 @@ function HubCards() {
               </p>
 
               {/* Description */}
-              <p className="mt-3 text-sm text-gray-500 leading-relaxed">
+              <p className="mt-3 text-sm text-gray-400 leading-relaxed">
                 {hub.description}
               </p>
 
               {/* Metrics row */}
-              <div className="mt-5 pt-4 border-t border-gray-100 grid grid-cols-3 gap-2">
+              <div className="mt-5 pt-4 border-t border-zinc-800 grid grid-cols-3 gap-2">
                 <div className="text-center">
-                  <p className="text-xs font-bold" style={{ color: NAVY }}>{hub.metrics.responseTime}</p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">Response</p>
+                  <p className="text-xs font-bold text-white">{hub.metrics.responseTime}</p>
+                  <p className="text-[10px] text-gray-500 mt-0.5">Response</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xs font-bold" style={{ color: NAVY }}>{hub.metrics.coverage}</p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">Coverage</p>
+                  <p className="text-xs font-bold text-white">{hub.metrics.coverage}</p>
+                  <p className="text-[10px] text-gray-500 mt-0.5">Coverage</p>
                 </div>
                 <div className="text-center">
                   <p className="text-xs font-bold" style={{ color: hub.accent }}>{hub.metrics.dispatchPriority}</p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">Priority</p>
+                  <p className="text-[10px] text-gray-500 mt-0.5">Priority</p>
                 </div>
               </div>
             </div>
@@ -344,32 +382,59 @@ function HubCards() {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   COVERAGE STATS BAR
+   5. TERRITORY BOUNDARIES PANEL
    ══════════════════════════════════════════════════════════════════════ */
-function StatsBar() {
-  const stats = [
-    { value: "1,000+", label: "Neighbors Served", icon: "👥" },
-    { value: "6", label: "City Hubs Active", icon: "📍" },
-    { value: "15 mi", label: "Dispatch Radius", icon: "📡" },
-    { value: "24/7", label: "Emergency Coverage", icon: "⚡" },
+function TerritoryBoundaries() {
+  const boundaries = [
+    { direction: "North", boundary: "Foothill Blvd / San Antonio Ave", status: "Active" },
+    { direction: "South", boundary: "Chino Hills State Park", status: "Active" },
+    { direction: "East", boundary: "Etiwanda Ave / San Bernardino Line", status: "Active" },
+    { direction: "West", boundary: "Euclid Ave / Fullerton Corridor", status: "Active" },
   ];
 
   return (
-    <section className="py-12 md:py-16" style={{ background: "#0a1628" }}>
+    <section className="py-16 md:py-24" style={{ background: "#0a1628" }}>
       <div className="max-w-6xl mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map((stat, i) => (
-            <div key={i} className="text-center">
-              <span className="text-2xl mb-2 block">{stat.icon}</span>
-              <p
-                className="text-3xl md:text-4xl font-black tracking-tight"
-                style={{ color: ELECTRIC_BLUE }}
+        <div className="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6 md:p-10 shadow-2xl">
+          <div className="text-center mb-10">
+            <span
+              className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full"
+              style={{ color: EMERALD, background: "rgba(16,185,129,0.1)", border: `1px solid ${EMERALD}20` }}
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              Territory Boundaries
+            </span>
+            <h2
+              className="mt-5 text-2xl md:text-3xl font-black tracking-tight"
+              style={{ color: WHITE }}
+            >
+              Operational Coverage Perimeter
+            </h2>
+            <p className="mt-3 text-gray-400 max-w-xl mx-auto text-sm leading-relaxed">
+              All Santos technicians operate within a clearly defined service perimeter to guarantee arrival times, local expertise, and community accountability.
+            </p>
+          </div>
+
+          {/* Boundary cards */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {boundaries.map((b, i) => (
+              <div
+                key={i}
+                className="relative p-5 rounded-xl bg-zinc-950/60 border border-zinc-800 hover:border-zinc-700 transition-colors"
               >
-                {stat.value}
-              </p>
-              <p className="text-sm text-gray-400 mt-1 font-medium">{stat.label}</p>
-            </div>
-          ))}
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold tracking-widest uppercase" style={{ color: ELECTRIC_BLUE }}>
+                    {b.direction}
+                  </span>
+                  <span className="flex items-center gap-1 text-[10px] font-bold" style={{ color: EMERALD }}>
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: EMERALD }} />
+                    {b.status}
+                  </span>
+                </div>
+                <p className="text-sm font-semibold text-white leading-snug">{b.boundary}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -377,7 +442,7 @@ function StatsBar() {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   CTA SECTION
+   6. CTA SECTION
    ══════════════════════════════════════════════════════════════════════ */
 function CtaSection() {
   return (
@@ -518,10 +583,11 @@ export default function ServiceTerritoryPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
-        <HeroSection />
-        <MapPanel />
-        <HubCards />
+        <HeaderSection />
+        <MapCore />
         <StatsBar />
+        <HubCards />
+        <TerritoryBoundaries />
         <CtaSection />
       </main>
       <Footer />
