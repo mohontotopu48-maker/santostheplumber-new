@@ -76,3 +76,36 @@ Stage Summary:
 - 6 service hub cards with detailed metadata and metrics
 - Inherited persistent navigation header from root layout
 - Live site: https://santostheplumber-new.vercel.app/service-territory
+---
+Task ID: 3
+Agent: Main Agent
+Task: Add enterprise accessibility widget — floating a11y button + Apple-style dark panel with working toggles
+
+Work Log:
+- Created /src/components/accessibility-widget.tsx (170 lines) — full client component
+- Floating trigger button: bottom-left corner, Midnight Navy bg, Electric Blue icon + border, pulsing ring animation
+- Dark Apple-style panel: glassmorphism background (rgba(24,24,27,0.96) + backdrop-blur), 340px wide, slide-up animation
+- Panel header with Accessibility icon, title, close button
+- WCAG 2.1 COMPLIANT badge in Electric Blue
+- 5 toggle rows with iOS-style toggle switches:
+  1. Increase Contrast — applies html.a11y-high-contrast (filter: contrast(1.25))
+  2. Bigger Text — applies html.a11y-bigger-text (font-size: 118.75%)
+  3. Readable Font — applies html.a11y-readable-font (Lexend/Atkinson/OpenDyslexic fallback stack + wider letter/word spacing)
+  4. Reduce Motion — applies html.a11y-reduce-motion (kills all animations/transitions)
+  5. Highlight Links — applies html.a11y-highlight-links (underlines all non-tel links in Electric Blue)
+- Reset All button in panel footer
+- Close on Escape key, click outside, or X button
+- Added 300+ lines of CSS to globals.css for widget + 5 global a11y toggle classes
+- Wired into root layout.tsx via <AccessibilityWidget /> — renders on every page site-wide
+- No conflicts with persistent SiteHeader or Leak Agent tab (z-index layering: header z-50, a11y z-9998, leak agent z-9999)
+- Build compiled successfully (Next.js 16.1.3, zero errors, 5.2s)
+- Pushed to GitHub at commit 5fa1883
+- Deployed to Vercel — READY status (dpl_DukYtaxC5mtQ4nCBUnsxubxWaNmB)
+
+Stage Summary:
+- Enterprise accessibility widget live on all pages (homepage, /service-territory, /diamond-vip, /services/*)
+- 5 working toggles that visually shift global utility classes on <html> element
+- Apple-style dark glassmorphism panel with WCAG 2.1 badge
+- Pulsing ring animation draws attention to the a11y button
+- No layout conflicts with header or chat widget
+- Live site: https://santostheplumber-new.vercel.app/
