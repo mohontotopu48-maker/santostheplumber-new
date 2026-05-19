@@ -578,7 +578,7 @@ function Hero({ onRequestService, onPhotoDrop }: { onRequestService: () => void;
             style={{ background: "rgba(255,215,0,0.15)", color: YELLOW, border: `1px solid ${YELLOW}40` }}
           >
             <Zap className="w-3.5 h-3.5" />
-            24/7 EMERGENCY RESPONSE
+            PRIORITY DAYTIME SCHEDULING
           </div>
 
           {/* Headline */}
@@ -691,8 +691,8 @@ function Hero({ onRequestService, onPhotoDrop }: { onRequestService: () => void;
               },
               {
                 icon: Clock,
-                title: "24/7 Emergency",
-                desc: "We answer when you call",
+                title: "Priority Scheduling",
+                desc: "Members Jump to the Front",
               },
             ].map((item, i) => (
               <div
@@ -1045,12 +1045,12 @@ function DiamondVIPSection({ onRequestService }: { onRequestService: () => void 
       desc: "Locked-in pricing on every drain clear. Same rate 365 days a year, including holidays.",
     },
     {
-      title: "Priority 24/7 Service Booking",
-      desc: "Skip the queue. Diamond VIP members get first-available scheduling, even during peak demand.",
+      title: "Daytime Priority Service Booking",
+      desc: "Skip the queue. Diamond VIP members get first-available scheduling during regular business hours.",
     },
     {
-      title: "No Emergency Weekend Surge Fees",
-      desc: "Weekend and after-hours calls at standard rates — save hundreds when emergencies strike off-hours.",
+      title: "Guaranteed Flat-Rate Upfront Pricing",
+      desc: "No hidden fees, no surprise line items. The price we quote is the price you pay — transparent and honest.",
     },
     {
       title: "Early-Bird Pre-Launch Access",
@@ -1162,6 +1162,151 @@ function DiamondVIPSection({ onRequestService }: { onRequestService: () => void 
 }
 
 /* ══════════════════════════════════════════════════════════════════════
+   EXCLUSIVE INTERNET SPECIALS (COUPONS)
+   ══════════════════════════════════════════════════════════════════════ */
+function CouponsSection({ onRequestService }: { onRequestService: () => void }) {
+  const coupons = [
+    {
+      icon: Camera,
+      title: "$99 HD Camera Mainline Inspection",
+      regularPrice: "$250",
+      savings: "Save $151 Instantly",
+      badge: "MOST POPULAR",
+      badgeColor: ELECTRIC_BLUE,
+      accent: ELECTRIC_BLUE,
+      copy:
+        "Stop guessing what\u2019s choking your lines. We will run our high-definition sewer diagnostic cameras straight down your main line to locate root intrusions, bellies, or cracks with surgical precision. Includes full video playback report.",
+    },
+    {
+      icon: Droplets,
+      title: "$49 System Flush & Tune-Up",
+      regularPrice: "$189",
+      savings: "Save $140 Instantly",
+      badge: "SEASONAL SPECIAL",
+      badgeColor: "#FBBF24",
+      accent: "#FBBF24",
+      copy:
+        "Hard water and calcium deposits destroy water heaters from the inside out, spiking your utility bills. We will completely flush your tank, clear out sediment buildup, check your pressure relief valve, and calibrate your heating elements for peak efficiency.",
+    },
+    {
+      icon: Wrench,
+      title: "$69 Leak & Pressure Diagnostic",
+      regularPrice: "$175",
+      savings: "Save $106 Instantly",
+      badge: "HOMEOWNER ESSENTIAL",
+      badgeColor: "#10b981",
+      accent: "#10b981",
+      copy:
+        "High municipal water pressure is the silent killer of appliances, ice-makers, and hidden pipe joints. We will audit your entire home\u2019s pressure regulatory valves, run deep acoustic checks for hidden slab leaks, and test every fixture for micro-drips.",
+    },
+  ];
+
+  return (
+    <section className="py-20 md:py-28" style={{ background: "#0d1117" }}>
+      <div className="max-w-6xl mx-auto px-4 md:px-8">
+        {/* Section header */}
+        <div className="text-center mb-14">
+          <span
+            className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase"
+            style={{ color: ELECTRIC_BLUE }}
+          >
+            EXCLUSIVE INTERNET SPECIALS
+          </span>
+          <h2
+            className="mt-3 text-3xl md:text-4xl font-black leading-tight tracking-tight"
+            style={{ color: WHITE }}
+          >
+            Claim Your Entry-Level
+            <br />
+            <span style={{ color: "#FBBF24" }}>Scheduled Service Coupons</span>
+          </h2>
+          <p className="mt-4 text-gray-400 max-w-xl mx-auto text-sm">
+            Get a truck in your driveway with zero friction. Claim an offer below to lock in upfront savings on your next scheduled daytime appointment.
+          </p>
+        </div>
+
+        {/* Coupon cards — 3-column grid */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {coupons.map((c, i) => (
+            <div
+              key={i}
+              className="relative border-dashed border-zinc-700 bg-zinc-900/90 rounded-2xl p-6 flex flex-col transition-all duration-300 hover:border-zinc-600 hover:scale-[1.02] hover:shadow-xl"
+            >
+              {/* Scissors notch top-right */}
+              <div className="absolute -top-3 -right-3 w-7 h-7 rounded-full flex items-center justify-center bg-[#0d1117] border-2 border-dashed border-zinc-700">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 text-zinc-500">
+                  <circle cx="6" cy="6" r="3" />
+                  <circle cx="6" cy="18" r="3" />
+                  <line x1="20" y1="4" x2="8.12" y2="15.88" />
+                  <line x1="14.47" y1="14.48" x2="20" y2="20" />
+                  <line x1="8.12" y1="8.12" x2="12" y2="12" />
+                </svg>
+              </div>
+
+              {/* Badge */}
+              <div
+                className="inline-flex self-start items-center gap-1.5 px-3 py-1 rounded-md text-[11px] font-black tracking-wide uppercase mb-5"
+                style={{ background: `${c.badgeColor}15`, color: c.badgeColor }}
+              >
+                {c.badge}
+              </div>
+
+              {/* Service icon */}
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `${c.accent}12` }}
+              >
+                <c.icon className="w-6 h-6" style={{ color: c.accent }} />
+              </div>
+
+              {/* Title */}
+              <h3 className="text-lg font-black mb-3" style={{ color: WHITE }}>
+                {c.title}
+              </h3>
+
+              {/* Price row */}
+              <div className="flex items-baseline gap-2 mb-4">
+                <span
+                  className="text-xs font-semibold line-through"
+                  style={{ color: "#6b7280" }}
+                >
+                  Regular Price: {c.regularPrice}
+                </span>
+                <span
+                  className="text-xs font-bold"
+                  style={{ color: c.accent }}
+                >
+                  ({c.savings})
+                </span>
+              </div>
+
+              {/* Copy */}
+              <p className="text-sm text-gray-400 leading-relaxed flex-1">
+                {c.copy}
+              </p>
+
+              {/* CTA Button */}
+              <Button
+                className="font-bold text-sm px-6 py-3 rounded-lg text-black shadow-lg hover:scale-105 transition-transform mt-5 w-full"
+                style={{ background: c.accent }}
+                onClick={onRequestService}
+              >
+                Claim Coupon
+              </Button>
+
+              {/* Fine print */}
+              <p className="mt-4 text-[11px] text-gray-600 leading-relaxed">
+                Internet-only pricing. Present at time of service. Cannot be combined with other offers.
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════════
    SEND US A PHOTO
    ══════════════════════════════════════════════════════════════════════ */
 function SendPhotoSection({ onRequestService }: { onRequestService: () => void }) {
@@ -1250,13 +1395,13 @@ function CtaBanner({ onRequestService }: { onRequestService: () => void }) {
           className="text-3xl md:text-4xl font-black leading-tight tracking-tight"
           style={{ color: WHITE }}
         >
-          Plumbing Emergency?{" "}
-          <span style={{ color: YELLOW }}>We&apos;re On Our Way.</span>
+          Need Reliable Plumbing?{" "}
+          <span style={{ color: YELLOW }}>Schedule Your Priority Visit Today.</span>
         </h2>
         <p className="mt-4 text-gray-400 text-base md:text-lg max-w-xl mx-auto">
           Don&apos;t wait for a small leak to become a big disaster. Our 909 &amp; 951
-          team is standing by 24/7 to take your call and get your home back to
-          normal — fast.
+          team is available during normal daytime business hours to take your call and get your home back to
+          normal — schedule your priority visit today.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
           <Button
@@ -1481,6 +1626,7 @@ export default function Home() {
         <HiddenLeakSection onRequestService={openPopup} />
         <ServicesDeepDive onRequestService={openPopup} />
         <DiamondVIPSection onRequestService={openPopup} />
+        <CouponsSection onRequestService={openPopup} />
         <SendPhotoSection onRequestService={openPopup} />
         <CtaBanner onRequestService={openPopup} />
       </main>
