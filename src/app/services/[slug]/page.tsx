@@ -7,8 +7,8 @@ import {
   SERVICE_COLUMNS,
   SERVICE_AREA_CITIES,
 } from "@/lib/services-data";
-import { CheckCircle2, AlertTriangle, Phone, ArrowRight, Star, Shield, Clock, MapPin, ChevronRight } from "lucide-react";
-import { ServiceCtaButtons, StickyHeaderCta } from "@/components/service-cta";
+import { CheckCircle2, AlertTriangle, Phone, ArrowRight, Star, Shield, Clock, MapPin } from "lucide-react";
+import { ServiceCtaButtons } from "@/components/service-cta";
 
 /* ─── Colour Tokens ─── */
 const NAVY = "#001F3F";
@@ -105,57 +105,6 @@ export default async function ServicePage({
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: WHITE }}>
-      {/* ─── A. STICKY SERVICE HEADER ─── */}
-      <header className="sticky top-0 z-50 w-full" style={{ background: NAVY }}>
-        <div className="flex items-center justify-between px-4 md:px-8 py-3 max-w-7xl mx-auto">
-          {/* Logo + Breadcrumb */}
-          <div className="flex items-center gap-3 min-w-0">
-            <a href="/" className="flex items-center gap-2 shrink-0">
-              <img
-                src="/santos-logo-v2.png"
-                alt="Santos Plumbing Logo"
-                className="h-8 w-8 md:h-9 md:w-9 object-contain"
-              />
-              <div className="flex flex-col leading-tight">
-                <span
-                  className="font-extrabold text-lg md:text-xl tracking-tight"
-                  style={{ color: WHITE }}
-                >
-                  SANTOS
-                </span>
-                <span
-                  className="font-semibold text-[0.55rem] md:text-[0.65rem] uppercase tracking-[0.12em] mt-[-2px]"
-                  style={{ color: WARM_YELLOW }}
-                >
-                  Plumbing
-                </span>
-              </div>
-            </a>
-            <ChevronRight className="w-4 h-4 shrink-0" style={{ color: "#6b7280" }} />
-            <span className="text-sm text-gray-400 truncate hidden sm:inline">Our Services</span>
-            <ChevronRight className="w-4 h-4 shrink-0 hidden sm:inline" style={{ color: "#6b7280" }} />
-            <span className="text-sm font-semibold truncate" style={{ color: ELECTRIC_BLUE }}>
-              {service.title}
-            </span>
-          </div>
-
-          {/* Phone + CTA */}
-          <div className="hidden lg:block">
-            <StickyHeaderCta phone="(909) 256-2244" />
-          </div>
-
-          {/* Mobile phone only */}
-          <a
-            href="tel:9092562244"
-            className="lg:hidden font-bold text-sm flex items-center gap-1.5"
-            style={{ color: YELLOW, whiteSpace: "nowrap" }}
-          >
-            <Phone className="w-4 h-4" />
-            <span className="hidden sm:inline">(909) 256-2244</span>
-          </a>
-        </div>
-      </header>
-
       <main className="flex-1">
         {/* ─── B. HERO SECTION ─── */}
         <section className="relative overflow-hidden" style={{ background: NAVY }}>
@@ -444,7 +393,7 @@ export default async function ServicePage({
 
                     <div className="flex flex-col sm:flex-row gap-3">
                       <a
-                        href="/services/diamond-vip-membership"
+                        href="/diamond-vip"
                         className="font-bold text-base px-6 py-4 rounded-md text-black shadow-xl hover:scale-105 transition-transform inline-flex items-center justify-center gap-2"
                         style={{ background: YELLOW }}
                       >

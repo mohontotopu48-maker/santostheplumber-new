@@ -5,14 +5,14 @@ import { NextRequest, NextResponse } from "next/server";
  *
  * This endpoint receives form data from the multi-step popup and:
  * 1. Creates/updates a lead in NXLBYLDR CRM (GHL) via API
- * 2. Triggers an instant SMS to the homeowner from (909) 256-9224
+ * 2. Triggers an instant SMS to the homeowner from (909) 256-2244
  * 3. Sends an internal notification to the lead specialist
  *
  * Environment variables required (set in .env):
  * - GHL_API_KEY: GoHighLevel / NXLBYLDR API key
  * - GHL_LOCATION_ID: GHL location/sub-account ID
  * - GHL_PIPELINE_ID: Pipeline for inbound plumbing leads
- * - TWILIO_PHONE: (909) 256-9224 — verified caller ID
+ * - TWILIO_PHONE: (909) 256-2244 — verified caller ID
  *
  * During development, the endpoint returns a 200 with the parsed
  * lead data so the popup flow works end-to-end without CRM creds.

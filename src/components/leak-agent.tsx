@@ -176,7 +176,7 @@ export default function LeakAgentAI() {
       const assistantMessage: ChatMessage = {
         id: genId(),
         role: "assistant",
-        content: data.content || "I'm having trouble connecting right now. Please call (909) 256-9224 for immediate help!",
+        content: data.content || "I'm having trouble connecting right now. Please call (909) 256-2244 for immediate help!",
         timestamp: new Date(),
       };
 
@@ -185,7 +185,7 @@ export default function LeakAgentAI() {
       const errorMessage: ChatMessage = {
         id: genId(),
         role: "assistant",
-        content: "I'm having trouble connecting right now. For immediate assistance, please call (909) 256-9224 and our team will help you directly!",
+        content: "I'm having trouble connecting right now. For immediate assistance, please call (909) 256-2244 and our team will help you directly!",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);

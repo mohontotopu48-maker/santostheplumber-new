@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import {
   Phone,
@@ -12,9 +11,6 @@ import {
   Facebook,
   Instagram,
   Linkedin,
-  Menu,
-  X,
-  ChevronDown,
   Gift,
   Percent,
   MapPin,
@@ -69,148 +65,6 @@ function NextdoorIcon({ className }: { className?: string }) {
   );
 }
 
-/* ══════════════════════════════════════════════════════════════════════
-   STICKY HEADER BAR
-   ══════════════════════════════════════════════════════════════════════ */
-function StickyHeader() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  return (
-    <header className="sticky top-0 z-50 w-full" style={{ background: NAVY }}>
-      <div className="flex items-center justify-between px-4 md:px-8 py-3 max-w-7xl mx-auto">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1 }}>
-          <div className="flex items-center gap-2.5">
-            <img
-              src="/santos-logo-v2.png"
-              alt="Santos Plumbing Logo"
-              className="h-10 w-10 md:h-11 md:w-11 object-contain"
-            />
-            <span
-              className="font-extrabold text-xl md:text-2xl tracking-tight"
-              style={{ color: WHITE }}
-            >
-              SANTOS
-            </span>
-          </div>
-          <span
-            className="font-semibold text-[0.65rem] md:text-xs uppercase tracking-[0.12em] ml-[52px] md:ml-[58px] mt-[-2px]"
-            style={{ color: WARM_YELLOW }}
-          >
-            Plumbing
-          </span>
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-4">
-          <Link
-            href="/"
-            className="nav-link flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition-colors"
-            style={{ color: "rgba(255,255,255,0.8)" }}
-          >
-            Home
-          </Link>
-          <Link
-            href="/#services"
-            className="nav-link flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition-colors"
-            style={{ color: "rgba(255,255,255,0.8)" }}
-          >
-            Services
-          </Link>
-          <a
-            href="/diamond-vip"
-            className="nav-link flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded-md transition-all"
-            style={{ color: WARM_YELLOW }}
-          >
-            <DiamondIcon className="w-4 h-4" />
-            Diamond VIP
-          </a>
-        </nav>
-
-        {/* CTA + phone */}
-        <div className="hidden lg:flex items-center gap-4">
-          <a
-            href="tel:9092562244"
-            className="font-bold text-sm flex items-center gap-1.5"
-            style={{ color: YELLOW, whiteSpace: "nowrap" }}
-          >
-            <Phone className="w-4 h-4" />
-            (909) 256-2244
-          </a>
-          <Link
-            href="/"
-            className="font-bold px-6 py-2.5 rounded-md text-black shadow-lg hover:scale-105 transition-transform inline-block"
-            style={{ background: YELLOW }}
-          >
-            REQUEST SERVICE
-          </Link>
-        </div>
-
-        {/* Mobile hamburger */}
-        <button
-          className="lg:hidden p-2"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? (
-            <X className="w-6 h-6" style={{ color: YELLOW }} />
-          ) : (
-            <Menu className="w-6 h-6" style={{ color: YELLOW }} />
-          )}
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="lg:hidden px-4 pb-6 pt-2" style={{ background: NAVY }}>
-          <Link
-            href="/"
-            className="block px-4 py-3 font-medium rounded-md hover:bg-white/5"
-            style={{ color: "rgba(255,255,255,0.8)" }}
-            onClick={() => setMobileOpen(false)}
-          >
-            Home
-          </Link>
-          <Link
-            href="/#services"
-            className="block px-4 py-3 font-medium rounded-md hover:bg-white/5"
-            style={{ color: "rgba(255,255,255,0.8)" }}
-            onClick={() => setMobileOpen(false)}
-          >
-            Services
-          </Link>
-          <Link
-            href="/diamond-vip"
-            className="block px-4 py-3 font-bold rounded-md hover:bg-white/5"
-            style={{ color: WARM_YELLOW }}
-            onClick={() => setMobileOpen(false)}
-          >
-            <DiamondIcon className="w-4 h-4 inline mr-2" />
-            Diamond VIP
-          </Link>
-          <div className="pt-4 space-y-3">
-            <a
-              href="tel:9092562244"
-              className="block font-bold text-center py-3 rounded-md"
-              style={{ color: YELLOW }}
-            >
-              <Phone className="w-4 h-4 inline mr-2" />
-              (909) 256-2244
-            </a>
-            <Link
-              href="/"
-              className="block w-full font-bold py-3 rounded-md text-black text-center"
-              style={{ background: YELLOW }}
-              onClick={() => setMobileOpen(false)}
-            >
-              REQUEST SERVICE
-            </Link>
-          </div>
-        </div>
-      )}
-    </header>
-  );
-}
 
 /* ══════════════════════════════════════════════════════════════════════
    HERO SECTION
@@ -681,7 +535,6 @@ function Footer() {
 export default function DiamondVIPPage() {
   return (
     <div className="min-h-screen flex flex-col">
-      <StickyHeader />
       <main className="flex-1">
         <HeroSection />
         <BenefitsGrid />

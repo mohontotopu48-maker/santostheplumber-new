@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import SiteHeader from "@/components/site-header";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -12,7 +13,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Santos Plumbing | Fast, Professional Plumbing for Inland Empire & Foothill Communities",
   description:
-    "Santos Plumbing provides fast, professional plumbing solutions for Inland Empire and Foothill homeowners. Serving a 15-mile radius from Upland, CA across San Bernardino, Riverside, and East Los Angeles Counties. 24/7 emergency pipe repairs, water heater installations, and leak detection. Call (909) 256-9224.",
+    "Santos Plumbing provides fast, professional plumbing solutions for Inland Empire and Foothill homeowners. Serving a 15-mile radius from Upland, CA across San Bernardino, Riverside, and East Los Angeles Counties. 24/7 emergency pipe repairs, water heater installations, and leak detection. Call (909) 256-2244.",
   keywords: [
     "Santos Plumbing",
     "Inland Empire plumber",
@@ -57,6 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} antialiased bg-white text-gray-900 font-sans`}>
+        <SiteHeader />
         {children}
         <Toaster />
       </body>
