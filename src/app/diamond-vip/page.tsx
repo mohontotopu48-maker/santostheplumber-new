@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import {
   Phone,
@@ -19,6 +20,9 @@ import {
   Camera,
   Droplets,
   Gauge,
+  X,
+  User,
+  Home,
 } from "lucide-react";
 
 /* ─── Colour Tokens ─── */
@@ -94,7 +98,7 @@ function CouponIcon({ className }: { className?: string }) {
 /* ══════════════════════════════════════════════════════════════════════
    SECTION 1: HERO HEADER
    ══════════════════════════════════════════════════════════════════════ */
-function HeroHeader() {
+function HeroHeader({ onOpenForm }: { onOpenForm: () => void }) {
   return (
     <section className="relative overflow-hidden py-24 md:py-36 lg:py-44" style={{ background: NAVY }}>
       {/* Subtle gradient overlay */}
@@ -132,14 +136,15 @@ function HeroHeader() {
 
         {/* Dual CTAs */}
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="tel:9092562244"
-            className="font-bold text-lg px-10 py-5 rounded-xl text-black shadow-2xl hover:scale-105 transition-transform inline-flex items-center justify-center"
+          <button
+            type="button"
+            onClick={onOpenForm}
+            className="font-bold text-lg px-10 py-5 rounded-xl text-black shadow-2xl hover:scale-105 transition-transform inline-flex items-center justify-center cursor-pointer"
             style={{ background: YELLOW }}
           >
             Join the Club — $22/mo
             <ArrowRight className="w-5 h-5 ml-2" />
-          </a>
+          </button>
           <a
             href="tel:9092562244"
             className="font-bold text-lg px-10 py-5 rounded-xl border-2 shadow-xl hover:scale-105 transition-transform inline-flex items-center justify-center"
@@ -559,7 +564,7 @@ function TestimonialsSection() {
 /* ══════════════════════════════════════════════════════════════════════
    PRICING CTA BLOCK
    ══════════════════════════════════════════════════════════════════════ */
-function PricingCTA() {
+function PricingCTA({ onOpenForm }: { onOpenForm: () => void }) {
   return (
     <section className="py-20 md:py-28" style={{ background: "#0d1117" }}>
       <div className="max-w-xl mx-auto px-4 md:px-8 text-center">
@@ -582,15 +587,16 @@ function PricingCTA() {
             Cancel anytime. No contracts.
           </p>
 
-          {/* CTA Button */}
-          <a
-            href="tel:9092562244"
-            className="mt-8 font-bold text-lg px-10 py-5 rounded-xl text-black shadow-2xl hover:scale-105 transition-transform inline-flex items-center justify-center w-full"
+          {/* CTA Button — opens modal form */}
+          <button
+            type="button"
+            onClick={onOpenForm}
+            className="mt-8 font-bold text-lg px-10 py-5 rounded-xl text-black shadow-2xl hover:scale-105 transition-transform inline-flex items-center justify-center w-full cursor-pointer"
             style={{ background: YELLOW }}
           >
-            <Phone className="w-5 h-5 mr-2" />
+            <Shield className="w-5 h-5 mr-2" />
             JOIN THE CLUB — $22/MO
-          </a>
+          </button>
 
           {/* Trust badges */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
@@ -715,20 +721,224 @@ function Footer() {
 
 
 /* ══════════════════════════════════════════════════════════════════════
+   VIP SIGNUP MODAL — Lead Capture Form
+   ══════════════════════════════════════════════════════════════════════ */
+function VIPSignupModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [form, setForm] = useState({ fullName: "", phone: "", address: "" });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!form.fullName.trim() || !form.phone.trim()) return;
+
+      try {
+        const formData = new FormData();
+        formData.append("firstName", form.fullName.split(" ")[0]);
+        formData.append("lastName", form.fullName.split(" ").slice(1).join(" ") || "");
+        formData.append("phone", form.phone);
+        formData.append("issue", `Diamond VIP Signup — ${form.address}`);
+        await fetch("/api/lead", { method: "POST", body: formData });
+      } catch {
+        // Silently handle — lead captured in UI
+      }
+
+      setSubmitted(true);
+    },
+    [form]
+  );
+
+  const handleClose = useCallback(() => {
+    onClose();
+    // Reset after close animation
+    setTimeout(() => {
+      setForm({ fullName: "", phone: "", address: "" });
+      setSubmitted(false);
+    }, 300);
+  }, [onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      onClick={handleClose}
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+
+      {/* Modal container */}
+      <div
+        className="relative w-full max-w-md rounded-2xl shadow-2xl border border-zinc-700 overflow-hidden"
+        style={{ background: "#111318" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header bar */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
+          <div className="flex items-center gap-2.5">
+            <DiamondIcon className="w-5 h-5" style={{ color: WARM_YELLOW }} />
+            <span className="font-bold text-sm" style={{ color: WARM_YELLOW }}>
+              Diamond VIP Signup
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={handleClose}
+            className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-zinc-800 transition-colors"
+            aria-label="Close"
+          >
+            <X className="w-4 h-4 text-gray-400" />
+          </button>
+        </div>
+
+        {/* Form body */}
+        {!submitted ? (
+          <form onSubmit={handleSubmit} className="p-6 space-y-5">
+            {/* Full Name */}
+            <div>
+              <label className="block text-xs font-semibold mb-1.5 text-gray-300">
+                Full Name <span className="text-red-400">*</span>
+              </label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <input
+                  type="text"
+                  required
+                  placeholder="John Doe"
+                  value={form.fullName}
+                  onChange={(e) => setForm((prev) => ({ ...prev, fullName: e.target.value }))}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-zinc-800/80 border border-zinc-700 text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FBBF24]/50 focus:border-[#FBBF24]/50 transition-colors"
+                />
+              </div>
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className="block text-xs font-semibold mb-1.5 text-gray-300">
+                Primary Phone Number <span className="text-red-400">*</span>
+              </label>
+              <div className="relative">
+                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <input
+                  type="tel"
+                  required
+                  placeholder="(909) 555-1234"
+                  value={form.phone}
+                  onChange={(e) => setForm((prev) => ({ ...prev, phone: e.target.value }))}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-zinc-800/80 border border-zinc-700 text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FBBF24]/50 focus:border-[#FBBF24]/50 transition-colors"
+                />
+              </div>
+            </div>
+
+            {/* Service Address */}
+            <div>
+              <label className="block text-xs font-semibold mb-1.5 text-gray-300">
+                Property Service Address
+              </label>
+              <div className="relative">
+                <Home className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <input
+                  type="text"
+                  placeholder="1234 Main St, Upland CA 91786"
+                  value={form.address}
+                  onChange={(e) => setForm((prev) => ({ ...prev, address: e.target.value }))}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-zinc-800/80 border border-zinc-700 text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FBBF24]/50 focus:border-[#FBBF24]/50 transition-colors"
+                />
+              </div>
+              <p className="mt-1 text-[11px] text-gray-600">
+                Inland Empire service area — Upland, Rancho Cucamonga, Fontana, Chino & more
+              </p>
+            </div>
+
+            {/* Disclaimer */}
+            <div className="p-3 rounded-lg border border-zinc-800" style={{ background: "rgba(56,189,248,0.04)" }}>
+              <p className="text-[11px] text-gray-400 leading-relaxed">
+                By clicking submit, you are reserving your priority status. A
+                representative will call you during normal business hours to
+                finalize your secure $22/mo billing setup.
+              </p>
+            </div>
+
+            {/* Submit button */}
+            <button
+              type="submit"
+              className="w-full font-bold text-base py-4 rounded-xl text-black shadow-xl hover:scale-[1.02] transition-transform cursor-pointer"
+              style={{ background: YELLOW }}
+              disabled={!form.fullName.trim() || !form.phone.trim()}
+            >
+              Reserve My VIP Spot — $22/mo
+              <ArrowRight className="w-4 h-4 ml-2 inline" />
+            </button>
+          </form>
+        ) : (
+          /* ── Success State ── */
+          <div className="p-8 text-center">
+            <div
+              className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-5"
+              style={{ background: "rgba(251,191,36,0.10)" }}
+            >
+              <CheckCircle2 className="w-8 h-8" style={{ color: WARM_YELLOW }} />
+            </div>
+            <h3 className="text-xl font-black" style={{ color: WHITE }}>
+              Welcome to Diamond VIP!
+            </h3>
+            <p className="mt-3 text-sm text-gray-400 leading-relaxed max-w-xs mx-auto">
+              Your priority spot is reserved. A representative will call you
+              during normal business hours to finalize your $22/mo membership.
+              Your $20 welcome credit is waiting!
+            </p>
+            <button
+              type="button"
+              onClick={handleClose}
+              className="mt-6 w-full font-bold text-base py-4 rounded-xl text-black shadow-xl hover:scale-[1.02] transition-transform cursor-pointer"
+              style={{ background: YELLOW }}
+            >
+              DONE
+            </button>
+          </div>
+        )}
+
+        {/* Agency credit */}
+        {!submitted && (
+          <div className="px-6 pb-4">
+            <p className="text-[10px] text-gray-600 text-center">
+              managed by{" "}
+              <a
+                href="https://vsualdigitalmedia.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-gray-500 hover:text-gray-400 transition-colors"
+              >
+                VSUAL digitalmedia.com
+              </a>
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════════
    PAGE COMPOSER
    ══════════════════════════════════════════════════════════════════════ */
 export default function DiamondVIPPage() {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const openForm = useCallback(() => setIsFormOpen(true), []);
+  const closeForm = useCallback(() => setIsFormOpen(false), []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
-        <HeroHeader />
+        <HeroHeader onOpenForm={openForm} />
         <StoryClose />
         <PerksGrid />
         <CouponsSection />
         <TestimonialsSection />
-        <PricingCTA />
+        <PricingCTA onOpenForm={openForm} />
       </main>
       <Footer />
+      <VIPSignupModal open={isFormOpen} onClose={closeForm} />
     </div>
   );
 }
