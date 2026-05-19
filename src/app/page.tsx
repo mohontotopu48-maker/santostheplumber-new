@@ -572,100 +572,157 @@ function Hero({ onRequestService, onPhotoDrop }: { onRequestService: () => void;
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-20 md:py-32 lg:py-40">
-        <div className="max-w-2xl">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6"
-            style={{ background: "rgba(255,215,0,0.15)", color: YELLOW, border: `1px solid ${YELLOW}40` }}
-          >
-            <Zap className="w-3.5 h-3.5" />
-            PRIORITY DAYTIME SCHEDULING
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-          {/* Headline */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight">
-            <span style={{ color: WHITE }}>If You Got A Leak,</span>
-            <br />
-            <span style={{ color: YELLOW }}>We&apos;ll Take A Peek!</span>
-          </h1>
-
-          {/* Sub-headline */}
-          <p className="mt-6 text-base md:text-lg text-gray-300 leading-relaxed max-w-xl">
-            Join over 1,000 local families who trust Santos for honest, fast repairs.
-            From priority pipe repairs to water heater installations, the Inland
-            Empire&apos;s most referred plumber gets it flowing right the first time.
-          </p>
-
-          {/* CTA row */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-4">
-            <Button
-              className="font-bold text-lg px-8 py-6 rounded-md text-black shadow-xl hover:scale-105 transition-transform"
-              style={{ background: YELLOW }}
-              onClick={onRequestService}
+          {/* ── Left Column: Text & CTAs ── */}
+          <div>
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6"
+              style={{ background: "rgba(255,215,0,0.15)", color: YELLOW, border: `1px solid ${YELLOW}40` }}
             >
-              REQUEST SERVICE
-              <ArrowRight className="w-5 h-5 ml-2 inline" />
-            </Button>
-            <Button
-              asChild
-              className="hero-phone-btn font-bold text-lg px-8 py-6 rounded-md shadow-xl hover:scale-105"
-            >
-              <a href="tel:9092562244">
-                <Phone className="w-5 h-5 mr-2" />
-                (909) 256-2244
-              </a>
-            </Button>
-          </div>
+              <Zap className="w-3.5 h-3.5" />
+              PRIORITY DAYTIME SCHEDULING
+            </div>
 
-          {/* ── Hero Photo Drop Zone ── */}
-          <div
-            className="hero-drop-zone mt-8"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => {
-              e.preventDefault();
-              const file = e.dataTransfer.files?.[0];
-              if (file && file.type.startsWith("image/")) {
-                const preview = URL.createObjectURL(file);
-                onPhotoDrop?.({ file, preview });
-              }
-            }}
-            onClick={() => {
-              const input = document.getElementById("hero-file-input") as HTMLInputElement;
-              input?.click();
-            }}
-          >
-            <input
-              id="hero-file-input"
-              type="file"
-              accept="image/*"
-              capture="environment"
-              className="hidden"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
+            {/* Headline */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight">
+              <span style={{ color: WHITE }}>If You Got A Leak,</span>
+              <br />
+              <span style={{ color: YELLOW }}>We&apos;ll Take A Peek!</span>
+            </h1>
+
+            {/* Sub-headline */}
+            <p className="mt-6 text-base md:text-lg text-gray-300 leading-relaxed max-w-xl">
+              Join over 1,000 local families who trust Santos for honest, fast repairs.
+              From priority pipe repairs to water heater installations, the Inland
+              Empire&apos;s most referred plumber gets it flowing right the first time.
+            </p>
+
+            {/* CTA row */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+              <Button
+                className="font-bold text-lg px-8 py-6 rounded-md text-black shadow-xl hover:scale-105 transition-transform"
+                style={{ background: YELLOW }}
+                onClick={onRequestService}
+              >
+                REQUEST SERVICE
+                <ArrowRight className="w-5 h-5 ml-2 inline" />
+              </Button>
+              <Button
+                asChild
+                className="hero-phone-btn font-bold text-lg px-8 py-6 rounded-md shadow-xl hover:scale-105"
+              >
+                <a href="tel:9092562244">
+                  <Phone className="w-5 h-5 mr-2" />
+                  (909) 256-2244
+                </a>
+              </Button>
+            </div>
+
+            {/* ── Hero Photo Drop Zone ── */}
+            <div
+              className="hero-drop-zone mt-8"
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                const file = e.dataTransfer.files?.[0];
+                if (file && file.type.startsWith("image/")) {
                   const preview = URL.createObjectURL(file);
                   onPhotoDrop?.({ file, preview });
                 }
-                e.target.value = "";
               }}
-            />
-            <div className="flex items-center gap-3 justify-center">
-              <Droplets className="w-5 h-5 shrink-0" style={{ color: ELECTRIC_BLUE }} />
-              <Camera className="w-5 h-5 shrink-0" style={{ color: YELLOW }} />
-              <span className="text-sm font-semibold text-gray-200">
-                Drag & Drop photos of your leak here for an instant AI estimate.
-              </span>
-            </div>
-            <Button
-              asChild
-              className="font-bold text-sm px-6 py-3 rounded-md text-black shadow-lg hover:scale-105 transition-transform mt-3"
-              style={{ background: YELLOW }}
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              onClick={() => {
+                const input = document.getElementById("hero-file-input") as HTMLInputElement;
+                input?.click();
+              }}
             >
-              <a href="sms:9092562244?body=Hi%20Santos%20Plumbing%2C%20I%20have%20a%20plumbing%20issue%20I%27d%20like%20to%20share%20a%20photo%20of.">
-                TAKE A PEEK (SMS) <ArrowRight className="w-4 h-4 ml-1 inline" />
-              </a>
-            </Button>
+              <input
+                id="hero-file-input"
+                type="file"
+                accept="image/*"
+                capture="environment"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const preview = URL.createObjectURL(file);
+                    onPhotoDrop?.({ file, preview });
+                  }
+                  e.target.value = "";
+                }}
+              />
+              <div className="flex items-center gap-3 justify-center">
+                <Droplets className="w-5 h-5 shrink-0" style={{ color: ELECTRIC_BLUE }} />
+                <Camera className="w-5 h-5 shrink-0" style={{ color: YELLOW }} />
+                <span className="text-sm font-semibold text-gray-200">
+                  Drag & Drop photos of your leak here for an instant AI estimate.
+                </span>
+              </div>
+              <Button
+                asChild
+                className="font-bold text-sm px-6 py-3 rounded-md text-black shadow-lg hover:scale-105 transition-transform mt-3"
+                style={{ background: YELLOW }}
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              >
+                <a href="sms:9092562244?body=Hi%20Santos%20Plumbing%2C%20I%20have%20a%20plumbing%20issue%20I%27d%20like%20to%20share%20a%20photo%20of.">
+                  TAKE A PEEK (SMS) <ArrowRight className="w-4 h-4 ml-1 inline" />
+                </a>
+              </Button>
+            </div>
           </div>
+
+          {/* ── Right Column: Santos Video Intro Mockup ── */}
+          <div className="relative aspect-video w-full rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl bg-zinc-950 group">
+            {/* Background image */}
+            <img
+              src="/hero-video-thumb.png"
+              alt="Santos Plumbing — Meet Your Plumber"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+
+            {/* Sleek dark gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+
+            {/* Subtle corner vignette for depth */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(0,0,0,0.3)_100%)]" />
+
+            {/* Interactive Play Button — centered */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <button
+                type="button"
+                aria-label="Play Santos Introduction Video"
+                className="relative flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full shadow-2xl hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-400/50"
+                style={{ background: YELLOW }}
+              >
+                {/* Pulse ring animation */}
+                <span className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ background: YELLOW }} />
+
+                {/* White triangle play icon */}
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="white"
+                  className="w-8 h-8 md:w-10 md:h-10 ml-1"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Bottom-left label badge */}
+            <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold text-black" style={{ background: YELLOW }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+                <polygon points="23 7 16 12 23 17 23 7" />
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+              </svg>
+              MEET SANTOS
+            </div>
+
+            {/* Duration badge bottom-right */}
+            <div className="absolute bottom-4 right-4 z-10 px-2.5 py-1 rounded-md text-[11px] font-semibold text-white bg-black/60 backdrop-blur-sm">
+              2:30
+            </div>
+          </div>
+
         </div>
       </div>
 
