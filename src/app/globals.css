@@ -854,3 +854,124 @@
   background: rgba(56, 189, 248, 0.08);
   transform: translateY(-1px);
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   MEGA-MENU
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Mega-menu panel — full-width dropdown below header */
+.mega-menu-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #001a35;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(56, 189, 248, 0.05);
+  z-index: 40;
+  overflow: hidden;
+}
+
+/* Open / closed states with smooth transition */
+.mega-menu-open {
+  max-height: 600px;
+  opacity: 1;
+  visibility: visible;
+  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease,
+              visibility 0s;
+}
+.mega-menu-closed {
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s ease,
+              visibility 0s 0.3s;
+}
+
+/* Individual column in the mega-menu */
+.mega-menu-column {
+  padding: 0 0.5rem;
+}
+.mega-menu-column + .mega-menu-column {
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  padding-left: 1.5rem;
+}
+
+/* Each service item link */
+.mega-menu-item {
+  padding: 0.25rem 0;
+  border-radius: 4px;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+.mega-menu-item:hover {
+  color: #38BDF8 !important;
+  padding-left: 4px;
+}
+
+/* Mega-menu footer with tagline + badges */
+.mega-menu-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Service area city badge chips */
+.service-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #9CA3AF;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.service-badge:hover {
+  color: #38BDF8;
+  border-color: rgba(56, 189, 248, 0.3);
+  background: rgba(56, 189, 248, 0.06);
+}
+
+/* ─── Mobile Accordion ─── */
+.mobile-accordion-content {
+  animation: accordion-slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 70vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+@keyframes accordion-slide-down {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 70vh;
+  }
+}
+
+/* Mobile accordion scrollbar */
+.mobile-accordion-content::-webkit-scrollbar {
+  width: 3px;
+}
+.mobile-accordion-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mobile-accordion-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+/* ─── Diamond VIP Card Hover Effect ─── */
+.diamond-vip-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.diamond-vip-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(251, 191, 36, 0.08);
+}

@@ -24,6 +24,7 @@ import {
   Camera,
   MessageSquare,
   ChevronRight,
+  ChevronDown,
   CheckCircle2,
   Zap,
   ArrowRight,
@@ -58,6 +59,27 @@ function NextdoorIcon({ className }: { className?: string }) {
     >
       <path d="M3 10.5L12 3l9 7.5" />
       <path d="M5 9.5V19a1 1 0 001 1h3.5v-5h5v5H18a1 1 0 001-1V9.5" />
+    </svg>
+  );
+}
+
+/* ─── Diamond Icon (custom SVG — gem shape for VIP) ─── */
+function DiamondIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M6 3h12l4 6-10 12L2 9z" />
+      <path d="M2 9h20" />
+      <path d="M10 3L6 9l6 12" />
+      <path d="M14 3l4 6-6 12" />
     </svg>
   );
 }
@@ -534,20 +556,101 @@ function MultiStepPopup({ open, onClose, initialPhoto }: { open: boolean; onClos
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   HEADER
+   HEADER — Mega-Menu + Diamond VIP
    ══════════════════════════════════════════════════════════════════════ */
 function Header({ onRequestService }: { onRequestService: () => void }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navLinks = [
-    { label: "Emergency Service", href: "#emergency" },
-    { label: "Water Heaters", href: "#water-heaters" },
-    { label: "Pipe Repairs", href: "#pipe-repairs" },
-    { label: "Maintenance", href: "#maintenance" },
+  const [megaMenuOpen, setMegaMenuOpen] = useState(false);
+  const [mobileAccordion, setMobileAccordion] = useState<number | null>(null);
+
+  /* Close mega-menu on scroll */
+  useEffect(() => {
+    const onScroll = () => setMegaMenuOpen(false);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  /* Close mega-menu on click outside */
+  useEffect(() => {
+    if (!megaMenuOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest(".mega-menu-trigger") && !target.closest(".mega-menu-panel")) {
+        setMegaMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [megaMenuOpen]);
+
+  const megaMenuColumns = [
+    {
+      emoji: "🔴",
+      title: "EMERGENCY SERVICE",
+      color: "#dc2626",
+      items: [
+        "24/7 Emergency Response",
+        "Burst Pipe Repair",
+        "Sewer Backup Clearance",
+        "Gas Leak Detection",
+        "Same-Day Urgent Repairs",
+      ],
+    },
+    {
+      emoji: "🟢",
+      title: "DRAIN CLEANING",
+      color: "#16a34a",
+      items: [
+        "Clog Removal & Snaking",
+        "Hydro Jetting Solutions",
+        "Kitchen & Bath Drains",
+        "Main Sewer Line Cleaning",
+        "Preventative Maintenance",
+      ],
+    },
+    {
+      emoji: "🟠",
+      title: "WATER HEATERS & PIPE REPAIRS",
+      color: "#ea580c",
+      items: [
+        "Water Heater Repair & Tune-Ups",
+        "Tankless Installation & Flushes",
+        "Slab Leak Detection & Fixes",
+        "Copper & PEX Whole-Home Repiping",
+        "Advanced Leak Location & Repair",
+      ],
+    },
+    {
+      emoji: "🔵",
+      title: "MAINTENANCE & FIXTURES",
+      color: "#2563eb",
+      items: [
+        "Faucet, Sink & Tub Installation",
+        "Toilet Repair & Replacement",
+        "Garbage Disposal Service",
+        "Whole-Home Water Filtration",
+        "Annual Plumbing Safety Inspections",
+      ],
+    },
+    {
+      emoji: "💎",
+      title: "DIAMOND VIP CARE CLUB",
+      color: "#FBBF24",
+      items: [
+        "$100/Yr Flat-Rate Membership",
+        "$100 Fixed-Price Drain Unclogging",
+        "Priority 24/7 Service Booking",
+        "No Emergency Weekend Surge Fees",
+        "Early-Bird Pre-Launch Access",
+      ],
+    },
   ];
+
+  const serviceAreaBadges = ["Fullerton", "Rancho Cucamonga", "Ontario", "Fontana", "Upland", "Chino"];
 
   return (
     <header className="sticky top-0 z-50 w-full" style={{ background: NAVY }}>
-      {/* Top bar – service area strip (phone removed — shown on main nav row next to CTA) */}
+      {/* Top bar – service area strip */}
       <div
         className="hidden md:flex items-center justify-center px-6 py-1.5 text-xs"
         style={{ background: "rgba(0,0,0,0.25)" }}
@@ -582,15 +685,31 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
-          {navLinks.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="nav-link px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5"
-            >
-              {l.label}
-            </a>
-          ))}
+          {/* Our Services – mega-menu trigger */}
+          <button
+            className="mega-menu-trigger nav-link flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-md hover:bg-white/5 transition-colors"
+            onClick={() => setMegaMenuOpen(!megaMenuOpen)}
+            onMouseEnter={() => setMegaMenuOpen(true)}
+            aria-expanded={megaMenuOpen}
+            aria-haspopup="true"
+          >
+            Our Services
+            <ChevronDown
+              className="w-4 h-4 transition-transform duration-200"
+              style={{ transform: megaMenuOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+            />
+          </button>
+
+          {/* Diamond VIP link */}
+          <a
+            href="#diamond-vip"
+            className="nav-link flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded-md transition-all"
+            style={{ color: "#FBBF24" }}
+            onClick={() => setMegaMenuOpen(false)}
+          >
+            <DiamondIcon className="w-4 h-4" />
+            Diamond VIP
+          </a>
         </nav>
 
         {/* CTA + phone (single phone instance with nowrap) */}
@@ -626,22 +745,138 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* ── Desktop Mega-Menu Panel ── */}
+      <div
+        className={`mega-menu-panel hidden lg:block ${megaMenuOpen ? "mega-menu-open" : "mega-menu-closed"}`}
+        onMouseLeave={() => setMegaMenuOpen(false)}
+      >
+        <div className="max-w-7xl mx-auto px-8 py-8">
+          <div className="grid grid-cols-5 gap-6">
+            {megaMenuColumns.map((col, i) => (
+              <div key={i} className="mega-menu-column">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-base">{col.emoji}</span>
+                  <h3
+                    className="text-xs font-black tracking-wider uppercase"
+                    style={{ color: col.color }}
+                  >
+                    {col.title}
+                  </h3>
+                </div>
+                <ul className="space-y-2.5">
+                  {col.items.map((item, j) => (
+                    <li key={j}>
+                      <a
+                        href={i === 4 ? "#diamond-vip" : `#services`}
+                        className="mega-menu-item block text-sm leading-snug transition-colors"
+                        style={{ color: "rgba(255,255,255,0.75)" }}
+                        onClick={() => setMegaMenuOpen(false)}
+                      >
+                        {item}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Mega-menu footer */}
+          <div className="mega-menu-footer mt-8 pt-6">
+            <p className="text-white font-bold text-lg tracking-tight">
+              If You Got A Leak, We&apos;ll Take A Peek!
+            </p>
+            <p className="text-gray-400 text-sm mt-1">
+              Serving our community with honest upfront flat rates and surgical execution.
+            </p>
+            <div className="flex flex-wrap gap-2 mt-4">
+              {serviceAreaBadges.map((city) => (
+                <span key={city} className="service-badge">
+                  {city}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Mobile Menu ── */}
       {mobileOpen && (
         <div
-          className="lg:hidden px-4 pb-6 pt-2 space-y-1"
+          className="lg:hidden px-4 pb-6 pt-2"
           style={{ background: NAVY }}
         >
-          {navLinks.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setMobileOpen(false)}
-              className="nav-link-mobile block px-4 py-3 font-medium rounded-md hover:bg-white/5"
-            >
-              {l.label}
-            </a>
-          ))}
+          {/* Our Services accordion */}
+          <button
+            className="nav-link-mobile flex items-center justify-between w-full px-4 py-3 font-medium rounded-md hover:bg-white/5"
+            onClick={() => setMobileAccordion(mobileAccordion === 0 ? null : 0)}
+            aria-expanded={mobileAccordion === 0}
+          >
+            Our Services
+            <ChevronDown
+              className="w-4 h-4 transition-transform duration-200"
+              style={{ transform: mobileAccordion === 0 ? "rotate(180deg)" : "rotate(0deg)", color: "#9CA3AF" }}
+            />
+          </button>
+
+          {mobileAccordion === 0 && (
+            <div className="mobile-accordion-content pl-4 space-y-3">
+              {megaMenuColumns.map((col, i) => (
+                <div key={i} className="py-2">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-sm">{col.emoji}</span>
+                    <span
+                      className="text-xs font-bold tracking-wider uppercase"
+                      style={{ color: col.color }}
+                    >
+                      {col.title}
+                    </span>
+                  </div>
+                  <ul className="space-y-1.5 pl-6">
+                    {col.items.map((item, j) => (
+                      <li key={j}>
+                        <a
+                          href={i === 4 ? "#diamond-vip" : "#services"}
+                          className="block text-sm py-1 transition-colors"
+                          style={{ color: "rgba(255,255,255,0.65)" }}
+                          onClick={() => {
+                            setMobileOpen(false);
+                            setMobileAccordion(null);
+                          }}
+                        >
+                          {item}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
+              {/* Service area badges */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {serviceAreaBadges.map((city) => (
+                  <span key={city} className="service-badge text-[10px] px-2 py-0.5">
+                    {city}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Diamond VIP standalone link */}
+          <a
+            href="#diamond-vip"
+            className="nav-link-mobile flex items-center gap-2 px-4 py-3 font-bold rounded-md hover:bg-white/5"
+            style={{ color: "#FBBF24" }}
+            onClick={() => {
+              setMobileOpen(false);
+              setMobileAccordion(null);
+            }}
+          >
+            <DiamondIcon className="w-4 h-4" />
+            Diamond VIP
+          </a>
+
           <div className="pt-4 space-y-3">
             <a
               href="tel:9092569224"
@@ -656,6 +891,7 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
               style={{ background: YELLOW }}
               onClick={() => {
                 setMobileOpen(false);
+                setMobileAccordion(null);
                 onRequestService();
               }}
             >
@@ -1145,6 +1381,136 @@ function ServicesDeepDive({ onRequestService }: { onRequestService: () => void }
 }
 
 /* ══════════════════════════════════════════════════════════════════════
+   DIAMOND VIP CARE CLUB
+   ══════════════════════════════════════════════════════════════════════ */
+function DiamondVIPSection({ onRequestService }: { onRequestService: () => void }) {
+  const benefits = [
+    {
+      title: "$100/Yr Flat-Rate Membership",
+      desc: "One simple annual fee covers your entire household — no hidden costs, no surprises.",
+    },
+    {
+      title: "$100 Fixed-Price Drain Unclogging",
+      desc: "Locked-in pricing on every drain clear. Same rate 365 days a year, including holidays.",
+    },
+    {
+      title: "Priority 24/7 Service Booking",
+      desc: "Skip the queue. Diamond VIP members get first-available scheduling, even during peak demand.",
+    },
+    {
+      title: "No Emergency Weekend Surge Fees",
+      desc: "Weekend and after-hours calls at standard rates — save hundreds when emergencies strike off-hours.",
+    },
+    {
+      title: "Early-Bird Pre-Launch Access",
+      desc: "Be first in line for new services, seasonal promotions, and limited-offer discounts before anyone else.",
+    },
+  ];
+
+  return (
+    <section id="diamond-vip" className="py-20 md:py-28" style={{ background: "#001F3F" }}>
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        {/* Section badge */}
+        <div className="flex items-center justify-center gap-2 mb-6">
+          <DiamondIcon className="w-5 h-5" style={{ color: "#FBBF24" }} />
+          <span
+            className="text-xs font-bold tracking-widest uppercase"
+            style={{ color: "#FBBF24" }}
+          >
+            Exclusive Membership
+          </span>
+        </div>
+
+        {/* Title */}
+        <div className="text-center max-w-3xl mx-auto">
+          <h2
+            className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight"
+            style={{ color: WHITE }}
+          >
+            Santos{" "}
+            <span style={{ color: "#FBBF24" }}>Diamond VIP</span>{" "}
+            Care Club
+          </h2>
+          <p className="mt-4 text-base md:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">
+            Join the Inland Empire&apos;s most valued plumbing membership. For just $100/year,
+            you unlock flat-rate pricing, priority scheduling, and zero surge fees —
+            the smartest investment a homeowner can make.
+          </p>
+        </div>
+
+        {/* Benefits grid */}
+        <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {benefits.map((b, i) => (
+            <div
+              key={i}
+              className="diamond-vip-card p-6 rounded-xl border transition-all duration-200 hover:border-[#FBBF24]/50"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                borderColor: "rgba(251,191,36,0.15)",
+              }}
+            >
+              <div
+                className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"
+                style={{ background: "rgba(251,191,36,0.12)" }}
+              >
+                <CheckCircle2 className="w-5 h-5" style={{ color: "#FBBF24" }} />
+              </div>
+              <p className="font-bold text-sm" style={{ color: WHITE }}>
+                {b.title}
+              </p>
+              <p className="text-sm text-gray-400 mt-1.5 leading-relaxed">
+                {b.desc}
+              </p>
+            </div>
+          ))}
+
+          {/* CTA card */}
+          <div
+            className="diamond-vip-card p-6 rounded-xl border flex flex-col items-center justify-center text-center transition-all duration-200 hover:border-[#FBBF24]/60"
+            style={{
+              background: "rgba(251,191,36,0.06)",
+              borderColor: "rgba(251,191,36,0.25)",
+            }}
+          >
+            <DiamondIcon className="w-10 h-10 mb-3" style={{ color: "#FBBF24" }} />
+            <p className="font-black text-2xl" style={{ color: "#FBBF24" }}>
+              $100<span className="text-base font-semibold text-gray-400">/yr</span>
+            </p>
+            <p className="text-sm text-gray-400 mt-1 mb-5">
+              Cancel anytime. No contracts.
+            </p>
+            <Button
+              className="font-bold px-8 py-4 rounded-md text-black shadow-lg hover:scale-105 transition-transform w-full"
+              style={{ background: "#FBBF24" }}
+              onClick={onRequestService}
+            >
+              JOIN DIAMOND VIP
+              <ArrowRight className="w-4 h-4 ml-1 inline" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Trust bar */}
+        <div className="mt-12 flex items-center justify-center gap-6 text-sm text-gray-500">
+          <span className="flex items-center gap-1.5">
+            <CheckCircle2 className="w-4 h-4" style={{ color: "#FBBF24" }} />
+            No contracts
+          </span>
+          <span className="flex items-center gap-1.5">
+            <CheckCircle2 className="w-4 h-4" style={{ color: "#FBBF24" }} />
+            Cancel anytime
+          </span>
+          <span className="flex items-center gap-1.5">
+            <CheckCircle2 className="w-4 h-4" style={{ color: "#FBBF24" }} />
+            Instant activation
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════════
    SEND US A PHOTO
    ══════════════════════════════════════════════════════════════════════ */
 function SendPhotoSection({ onRequestService }: { onRequestService: () => void }) {
@@ -1464,6 +1830,7 @@ export default function Home() {
         <Hero onRequestService={openPopup} onPhotoDrop={handleHeroPhotoDrop} />
         <HiddenLeakSection onRequestService={openPopup} />
         <ServicesDeepDive onRequestService={openPopup} />
+        <DiamondVIPSection onRequestService={openPopup} />
         <SendPhotoSection onRequestService={openPopup} />
         <CtaBanner onRequestService={openPopup} />
       </main>
