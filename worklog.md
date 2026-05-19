@@ -47,3 +47,32 @@ Stage Summary:
 - DiamondVIPSection on homepage updated to $22/mo pricing
 - New /diamond-vip landing page live with $22/mo, $20 Welcome Gift, icon grid, testimonials
 - Live site: https://santostheplumber-new.vercel.app/
+---
+Task ID: 2
+Agent: Main Agent
+Task: Create Apple-style Service Territory interactive map page at /service-territory
+
+Work Log:
+- Verified existing layout: SiteHeader already in root layout.tsx, navigation links already wired to /services/[slug] routes
+- Verified Diamond VIP page already has $22/mo, $20 Welcome Gift, nuclear-bomb tracking, 3 testimonials
+- Created /src/app/service-territory/page.tsx with 530 lines of premium Apple-style dark theme code
+- Hero Section: INTU-MAP AREA MONITOR badge, "Real-Time Service Territory & Coverage Mapping" headline, descriptive subhead
+- Map Panel: Glassmorphism container (bg-zinc-900/80 border border-zinc-800 rounded-2xl), faux tech status bar with pulsing green ACTIVE indicator, "6 Cities Secured" counter
+- Google Maps iframe embed with dark CSS filters (grayscale invert brightness-[0.9] contrast-[1.2]) centered on Upland, CA
+- HUD-style corner accent overlays (Electric Blue brackets) for premium tech aesthetic
+- Scan-line overlay for mission-control visual feel
+- Mini status footer with Coverage Verified, Updated Daily, 15-Mile Dispatch Radius
+- 6 Hub Information Cards: Upland, Rancho Cucamonga, Fontana, Ontario, Chino, Fullerton — each with accent color, tagline, description, response time/coverage/priority metrics
+- Stats Bar: 1,000+ Neighbors Served, 6 City Hubs Active, 15mi Dispatch Radius, 24/7 Emergency Coverage
+- CTA Section with phone call and Diamond VIP links
+- Footer consistent with site-wide design (brand, socials, credits)
+- Build compiled successfully (Next.js 16.1.3, zero errors)
+- Pushed to GitHub at commit ad4652e
+- Deployed to Vercel — READY status (dpl_CdawURWzfHruE2A3pww7kuyEaGHo)
+
+Stage Summary:
+- New /service-territory page live with full Apple-style interactive map experience
+- Dark-themed Google Maps embed with premium midnight aesthetic
+- 6 service hub cards with detailed metadata and metrics
+- Inherited persistent navigation header from root layout
+- Live site: https://santostheplumber-new.vercel.app/service-territory
