@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import SiteHeader from "@/components/site-header";
+import AccessibilityWidget from "@/components/accessibility-widget";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -60,6 +61,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased bg-white text-gray-900 font-sans`}>
         <SiteHeader />
         {children}
+        <AccessibilityWidget />
         <Toaster />
       </body>
     </html>
