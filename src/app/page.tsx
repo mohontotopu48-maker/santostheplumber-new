@@ -589,11 +589,11 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
       title: "EMERGENCY SERVICE",
       color: "#dc2626",
       items: [
-        "24/7 Emergency Response",
-        "Burst Pipe Repair",
-        "Sewer Backup Clearance",
-        "Gas Leak Detection",
-        "Same-Day Urgent Repairs",
+        { label: "24/7 Emergency Response", slug: "24-7-emergency-response" },
+        { label: "Burst Pipe Repair", slug: "burst-pipe-repair" },
+        { label: "Sewer Backup Clearance", slug: "sewer-backup-clearance" },
+        { label: "Gas Leak Detection", slug: "gas-leak-detection" },
+        { label: "Same-Day Urgent Repairs", slug: "same-day-urgent-repairs" },
       ],
     },
     {
@@ -601,11 +601,11 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
       title: "DRAIN CLEANING",
       color: "#16a34a",
       items: [
-        "Clog Removal & Snaking",
-        "Hydro Jetting Solutions",
-        "Kitchen & Bath Drains",
-        "Main Sewer Line Cleaning",
-        "Preventative Maintenance",
+        { label: "Clog Removal & Snaking", slug: "clog-removal-snaking" },
+        { label: "Hydro Jetting Solutions", slug: "hydro-jetting-solutions" },
+        { label: "Kitchen & Bath Drains", slug: "kitchen-bath-drains" },
+        { label: "Main Sewer Line Cleaning", slug: "main-sewer-line-cleaning" },
+        { label: "Preventative Maintenance", slug: "preventative-maintenance" },
       ],
     },
     {
@@ -613,11 +613,11 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
       title: "WATER HEATERS & PIPE REPAIRS",
       color: "#ea580c",
       items: [
-        "Water Heater Repair & Tune-Ups",
-        "Tankless Installation & Flushes",
-        "Slab Leak Detection & Fixes",
-        "Copper & PEX Whole-Home Repiping",
-        "Advanced Leak Location & Repair",
+        { label: "Water Heater Repair & Tune-Ups", slug: "water-heater-repair-tune-ups" },
+        { label: "Tankless Installation & Flushes", slug: "tankless-installation-flushes" },
+        { label: "Slab Leak Detection & Fixes", slug: "slab-leak-detection-fixes" },
+        { label: "Copper & PEX Whole-Home Repiping", slug: "copper-pex-whole-home-repiping" },
+        { label: "Advanced Leak Location & Repair", slug: "advanced-leak-location-repair" },
       ],
     },
     {
@@ -625,11 +625,11 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
       title: "MAINTENANCE & FIXTURES",
       color: "#2563eb",
       items: [
-        "Faucet, Sink & Tub Installation",
-        "Toilet Repair & Replacement",
-        "Garbage Disposal Service",
-        "Whole-Home Water Filtration",
-        "Annual Plumbing Safety Inspections",
+        { label: "Faucet, Sink & Tub Installation", slug: "faucet-sink-tub-installation" },
+        { label: "Toilet Repair & Replacement", slug: "toilet-repair-replacement" },
+        { label: "Garbage Disposal Service", slug: "garbage-disposal-service" },
+        { label: "Whole-Home Water Filtration", slug: "whole-home-water-filtration" },
+        { label: "Annual Plumbing Safety Inspections", slug: "annual-plumbing-safety-inspections" },
       ],
     },
     {
@@ -637,11 +637,11 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
       title: "DIAMOND VIP CARE CLUB",
       color: "#FBBF24",
       items: [
-        "$100/Yr Flat-Rate Membership",
-        "$100 Fixed-Price Drain Unclogging",
-        "Priority 24/7 Service Booking",
-        "No Emergency Weekend Surge Fees",
-        "Early-Bird Pre-Launch Access",
+        { label: "$22/mo Membership", slug: "diamond-vip" },
+        { label: "$100 Fixed-Price Drain Unclogging", slug: "diamond-vip" },
+        { label: "Priority 24/7 Service Booking", slug: "diamond-vip" },
+        { label: "No Emergency Weekend Surge Fees", slug: "diamond-vip" },
+        { label: "Early-Bird Pre-Launch Access", slug: "diamond-vip" },
       ],
     },
   ];
@@ -702,7 +702,7 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
 
           {/* Diamond VIP link */}
           <a
-            href="#diamond-vip"
+            href="/diamond-vip"
             className="nav-link flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded-md transition-all"
             style={{ color: "#FBBF24" }}
             onClick={() => setMegaMenuOpen(false)}
@@ -767,12 +767,12 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
                   {col.items.map((item, j) => (
                     <li key={j}>
                       <a
-                        href={i === 4 ? "#diamond-vip" : `#services`}
+                        href={i === 4 ? "/diamond-vip" : `/services/${item.slug}`}
                         className="mega-menu-item block text-sm leading-snug transition-colors"
                         style={{ color: "rgba(255,255,255,0.75)" }}
                         onClick={() => setMegaMenuOpen(false)}
                       >
-                        {item}
+                        {item.label}
                       </a>
                     </li>
                   ))}
@@ -836,7 +836,7 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
                     {col.items.map((item, j) => (
                       <li key={j}>
                         <a
-                          href={i === 4 ? "#diamond-vip" : "#services"}
+                          href={i === 4 ? "/diamond-vip" : `/services/${item.slug}`}
                           className="block text-sm py-1 transition-colors"
                           style={{ color: "rgba(255,255,255,0.65)" }}
                           onClick={() => {
@@ -844,7 +844,7 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
                             setMobileAccordion(null);
                           }}
                         >
-                          {item}
+                          {item.label}
                         </a>
                       </li>
                     ))}
@@ -865,7 +865,7 @@ function Header({ onRequestService }: { onRequestService: () => void }) {
 
           {/* Diamond VIP standalone link */}
           <a
-            href="#diamond-vip"
+            href="/diamond-vip"
             className="nav-link-mobile flex items-center gap-2 px-4 py-3 font-bold rounded-md hover:bg-white/5"
             style={{ color: "#FBBF24" }}
             onClick={() => {
@@ -1386,8 +1386,8 @@ function ServicesDeepDive({ onRequestService }: { onRequestService: () => void }
 function DiamondVIPSection({ onRequestService }: { onRequestService: () => void }) {
   const benefits = [
     {
-      title: "$100/Yr Flat-Rate Membership",
-      desc: "One simple annual fee covers your entire household — no hidden costs, no surprises.",
+      title: "$22/mo Membership",
+      desc: "One simple monthly fee covers your entire household — no hidden costs, no surprises.",
     },
     {
       title: "$100 Fixed-Price Drain Unclogging",
@@ -1432,7 +1432,7 @@ function DiamondVIPSection({ onRequestService }: { onRequestService: () => void 
             Care Club
           </h2>
           <p className="mt-4 text-base md:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">
-            Join the Inland Empire&apos;s most valued plumbing membership. For just $100/year,
+            Join the Inland Empire&apos;s most valued plumbing membership. For just $22/month,
             you unlock flat-rate pricing, priority scheduling, and zero surge fees —
             the smartest investment a homeowner can make.
           </p>
@@ -1474,7 +1474,7 @@ function DiamondVIPSection({ onRequestService }: { onRequestService: () => void 
           >
             <DiamondIcon className="w-10 h-10 mb-3" style={{ color: "#FBBF24" }} />
             <p className="font-black text-2xl" style={{ color: "#FBBF24" }}>
-              $100<span className="text-base font-semibold text-gray-400">/yr</span>
+              $22<span className="text-base font-semibold text-gray-400">/mo</span>
             </p>
             <p className="text-sm text-gray-400 mt-1 mb-5">
               Cancel anytime. No contracts.
