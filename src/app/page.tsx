@@ -591,7 +591,7 @@ function Hero({ onRequestService, onPhotoDrop }: { onRequestService: () => void;
           {/* Sub-headline */}
           <p className="mt-6 text-base md:text-lg text-gray-300 leading-relaxed max-w-xl">
             Join over 1,000 local families who trust Santos for honest, fast repairs.
-            From emergency pipe repairs to water heater installations, the Inland
+            From priority pipe repairs to water heater installations, the Inland
             Empire&apos;s most referred plumber gets it flowing right the first time.
           </p>
 
@@ -724,7 +724,7 @@ function Hero({ onRequestService, onPhotoDrop }: { onRequestService: () => void;
    ══════════════════════════════════════════════════════════════════════ */
 function HiddenLeakSection({ onRequestService }: { onRequestService: () => void }) {
   return (
-    <section id="emergency" className="py-20 md:py-28" style={{ background: WHITE }}>
+    <section id="leak-detection" className="py-20 md:py-28" style={{ background: WHITE }}>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Section label */}
         <div className="flex items-center gap-2 mb-4">
@@ -1007,7 +1007,7 @@ function ServicesDeepDive({ onRequestService }: { onRequestService: () => void }
         label="Preventive Care"
         title="Maintenance & Drain Cleaning"
         subtitle='Your annual "Peek" keeps disasters at bay'
-        description="An ounce of prevention is worth a gallon of cure. Our Annual Peek Inspection catches small problems before they become expensive emergencies. Combined with professional drain cleaning that clears blockages without damaging your pipes, regular maintenance is the smartest investment you can make in your home's plumbing."
+        description="An ounce of prevention is worth a gallon of cure. Our Annual Peek Inspection catches small problems before they become expensive repairs. Combined with professional drain cleaning that clears blockages without damaging your pipes, regular maintenance is the smartest investment you can make in your home's plumbing."
         features={[
           {
             title: 'Annual "Peek" Inspection',
@@ -1019,7 +1019,7 @@ function ServicesDeepDive({ onRequestService }: { onRequestService: () => void }
           },
           {
             title: "Priority Scheduling",
-            desc: "Maintenance plan members jump to the front of the line when emergencies strike — because loyalty should be rewarded.",
+            desc: "Maintenance plan members jump to the front of the line when issues arise — because loyalty should be rewarded.",
           },
         ]}
         imageSrc="/plumber-service.png"
@@ -1084,7 +1084,7 @@ function DiamondVIPSection({ onRequestService }: { onRequestService: () => void 
           </h2>
           <p className="mt-4 text-base md:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">
             Join the Inland Empire&apos;s most valued plumbing membership. For just $22/month,
-            you unlock flat-rate pricing, priority scheduling, and zero surge fees —
+            you unlock flat-rate pricing, priority scheduling, and zero hidden fees —
             the smartest investment a homeowner can make.
           </p>
         </div>
@@ -1623,11 +1623,11 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
         <Hero onRequestService={openPopup} onPhotoDrop={handleHeroPhotoDrop} />
+        <SendPhotoSection onRequestService={openPopup} />
+        <CouponsSection onRequestService={openPopup} />
         <HiddenLeakSection onRequestService={openPopup} />
         <ServicesDeepDive onRequestService={openPopup} />
         <DiamondVIPSection onRequestService={openPopup} />
-        <CouponsSection onRequestService={openPopup} />
-        <SendPhotoSection onRequestService={openPopup} />
         <CtaBanner onRequestService={openPopup} />
       </main>
       <Footer />
